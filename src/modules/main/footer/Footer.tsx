@@ -24,14 +24,7 @@ const Footer = ({
       >
         <strong>
           <span>Copyright © {DateTime.now().toFormat('y')} </span>
-          <a
-            href="https://erdkse.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            erdkse.com
-          </a>
-          <span>.</span>
+            <b>TA-07</b>
         </strong>
         <div className="float-right d-none d-sm-inline-block">
           <b>{t('footer.version')}</b>
