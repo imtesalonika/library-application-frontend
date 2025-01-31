@@ -20,26 +20,24 @@ export const MENU: IMenuItem[] = [
     path: '/',
   },
   {
-    name: i18n.t('menusidebar.label.blank'),
-    icon: 'fas fa-wrench nav-icon',
-    path: '/blank',
+    name: i18n.t('menusidebar.label.buku'),
+    icon: 'fas fa-book nav-icon',
+    path: '/book',
   },
   {
-    name: i18n.t('menusidebar.label.mainMenu'),
-    icon: 'far fa-caret-square-down nav-icon',
-    children: [
-      {
-        name: i18n.t('menusidebar.label.subMenu'),
-        icon: 'fas fa-hammer nav-icon',
-        path: '/sub-menu-1',
-      },
-
-      {
-        name: i18n.t('menusidebar.label.blank'),
-        icon: 'fas fa-cogs nav-icon',
-        path: '/sub-menu-2',
-      },
-    ],
+    name: i18n.t('menusidebar.label.tugas_akhir'),
+    icon: 'fas fa-graduation-cap nav-icon',
+    path: '/thesis',
+  },
+  {
+    name: i18n.t('menusidebar.label.berita'),
+    icon: 'fas fa-newspaper nav-icon',
+    path: '/news',
+  },
+  {
+    name: i18n.t('menusidebar.label.rekap_data'),
+    icon: 'fas fa-chart-bar nav-icon',
+    path: '/data-recapitulation',
   },
 ];
 

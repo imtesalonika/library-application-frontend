@@ -76,10 +76,10 @@
   "menusidebar": {
     "label": {
       "dashboard": "Dashboard",
-      "profile": "Profile",
-      "blank": "Blank",
-      "mainMenu": "Main Menu",
-      "subMenu": "Sub Menu"
+      "buku": "Buku",
+      "tugas_akhir": "Tugas Akhir",
+      "berita": "Berita",
+      "rekap_data": "Rekap Data Peminjaman"
     }
   },
   "footer": {
