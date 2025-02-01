@@ -26,10 +26,10 @@ const Footer = ({
           <span>Copyright © {DateTime.now().toFormat('y')} </span>
             <b>TA-07</b>
         </strong>
-        <div className="float-right d-none d-sm-inline-block">
-          <b>{t('footer.version')}</b>
-          <span>&nbsp;{packageJSON.version}</span>
-        </div>
+        {/*<div className="float-right d-none d-sm-inline-block">*/}
+        {/*  <b>{t('footer.version')}</b>*/}
+        {/*  <span>&nbsp;{packageJSON.version}</span>*/}
+        {/*</div>*/}
       </div>
     </footer>
   );

@@ -24,6 +24,8 @@ import { firebaseAuth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/Loading';
+import {BookPage} from "@pages/BookPage";
+import {AddBookPage} from "@pages/AddBookPage";
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -96,6 +98,8 @@ const App = () => {
             <Route path="/blank" element={<Blank />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
+            <Route path="/books" element={<BookPage />} />
+            <Route path="/add-book" element={<AddBookPage />} />
           </Route>
         </Route>
       </Routes>

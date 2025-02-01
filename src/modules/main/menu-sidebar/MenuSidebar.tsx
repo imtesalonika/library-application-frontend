@@ -22,7 +22,7 @@ export const MENU: IMenuItem[] = [
   {
     name: i18n.t('menusidebar.label.buku'),
     icon: 'fas fa-book nav-icon',
-    path: '/book',
+    path: '/books',
   },
   {
     name: i18n.t('menusidebar.label.tugas_akhir'),
