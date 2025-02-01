@@ -27,7 +27,7 @@ export const MENU: IMenuItem[] = [
   {
     name: i18n.t('menusidebar.label.tugas_akhir'),
     icon: 'fas fa-graduation-cap nav-icon',
-    path: '/thesis',
+    path: '/tugasakhir',
   },
   {
     name: i18n.t('menusidebar.label.berita'),

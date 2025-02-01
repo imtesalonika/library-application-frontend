@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/Loading';
 import {BookPage} from "@pages/BookPage";
 import {AddBookPage} from "@pages/AddBookPage";
+import {TugasakhirPage} from "@pages/TugasakhirPage";
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -100,6 +101,7 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/books" element={<BookPage />} />
             <Route path="/add-book" element={<AddBookPage />} />
+            <Route path="/tugasakhir" element={<TugasakhirPage />} />
           </Route>
         </Route>
       </Routes>
