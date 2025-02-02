@@ -1,5 +1,5 @@
 {
-  "name": "adminlte-3-react",
+  "name": "library-application-frontend",
   "version": "0.3.2",
   "private": true,
   "type": "module",
@@ -40,6 +40,7 @@
     "@fortawesome/react-fontawesome": "0.2.2",
     "@profabric/react-components": "0.2.5-beta.5",
     "@reduxjs/toolkit": "2.2.5",
+    "axios": "^1.7.9",
     "datatables.net-bs4": "^2.2.1",
     "datatables.net-buttons-bs4": "^3.2.1",
     "datatables.net-dt": "^2.2.1",
