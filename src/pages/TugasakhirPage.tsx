@@ -31,9 +31,12 @@ export function TugasakhirPage() {
         <div className={'p-4 bg-white'}>
             <h2>Tugas Akhir</h2>
             <div className={'d-flex mb-3 w-100'} style={{ gap: 10 }}>
-                <button className="btn btn-success d-flex align-items-center" style={{ gap: 3 }}>
-                    <Plus /> Add Tesis
-                </button>
+                <Link to={"/addtugasakhir"}>
+                    <button className="btn btn-success d-flex align-items-center" style={{
+                        gap: 3
+                    }}><Plus/> Add Tugas Akhir
+                    </button>
+                </Link>
             </div>
 
             <table className={'table table-bordered table-hover mt-3'}>
