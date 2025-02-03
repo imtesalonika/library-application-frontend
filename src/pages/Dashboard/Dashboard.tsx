@@ -7,6 +7,7 @@ import {
   faEye,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
@@ -16,7 +17,7 @@ const Dashboard = () => {
       <section className="content">
         <div className="container-fluid">
           <div className="row">
-   
+            {/* Total Users */}
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Users"
@@ -33,7 +34,8 @@ const Dashboard = () => {
                 }}
               />
             </div>
-    
+
+            {/* Total Books */}
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Books"
@@ -50,7 +52,8 @@ const Dashboard = () => {
                 }}
               />
             </div>
-      
+
+            {/* Books Borrowed */}
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Books Borrowed"
@@ -67,12 +70,13 @@ const Dashboard = () => {
                 }}
               />
             </div>
+
             {/* Visitors */}
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Visitors Today"
                 text="340"
-                navigateTo="/visitors"
+                navigateTo="/VisitorReport"
                 variant="danger"
                 icon={{
                   content: (
@@ -83,6 +87,7 @@ const Dashboard = () => {
                   ),
                 }}
               />
+              
             </div>
           </div>
         </div>
