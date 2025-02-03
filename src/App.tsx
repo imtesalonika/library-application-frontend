@@ -11,7 +11,7 @@ import { calculateWindowSize } from '@app/utils/helpers';
 import { setWindowSize } from '@app/store/reducers/ui';
 import ReactGA from 'react-ga4';
 
-import Dashboard from '@pages/Dashboard';
+import Dashboard from '@app/pages/Dashboard/Dashboard';
 import Blank from '@pages/Blank';
 import SubMenu from '@pages/SubMenu';
 import Profile from '@pages/profile/Profile';
@@ -26,8 +26,6 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/Loading';
 import {BookPage} from "@pages/BookPage";
 import {AddBookPage} from "@pages/AddBookPage";
-import {TugasakhirPage} from "@pages/TugasakhirPage";
-import { AddTAPage } from './pages/AddTAPage';
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -102,8 +100,6 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/books" element={<BookPage />} />
             <Route path="/add-book" element={<AddBookPage />} />
-            <Route path="/tugasakhir" element={<TugasakhirPage />} />
-            <Route path="/addtugasakhir" element={<AddTAPage />} />
           </Route>
         </Route>
       </Routes>
