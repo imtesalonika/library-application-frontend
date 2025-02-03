@@ -27,6 +27,7 @@ import { Loading } from './components/Loading';
 import {BookPage} from "@pages/BookPage";
 import {AddBookPage} from "@pages/AddBookPage";
 import VisitorReport from './pages/Dashboard/VisitorReport';
+import BorrowedBooksReport from './pages/Dashboard/BorrowedBooksReport';
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -105,6 +106,7 @@ const App = () => {
       <Route path="/books" element={<BookPage />} />
       <Route path="/add-book" element={<AddBookPage />} />
       <Route path="/VisitorReport" element={<VisitorReport />} /> 
+      <Route path="/borrowed-books-report" element={<BorrowedBooksReport />} />
     </Route>
   </Route>
 </Routes>

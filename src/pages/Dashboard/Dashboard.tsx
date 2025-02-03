@@ -55,17 +55,14 @@ const Dashboard = () => {
 
             {/* Books Borrowed */}
             <div className="col-lg-3 col-6">
-              <SmallBox
+            <SmallBox
                 title="Books Borrowed"
                 text="1,030"
-                navigateTo="/borrowed-books"
+                navigateTo="/borrowed-books-report"
                 variant="warning"
                 icon={{
                   content: (
-                    <FontAwesomeIcon
-                      icon={faExchangeAlt}
-                      style={{ fontSize: '62px' }}
-                    />
+                    <FontAwesomeIcon icon={faExchangeAlt} style={{ fontSize: '62px' }} />
                   ),
                 }}
               />
