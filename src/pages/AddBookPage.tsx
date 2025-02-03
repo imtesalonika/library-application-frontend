@@ -5,19 +5,29 @@ import { apiUrl } from '@app/utils/env'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import { isStringContainsNumber } from '@app/utils/is-string-contains-number'
 
 export function AddBookPage() {
   const [judulBuku, setJudulBuku] = useState('')
-  const [jumlahHalaman, setJumlahHalaman] = useState('')
+  const [judulBukuErr, setJudulBukuErr] = useState('')
+  const [jumlahHalaman, setJumlahHalaman] = useState(0)
+  const [jumlahHalamanErr, setJumlahHalamanErr] = useState('')
   const [penulis, setPenulis] = useState('')
+  const [penulisErr, setPenulisErr] = useState('')
   const [bahasa, setBahasa] = useState('')
+  const [bahasaErr, setBahasaErr] = useState('')
   const [penerbit, setPenerbit] = useState('')
+  const [penerbitErr, setPenerbitErr] = useState('')
   const [edisi, setEdisi] = useState('')
-  const [tahunTerbit, setTahunTerbit] = useState('')
+  const [edisiErr, setEdisiErr] = useState('')
+  const [tahunTerbit, setTahunTerbit] = useState(0)
+  const [tahunTerbitErr, setTahunTerbitErr] = useState('')
   const [isbn, setIsbn] = useState('')
+  const [isbnErr, setisbnErr] = useState('')
   const [abstrak, setAbstrak] = useState('')
-  const [status, setStatus] = useState('')
+  const [abstrakErr, setAbstrakErr] = useState('')
   const [banyakBuku, setBanyakBuku] = useState(0)
+  const [banyakBukuErr, setBanyakBukuErr] = useState('')
   const [gambar, setGambar] = useState<any>(undefined)
   const navigation = useNavigate()
   const MySwal = withReactContent(Swal)
@@ -28,9 +38,9 @@ export function AddBookPage() {
       formData.append('judul', judulBuku)
       formData.append('penulis', penulis)
       formData.append('penerbit', penerbit)
-      formData.append('tahun_terbit', tahunTerbit)
+      formData.append('tahun_terbit', `${tahunTerbit}`)
       formData.append('isbn', isbn)
-      formData.append('jumlah_halaman', jumlahHalaman)
+      formData.append('jumlah_halaman', `${jumlahHalaman}`)
       formData.append('bahasa', bahasa)
       formData.append('edisi', edisi)
       formData.append('abstrak', abstrak)
@@ -111,13 +121,14 @@ export function AddBookPage() {
             <div className="form-group col-sm">
               <label>Banyak Buku</label>
               <input
-                type="text"
+                type="number"
                 value={banyakBuku}
                 onChange={(e) => {
                   setBanyakBuku(+e.target.value)
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{banyakBukuErr}</span>
             </div>
           </div>
 
@@ -132,18 +143,20 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{judulBukuErr}</span>
             </div>
 
             <div className="form-group col-sm">
               <label>Jumlah Halaman</label>
               <input
-                type="text"
+                type="number"
                 value={jumlahHalaman}
                 onChange={(e) => {
-                  setJumlahHalaman(e.target.value)
+                  setJumlahHalaman(+e.target.value)
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{jumlahHalamanErr}</span>
             </div>
           </div>
 
@@ -158,6 +171,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{penulisErr}</span>
             </div>
 
             <div className="form-group col-sm">
@@ -170,6 +184,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{bahasaErr}</span>
             </div>
           </div>
 
@@ -184,6 +199,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{penerbitErr}</span>
             </div>
 
             <div className="form-group col-sm">
@@ -196,6 +212,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{edisiErr}</span>
             </div>
           </div>
 
@@ -203,13 +220,14 @@ export function AddBookPage() {
             <div className="form-group col-sm">
               <label>Tahun Terbit</label>
               <input
-                type="text"
+                type="number"
                 value={tahunTerbit}
                 onChange={(e) => {
-                  setTahunTerbit(e.target.value)
+                  setTahunTerbit(+e.target.value)
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{tahunTerbitErr}</span>
             </div>
 
             <div className="form-group col-sm">
@@ -235,6 +253,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{isbnErr}</span>
             </div>
 
             <div className="form-group col-sm">
@@ -247,6 +266,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
+              <span className={'text-danger'}>{abstrakErr}</span>
             </div>
           </div>
         </div>
@@ -254,6 +274,55 @@ export function AddBookPage() {
         <button
           className={'btn btn-success mb-3'}
           onClick={() => {
+            setJudulBukuErr('')
+            setPenulisErr('')
+            setBahasaErr('')
+            setPenerbitErr('')
+            setEdisiErr('')
+            setisbnErr('')
+            setAbstrakErr('')
+
+            if (judulBuku === '') {
+              setJudulBukuErr('Tidak boleh kosong')
+              return
+            }
+            if (penulis === '') {
+              setPenulisErr('Tidak boleh kosong')
+              return
+            }
+            if (isStringContainsNumber(penulis)) {
+              setPenulisErr('Tidak boleh mengandung angka!')
+              return
+            }
+            if (bahasa === '') {
+              setBahasaErr('Tidak boleh kosong')
+              return
+            }
+            if (isStringContainsNumber(bahasa)) {
+              setBahasaErr('Tidak boleh mengandung angka!')
+              return
+            }
+            if (penerbit === '') {
+              setPenerbitErr('Tidak boleh kosong')
+              return
+            }
+            if (isStringContainsNumber(penerbit)) {
+              setPenerbitErr('Tidak boleh mengandung angka!')
+              return
+            }
+            if (edisi === '') {
+              setEdisiErr('Tidak boleh kosong')
+              return
+            }
+            if (isbn === '') {
+              setisbnErr('Tidak boleh kosong')
+              return
+            }
+            if (abstrak === '') {
+              setAbstrakErr('Tidak boleh kosong')
+              return
+            }
+
             handleSaveBuku().then()
           }}
         >
