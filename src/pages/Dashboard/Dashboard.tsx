@@ -53,7 +53,7 @@ const Dashboard = () => {
               />
             </div>
 
-            {/* Books Borrowed */}
+            {/* Books Borrowed Report */}
             <div className="col-lg-3 col-6">
             <SmallBox
                 title="Books Borrowed"
