@@ -3,6 +3,8 @@ import { useState } from 'react'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export function AddBookPage() {
   const [judulBuku, setJudulBuku] = useState('')
@@ -18,6 +20,7 @@ export function AddBookPage() {
   const [banyakBuku, setBanyakBuku] = useState(0)
   const [gambar, setGambar] = useState<any>(undefined)
   const navigation = useNavigate()
+  const MySwal = withReactContent(Swal)
 
   const handleSaveBuku = async () => {
     try {
@@ -31,7 +34,7 @@ export function AddBookPage() {
       formData.append('bahasa', bahasa)
       formData.append('edisi', edisi)
       formData.append('abstrak', abstrak)
-      formData.append('status', status)
+      formData.append('status', banyakBuku > 0 ? 'true' : 'false')
       formData.append('gambar', gambar)
       formData.append('banyak_buku', banyakBuku.toString())
 
@@ -41,6 +44,11 @@ export function AddBookPage() {
         navigation('/books')
       }
     } catch (e: any) {
+      MySwal.fire({
+        title: 'Failed!',
+        text: e.response.data.message,
+        icon: 'error',
+      })
       console.log(e)
     }
   }
@@ -208,9 +216,6 @@ export function AddBookPage() {
               <label>Status</label>
               <select
                 value={banyakBuku > 0 ? 'true' : 'false'}
-                onChange={(e) => {
-                  setStatus(e.target.value)
-                }}
                 className="form-control"
               >
                 <option value={'true'}>Tersedia</option>
