@@ -1,10 +1,10 @@
 import {ArrowLeft} from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-export function AddTAPage () {
+export function AddBeritaPage () {
     return (
         <div>
-            <h2 className={'font-weight-bold ml-3 pt-3'}>Tugas Akhir</h2>
+            <h2 className={'font-weight-bold ml-3 pt-3'}>Berita</h2>
 
             <div className={'d-flex align-items-center bg-white px-3 py-1 mb-3'} style={{gap: 10}}>
                 <Link to="/" className={'d-flex flex-column align-items-sm-center justify-content-center rounded-circle'} style={{
@@ -17,52 +17,34 @@ export function AddTAPage () {
 
                 <span style={{
                     color: '#3722AE'
-                }} className={'text-lg'}>Tambah Tugas Akhir</span>
+                }} className={'text-lg'}>Tambah Berita</span>
             </div>
 
             <div className={'px-5'}>
+                <div className="mb-3" style={{ width: '49%' }}>
+                    <label>File</label>
+                    <br />
+                    <input type="file" className={'border p-1 rounded-lg w-100 bg-white'} />
+                </div>
                 <div className={'w-100'}>
                     <div className={'row'}>
-                        <div className="form-group col-sm">
-                            <label>Judul Tugas Akhir</label>
-                            <input type="text" className="form-control" />
-                        </div>
-
-                        <div className="form-group col-sm">
-                            <label>Kata Kunci</label>
+                        <div className="form-group col-sm-6">
+                            <label>Judul Berita</label>
                             <input type="text" className="form-control" />
                         </div>
                     </div>
 
                     <div className={'row'}>
-                        <div className="form-group col-sm">
-                            <label>Penulis</label>
-                            <input type="text" className="form-control" />
-                        </div>
-
-                        <div className="form-group col-sm">
-                            <label>Abstrak</label>
+                        <div className="form-group col-sm-6">
+                            <label>Deskripsi</label>
                             <textarea className="form-control"></textarea>
                         </div>
                     </div>
 
                     <div className={'row'}>
                         <div className="form-group col-sm-6">
-                            <label>Pembimbing</label>
+                            <label>Kategori</label>
                             <input type="text" className="form-control" />
-                        </div>
-                    </div>
-
-                    <div className={'row'}>
-                        <div className="form-group col-sm-6">
-                            <label>Fakultas</label>
-                            <select className="form-control">
-                            <option value="">Pilih Fakultas</option>
-                                <option value="FITE">FITE</option>
-                                <option value="FTI">FTI</option>
-                                <option value="FTB">FTB</option>
-                                <option value="Vokasi">Vokasi</option>
-                            </select>
                         </div>
                     </div>
 

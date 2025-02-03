@@ -32,7 +32,7 @@ export const MENU: IMenuItem[] = [
   {
     name: i18n.t('menusidebar.label.berita'),
     icon: 'fas fa-newspaper nav-icon',
-    path: '/news',
+    path: '/berita',
   },
   {
     name: i18n.t('menusidebar.label.rekap_data'),
