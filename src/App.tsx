@@ -26,10 +26,12 @@ import { useAppDispatch, useAppSelector } from './store/store';
 import { Loading } from './components/Loading';
 import {BookPage} from "@pages/BookPage";
 import {AddBookPage} from "@pages/AddBookPage";
+import VisitorReport from './pages/Dashboard/VisitorReport';
+import BorrowedBooksReport from './pages/Dashboard/BorrowedBooksReport';
 import { TugasakhirPage } from './pages/TugasakhirPage';
+import { AddBeritaPage } from './pages/AddBeritaPage';
 import { AddTAPage } from './pages/AddTAPage';
 import { BeritaPage } from './pages/BeritaPage';
-import { AddBeritaPage } from './pages/AddBeritaPage';
 
 const { VITE_NODE_ENV } = import.meta.env;
 
@@ -83,34 +85,40 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/login" element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
-        <Route path="/register" element={<PublicRoute />}>
-          <Route path="/register" element={<Register />} />
-        </Route>
-        <Route path="/forgot-password" element={<PublicRoute />}>
-          <Route path="/forgot-password" element={<ForgetPassword />} />
-        </Route>
-        <Route path="/recover-password" element={<PublicRoute />}>
-          <Route path="/recover-password" element={<RecoverPassword />} />
-        </Route>
-        <Route path="/" element={<PrivateRoute />}>
-          <Route path="/" element={<Main />}>
-            <Route path="/sub-menu-2" element={<Blank />} />
-            <Route path="/sub-menu-1" element={<SubMenu />} />
-            <Route path="/blank" element={<Blank />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/books" element={<BookPage />} />
-            <Route path="/add-book" element={<AddBookPage />} />
-            <Route path="/tugasakhir" element={<TugasakhirPage />} />
-            <Route path="/addtugasakhir" element={<AddTAPage />} />
-            <Route path="/berita" element={<BeritaPage />} />
-            <Route path="/addberita" element={<AddBeritaPage />} />
-          </Route>
-        </Route>
-      </Routes>
+  {/* Public Routes */}
+  <Route path="/login" element={<PublicRoute />}>
+    <Route path="/login" element={<Login />} />
+  </Route>
+  <Route path="/register" element={<PublicRoute />}>
+    <Route path="/register" element={<Register />} />
+  </Route>
+  <Route path="/forgot-password" element={<PublicRoute />}>
+    <Route path="/forgot-password" element={<ForgetPassword />} />
+  </Route>
+  <Route path="/recover-password" element={<PublicRoute />}>
+    <Route path="/recover-password" element={<RecoverPassword />} />
+  </Route>
+
+  {/* Private Routes */}
+  <Route path="/" element={<PrivateRoute />}>
+    <Route path="/" element={<Main />}>
+      <Route path="/sub-menu-2" element={<Blank />} />
+      <Route path="/sub-menu-1" element={<SubMenu />} />
+      <Route path="/blank" element={<Blank />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/books" element={<BookPage />} />
+      <Route path="/add-book" element={<AddBookPage />} />
+      <Route path="/tugasakhir" element={<TugasakhirPage />} />
+      <Route path="/addtugasakhir" element={<AddTAPage />} />
+      <Route path="/berita" element={<BeritaPage />} />
+      <Route path="/addberita" element={<AddBeritaPage />} />
+      <Route path="/VisitorReport" element={<VisitorReport />} /> 
+      <Route path="/borrowed-books-report" element={<BorrowedBooksReport />} />
+    </Route>
+  </Route>
+</Routes>
+
       <ToastContainer
         autoClose={3000}
         draggable={false}
