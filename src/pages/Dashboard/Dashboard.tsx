@@ -22,7 +22,7 @@ const Dashboard = () => {
               <SmallBox
                 title="Total Users"
                 text="1,200"
-                navigateTo="/users"
+                navigateTo="/user-management"
                 variant="info"
                 icon={{
                   content: (
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
             {/* Books Borrowed Report */}
             <div className="col-lg-3 col-6">
-            <SmallBox
+              <SmallBox
                 title="Books Borrowed"
                 text="1,030"
                 navigateTo="/borrowed-books-report"
