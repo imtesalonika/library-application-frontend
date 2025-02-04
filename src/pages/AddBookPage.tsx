@@ -1,13 +1,14 @@
 import { ArrowLeft } from 'react-bootstrap-icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { isStringContainsNumber } from '@app/utils/is-string-contains-number'
 
 export function AddBookPage() {
+  const { id } = useParams()
   const [judulBuku, setJudulBuku] = useState('')
   const [judulBukuErr, setJudulBukuErr] = useState('')
   const [jumlahHalaman, setJumlahHalaman] = useState(0)
@@ -29,8 +30,30 @@ export function AddBookPage() {
   const [banyakBuku, setBanyakBuku] = useState(0)
   const [banyakBukuErr, setBanyakBukuErr] = useState('')
   const [gambar, setGambar] = useState<any>(undefined)
+  const [gambarErr, setGambarErr] = useState<string>('')
   const navigation = useNavigate()
   const MySwal = withReactContent(Swal)
+  const [bookData, setBookData] = useState<any>()
+
+  const getBookData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/book/${id}`)
+
+      setBookData(response.data.data)
+      setJudulBuku(response.data.data.judul)
+      setPenulis(response.data.data.penulis)
+      setPenerbit(response.data.data.penerbit)
+      setTahunTerbit(response.data.data.tahun_terbit)
+      setIsbn(response.data.data.isbn)
+      setJumlahHalaman(response.data.data.jumlah_halaman)
+      setBahasa(response.data.data.bahasa)
+      setEdisi(response.data.data.edisi)
+      setAbstrak(response.data.data.abstrak)
+      setBanyakBuku(response.data.data.banyak_buku)
+    } catch (e: any) {
+      console.log(e)
+    }
+  }
 
   const handleSaveBuku = async () => {
     try {
@@ -63,6 +86,43 @@ export function AddBookPage() {
     }
   }
 
+  const handleUpdateBuku = async () => {
+    try {
+      const formData = new FormData()
+      formData.append('judul', judulBuku)
+      formData.append('penulis', penulis)
+      formData.append('penerbit', penerbit)
+      formData.append('tahun_terbit', `${tahunTerbit}`)
+      formData.append('isbn', isbn)
+      formData.append('jumlah_halaman', `${jumlahHalaman}`)
+      formData.append('bahasa', bahasa)
+      formData.append('edisi', edisi)
+      formData.append('abstrak', abstrak)
+      formData.append('status', banyakBuku > 0 ? 'true' : 'false')
+      formData.append('gambar', gambar)
+      formData.append('banyak_buku', banyakBuku.toString())
+
+      const response = await axios.put(`${apiUrl}/api/book/${id}`, formData)
+
+      if (response.status === 200) {
+        navigation('/books')
+      }
+    } catch (e: any) {
+      MySwal.fire({
+        title: 'Failed!',
+        text: e.response.data.message,
+        icon: 'error',
+      })
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    if (id) {
+      getBookData().then()
+    }
+  }, [])
+
   return (
     <div>
       <h2 className={'font-weight-bold ml-3 pt-3'}>Buku</h2>
@@ -93,7 +153,7 @@ export function AddBookPage() {
           }}
           className={'text-lg'}
         >
-          Tambah Buku
+          {id ? 'Edit Buku' : 'Tambah Buku'}
         </span>
       </div>
 
@@ -108,14 +168,12 @@ export function AddBookPage() {
                 onChange={(e) => {
                   const selectedFile = e.target.files![0]
                   if (selectedFile) {
-                    setGambar(selectedFile) // Set file ke state
-                    console.log('File terpilih:', selectedFile)
-                  } else {
-                    console.log('Tidak ada file yang dipilih')
+                    setGambar(selectedFile)
                   }
                 }}
                 className={'border p-1 rounded-lg w-100 bg-white'}
               />
+              <span className={'text-danger'}>{gambarErr}</span>
             </div>
 
             <div className="form-group col-sm">
@@ -281,6 +339,14 @@ export function AddBookPage() {
             setEdisiErr('')
             setisbnErr('')
             setAbstrakErr('')
+            setGambarErr('')
+
+            if (!id) {
+              if (!gambar) {
+                setGambarErr('Pilih cover terlebih dahulu')
+                return
+              }
+            }
 
             if (judulBuku === '') {
               setJudulBukuErr('Tidak boleh kosong')
@@ -323,10 +389,14 @@ export function AddBookPage() {
               return
             }
 
-            handleSaveBuku().then()
+            if (id) {
+              handleUpdateBuku().then()
+            } else {
+              handleSaveBuku().then()
+            }
           }}
         >
-          Save
+          Simpan
         </button>
       </div>
     </div>
