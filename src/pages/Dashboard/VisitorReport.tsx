@@ -2,7 +2,7 @@ import { ContentHeader } from "@components";
 import { useState } from "react";
 
 const VisitorReport = () => {
-  // Data dummy untuk laporan pengunjung berdasarkan jam
+
   const [visitorData] = useState([
     { hour: "08:00 - 09:00", count: 50 },
     { hour: "09:00 - 10:00", count: 80 },

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ContentHeader } from '@components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faCheck, faTimes, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Table, Button } from 'react-bootstrap';
 
 const UserManagement = () => {
@@ -10,6 +10,10 @@ const UserManagement = () => {
     { name: 'Anggait Saud Parulian, S.T.,Kom.', username: 'anggait', email: 'anggait.parulian@del.ac.id', role: 'Member of BAA', phone: '08213222425' },
     { name: 'Ardiles Sinaga, S.T., M.T.', username: 'ardiles', email: 'ardiles.sinaga@del.ac.id', role: 'Ketua Program Studi D4 Teknologi Rekayasa Perangkat Lunak', phone: '09213222425' },
   ]);
+
+  function handleDelete(username: string): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <div>
@@ -43,11 +47,11 @@ const UserManagement = () => {
               <td>{user.role}</td>
               <td>{user.phone}</td>
               <td>
-                <Button variant="success" className="me-2">
-                  <FontAwesomeIcon icon={faCheck} />
+              <Button variant="info" className="me-2">
+                  <FontAwesomeIcon icon={faEye} /> Lihat Detail
                 </Button>
-                <Button variant="danger">
-                  <FontAwesomeIcon icon={faTimes} />
+                <Button variant="danger" onClick={() => handleDelete(user.username)}>
+                  <FontAwesomeIcon icon={faTrash} /> Hapus
                 </Button>
               </td>
             </tr>
