@@ -34,8 +34,7 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-newspaper nav-icon',
     path: '/berita',
   },
-
-];
+]
 
 const StyledBrandImage = styled(Image)`
   float: left;
@@ -46,12 +45,8 @@ const StyledBrandImage = styled(Image)`
     0 6px 6px rgba(0, 0, 0, 0.23) !important;
 `
 
-const StyledUserImage = styled(Image)`
-  --pf-box-shadow: 0 3px 6px #00000029, 0 3px 6px #0000003b !important;
-`
-
 const MenuSidebar = () => {
-  const currentUser = useAppSelector((state) => state.auth.currentUser)
+  // const currentUser = useAppSelector((state) => state.auth.currentUser)
   const sidebarSkin = useAppSelector((state) => state.ui.sidebarSkin)
   const menuItemFlat = useAppSelector((state) => state.ui.menuItemFlat)
   const menuChildIndent = useAppSelector((state) => state.ui.menuChildIndent)
@@ -64,30 +59,11 @@ const MenuSidebar = () => {
           alt="AdminLTE Logo"
           width={33}
           height={33}
-          rounded
         />
-        <span className="brand-text font-weight-light">AdminLTE 3</span>
+        <span className="brand-text font-weight-light">Del Library App</span>
       </Link>
       <div className="sidebar">
-        <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-          <div className="image">
-            <StyledUserImage
-              src={currentUser?.photoURL}
-              fallbackSrc="/img/default-profile.png"
-              alt="User"
-              width={34}
-              height={34}
-              rounded
-            />
-          </div>
-          <div className="info">
-            <Link to={'/profile'} className="d-block">
-              {currentUser?.email}
-            </Link>
-          </div>
-        </div>
-
-        <div className="form-inline">
+        <div className="form-inline mt-3">
           <SidebarSearch />
         </div>
 

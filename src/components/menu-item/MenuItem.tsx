@@ -1,62 +1,70 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useState } from 'react';
-import { NavLink, useNavigate, useLocation, Location } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { IMenuItem } from '@app/modules/main/menu-sidebar/MenuSidebar';
+import { useEffect, useState } from 'react'
+import { NavLink, useNavigate, useLocation, Location } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { IMenuItem } from '@app/modules/main/menu-sidebar/MenuSidebar'
 
 const MenuItem = ({ menuItem }: { menuItem: IMenuItem }) => {
-  const [t] = useTranslation();
-  const [isMenuExtended, setIsMenuExtended] = useState(false);
-  const [isExpandable, setIsExpandable] = useState(false);
-  const [isMainActive, setIsMainActive] = useState(false);
-  const [isOneOfChildrenActive, setIsOneOfChildrenActive] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [t] = useTranslation()
+  const [isMenuExtended, setIsMenuExtended] = useState(false)
+  const [isExpandable, setIsExpandable] = useState(false)
+  const [isMainActive, setIsMainActive] = useState(false)
+  const [isOneOfChildrenActive, setIsOneOfChildrenActive] = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const toggleMenu = () => {
-    setIsMenuExtended(!isMenuExtended);
-  };
+    setIsMenuExtended(!isMenuExtended)
+  }
 
   const handleMainMenuAction = () => {
     if (isExpandable) {
-      toggleMenu();
-      return;
+      toggleMenu()
+      return
     }
-    navigate(menuItem.path ? menuItem.path : '/');
-  };
+    navigate(menuItem.path ? menuItem.path : '/')
+  }
 
   const calculateIsActive = (url: Location) => {
-    setIsMainActive(false);
-    setIsOneOfChildrenActive(false);
+    setIsMainActive(false)
+    setIsOneOfChildrenActive(false)
     if (isExpandable && menuItem && menuItem.children) {
       menuItem.children.forEach((item) => {
         if (item.path === url.pathname) {
-          setIsOneOfChildrenActive(true);
-          setIsMenuExtended(true);
+          setIsOneOfChildrenActive(true)
+          setIsMenuExtended(true)
         }
-      });
-    } else if (menuItem.path === url.pathname) {
-      setIsMainActive(true);
+      })
+    } else {
+      if (menuItem.path!.length > 1) {
+        if (url.pathname.includes(menuItem.path!)) {
+          setIsMainActive(true)
+        }
+      } else {
+        if (url.pathname === menuItem.path!) {
+          setIsMainActive(true)
+        }
+      }
     }
-  };
+  }
 
   useEffect(() => {
     if (location) {
-      calculateIsActive(location);
+      calculateIsActive(location)
     }
-  }, [location, isExpandable, menuItem]);
+  }, [location, isExpandable, menuItem])
 
   useEffect(() => {
     if (!isMainActive && !isOneOfChildrenActive) {
-      setIsMenuExtended(false);
+      setIsMenuExtended(false)
     }
-  }, [isMainActive, isOneOfChildrenActive]);
+  }, [isMainActive, isOneOfChildrenActive])
 
   useEffect(() => {
     setIsExpandable(
       Boolean(menuItem && menuItem.children && menuItem.children.length > 0)
-    );
-  }, [menuItem]);
+    )
+  }, [menuItem])
 
   return (
     <li className={`nav-item${isMenuExtended ? ' menu-open' : ''}`}>
@@ -76,7 +84,7 @@ const MenuItem = ({ menuItem }: { menuItem: IMenuItem }) => {
       {isExpandable &&
         menuItem &&
         menuItem.children &&
-        menuItem.children.map((item) => (
+        menuItem.children.map((item: any) => (
           <ul key={item.name} className="nav nav-treeview">
             <li className="nav-item">
               <NavLink className="nav-link" to={`${item.path}`}>
@@ -87,7 +95,7 @@ const MenuItem = ({ menuItem }: { menuItem: IMenuItem }) => {
           </ul>
         ))}
     </li>
-  );
-};
+  )
+}
 
-export default MenuItem;
+export default MenuItem
