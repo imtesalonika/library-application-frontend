@@ -1,13 +1,13 @@
-import { InfoBox } from '@app/components/info-box/InfoBox';
-import { ContentHeader, SmallBox } from '@components';
+import { InfoBox } from '@app/components/info-box/InfoBox'
+import { ContentHeader, SmallBox } from '@components'
 import {
   faUsers,
   faBook,
   faExchangeAlt,
   faEye,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link } from "react-router-dom";
+} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
   return (
@@ -40,7 +40,7 @@ const Dashboard = () => {
               <SmallBox
                 title="Total Books"
                 text="5,400"
-                navigateTo="/books"
+                navigateTo="/book"
                 variant="success"
                 icon={{
                   content: (
@@ -62,7 +62,10 @@ const Dashboard = () => {
                 variant="warning"
                 icon={{
                   content: (
-                    <FontAwesomeIcon icon={faExchangeAlt} style={{ fontSize: '62px' }} />
+                    <FontAwesomeIcon
+                      icon={faExchangeAlt}
+                      style={{ fontSize: '62px' }}
+                    />
                   ),
                 }}
               />
@@ -84,13 +87,12 @@ const Dashboard = () => {
                   ),
                 }}
               />
-              
             </div>
           </div>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

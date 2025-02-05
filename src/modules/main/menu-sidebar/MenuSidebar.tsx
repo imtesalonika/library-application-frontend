@@ -1,16 +1,16 @@
-import { Link } from 'react-router-dom';
-import { MenuItem } from '@components';
-import { Image } from '@profabric/react-components';
-import styled from 'styled-components';
-import { SidebarSearch } from '@app/components/sidebar-search/SidebarSearch';
-import i18n from '@app/utils/i18n';
-import { useAppSelector } from '@app/store/store';
+import { Link } from 'react-router-dom'
+import { MenuItem } from '@components'
+import { Image } from '@profabric/react-components'
+import styled from 'styled-components'
+import { SidebarSearch } from '@app/components/sidebar-search/SidebarSearch'
+import i18n from '@app/utils/i18n'
+import { useAppSelector } from '@app/store/store'
 
 export interface IMenuItem {
-  name: string;
-  icon?: string;
-  path?: string;
-  children?: Array<IMenuItem>;
+  name: string
+  icon?: string
+  path?: string
+  children?: Array<IMenuItem>
 }
 
 export const MENU: IMenuItem[] = [
@@ -22,7 +22,7 @@ export const MENU: IMenuItem[] = [
   {
     name: i18n.t('menusidebar.label.buku'),
     icon: 'fas fa-book nav-icon',
-    path: '/books',
+    path: '/book',
   },
   {
     name: i18n.t('menusidebar.label.tugas_akhir'),
@@ -39,7 +39,7 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-chart-bar nav-icon',
     path: '/data-recapitulation',
   },
-];
+]
 
 const StyledBrandImage = styled(Image)`
   float: left;
@@ -48,17 +48,17 @@ const StyledBrandImage = styled(Image)`
   opacity: 0.8;
   --pf-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
     0 6px 6px rgba(0, 0, 0, 0.23) !important;
-`;
+`
 
 const StyledUserImage = styled(Image)`
   --pf-box-shadow: 0 3px 6px #00000029, 0 3px 6px #0000003b !important;
-`;
+`
 
 const MenuSidebar = () => {
-  const currentUser = useAppSelector((state) => state.auth.currentUser);
-  const sidebarSkin = useAppSelector((state) => state.ui.sidebarSkin);
-  const menuItemFlat = useAppSelector((state) => state.ui.menuItemFlat);
-  const menuChildIndent = useAppSelector((state) => state.ui.menuChildIndent);
+  const currentUser = useAppSelector((state) => state.auth.currentUser)
+  const sidebarSkin = useAppSelector((state) => state.ui.sidebarSkin)
+  const menuItemFlat = useAppSelector((state) => state.ui.menuItemFlat)
+  const menuChildIndent = useAppSelector((state) => state.ui.menuChildIndent)
 
   return (
     <aside className={`main-sidebar elevation-4 ${sidebarSkin}`}>
@@ -112,7 +112,7 @@ const MenuSidebar = () => {
         </nav>
       </div>
     </aside>
-  );
-};
+  )
+}
 
-export default MenuSidebar;
+export default MenuSidebar

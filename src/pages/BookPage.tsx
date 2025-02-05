@@ -63,7 +63,7 @@ export function BookPage() {
   return (
     <div className={'p-4 bg-white'}>
       <div className={'d-flex mb-3 w-100'} style={{ gap: 10 }}>
-        <Link to={'/add-book'}>
+        <Link to={'/book/add'}>
           <button
             className="btn btn-success d-flex align-items-center"
             style={{
@@ -107,7 +107,7 @@ export function BookPage() {
                   <button
                     className="btn btn-success d-flex align-items-center"
                     onClick={() => {
-                      navigation(`/edit-book/${row.id}`)
+                      navigation(`/book/${row.id}`)
                     }}
                   >
                     <svg
@@ -127,7 +127,7 @@ export function BookPage() {
                   <button
                     className="btn btn-warning d-flex align-items-center"
                     onClick={() => {
-                      navigation(`/edit-book/${row.id}`)
+                      navigation(`/book/${row.id}`)
                     }}
                   >
                     <svg

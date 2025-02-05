@@ -33,6 +33,7 @@ import { AddBeritaPage } from './pages/AddBeritaPage'
 import { AddTAPage } from './pages/AddTAPage'
 import { BeritaPage } from './pages/BeritaPage'
 import UserManagement from './pages/Dashboard/UserManagement'
+import { BookDetailPage } from '@pages/BookDetailPage'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -108,9 +109,14 @@ const App = () => {
             <Route path="/blank" element={<Blank />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
-            <Route path="/books" element={<BookPage />} />
-            <Route path="/add-book" element={<AddBookPage />} />
-            <Route path="/edit-book/:id" element={<AddBookPage />} />
+
+            {/*Bagian routing buku*/}
+            <Route path="/book" element={<BookPage />} />
+            <Route path="/book/:id" element={<BookDetailPage />} />
+            <Route path="/book/add" element={<AddBookPage />} />
+            <Route path="/book/edit/:id" element={<AddBookPage />} />
+            {/*Bagian routing buku end*/}
+
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/addtugasakhir" element={<AddTAPage />} />
             <Route path="/berita" element={<BeritaPage />} />

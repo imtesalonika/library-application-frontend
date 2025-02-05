@@ -74,7 +74,7 @@ export function AddBookPage() {
       const response = await axios.post(`${apiUrl}/api/book`, formData)
 
       if (response.status === 200) {
-        navigation('/books')
+        navigation('/book')
       }
     } catch (e: any) {
       MySwal.fire({
@@ -105,7 +105,7 @@ export function AddBookPage() {
       const response = await axios.put(`${apiUrl}/api/book/${id}`, formData)
 
       if (response.status === 200) {
-        navigation('/books')
+        navigation('/book')
       }
     } catch (e: any) {
       MySwal.fire({
@@ -141,7 +141,7 @@ export function AddBookPage() {
             height: '40px',
           }}
           onClick={() => {
-            navigation('/books')
+            navigation('/book')
           }}
         >
           <ArrowLeft size={'30'} color={'#3722AE'} />
