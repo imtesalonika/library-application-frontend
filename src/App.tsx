@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Main from '@modules/main/Main'
 import Login from '@modules/login/Login'
-import Register from '@modules/register/Register'
-import ForgetPassword from '@modules/forgot-password/ForgotPassword'
-import RecoverPassword from '@modules/recover-password/RecoverPassword'
 import { useWindowSize } from '@app/hooks/useWindowSize'
 import { calculateWindowSize } from '@app/utils/helpers'
 import { setWindowSize } from '@app/store/reducers/ui'
 import ReactGA from 'react-ga4'
 
 import Dashboard from '@app/pages/Dashboard/Dashboard'
-import Blank from '@pages/Blank'
-import SubMenu from '@pages/SubMenu'
 import Profile from '@pages/profile/Profile'
-
 import PublicRoute from './routes/PublicRoute'
 import PrivateRoute from './routes/PrivateRoute'
 import { setCurrentUser } from './store/reducers/auth'
@@ -24,16 +18,16 @@ import { firebaseAuth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useAppDispatch, useAppSelector } from './store/store'
 import { Loading } from './components/Loading'
-import { BookPage } from '@pages/BookPage'
-import { AddBookPage } from '@pages/AddBookPage'
+import { BookPage } from '@pages/Buku/BookPage'
+import { AddBookPage } from '@pages//Buku/AddBookPage'
 import VisitorReport from './pages/Dashboard/VisitorReport'
 import BorrowedBooksReport from './pages/Dashboard/BorrowedBooksReport'
-import { TugasakhirPage } from './pages/TugasakhirPage'
-import { AddBeritaPage } from './pages/AddBeritaPage'
-import { AddTAPage } from './pages/AddTAPage'
-import { BeritaPage } from './pages/BeritaPage'
+import { TugasakhirPage } from './pages/TugasAkhir/TugasakhirPage'
+import { AddBeritaPage } from './pages/Berita/AddBeritaPage'
+import { AddTAPage } from './pages/TugasAkhir/AddTAPage'
+import { BeritaPage } from './pages/Berita/BeritaPage'
 import UserManagement from './pages/Dashboard/UserManagement'
-import { DetailTAPage } from './pages/DetailTAPage'
+import { DetailTAPage } from './pages/TugasAkhir/DetailTAPage'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -42,6 +36,7 @@ const App = () => {
   const screenSize = useAppSelector((state) => state.ui.screenSize)
   const dispatch = useAppDispatch()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const [isAppLoading, setIsAppLoading] = useState(true)
 
@@ -51,14 +46,17 @@ const App = () => {
       (user) => {
         if (user) {
           dispatch(setCurrentUser(user))
+          navigate('/dashboard', { replace: true }) // Redirect ke dashboard jika sudah login
         } else {
           dispatch(setCurrentUser(null))
+          navigate('/login', { replace: true }) // Redirect ke login jika belum login
         }
         setIsAppLoading(false)
       },
       (e) => {
-        console.log(e)
+        console.error(e)
         dispatch(setCurrentUser(null))
+        navigate('/login', { replace: true }) // Pastikan redirect ke login jika ada error
         setIsAppLoading(false)
       }
     )
@@ -91,22 +89,10 @@ const App = () => {
         <Route path="/login" element={<PublicRoute />}>
           <Route path="/login" element={<Login />} />
         </Route>
-        <Route path="/register" element={<PublicRoute />}>
-          <Route path="/register" element={<Register />} />
-        </Route>
-        <Route path="/forgot-password" element={<PublicRoute />}>
-          <Route path="/forgot-password" element={<ForgetPassword />} />
-        </Route>
-        <Route path="/recover-password" element={<PublicRoute />}>
-          <Route path="/recover-password" element={<RecoverPassword />} />
-        </Route>
 
         {/* Private Routes */}
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<Main />}>
-            <Route path="/sub-menu-2" element={<Blank />} />
-            <Route path="/sub-menu-1" element={<SubMenu />} />
-            <Route path="/blank" element={<Blank />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="/books" element={<BookPage />} />
@@ -114,14 +100,11 @@ const App = () => {
             <Route path="/edit-book/:id" element={<AddBookPage />} />
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
-            <Route path="tugasakhir/detail" element={<DetailTAPage />} />
+            <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
             <Route path="/berita" element={<BeritaPage />} />
             <Route path="/addberita" element={<AddBeritaPage />} />
             <Route path="/VisitorReport" element={<VisitorReport />} />
-            <Route
-              path="/borrowed-books-report"
-              element={<BorrowedBooksReport />}
-            />
+            <Route path="/borrowed-books-report" element={<BorrowedBooksReport />} />
             <Route path="/user-management" element={<UserManagement />} />
           </Route>
         </Route>

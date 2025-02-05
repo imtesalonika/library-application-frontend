@@ -34,11 +34,7 @@ export const MENU: IMenuItem[] = [
     icon: 'fas fa-newspaper nav-icon',
     path: '/berita',
   },
-  {
-    name: i18n.t('menusidebar.label.rekap_data'),
-    icon: 'fas fa-chart-bar nav-icon',
-    path: '/data-recapitulation',
-  },
+  
 ];
 
 const StyledBrandImage = styled(Image)`
