@@ -31,7 +31,7 @@ export function TugasakhirPage() {
         <div className={'p-4 bg-white'}>
             <h2>Tugas Akhir</h2>
             <div className={'d-flex mb-3 w-100'} style={{ gap: 10 }}>
-                <Link to={"/addtugasakhir"}>
+                <Link to={"/tugasakhir/add"}>
                     <button className="btn btn-success d-flex align-items-center" style={{
                         gap: 3
                     }}><Plus/> Add Tugas Akhir
@@ -56,7 +56,8 @@ export function TugasakhirPage() {
                             <td>{row[2]}</td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
-                                    <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button>
+                                    <Link to={"/tugasakhir/detail"}> <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button> </Link>
+                                    {/* <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button> */}
                                     <button className="btn btn-warning btn-sm"><PencilSquare /></button>
                                     <button className="btn btn-danger btn-sm"><Trash /></button>
                                 </div>

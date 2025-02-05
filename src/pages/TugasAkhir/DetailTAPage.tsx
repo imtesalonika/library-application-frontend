@@ -1,7 +1,10 @@
-import {ArrowLeft} from "react-bootstrap-icons";
+import { useState } from "react";
+import axios from "axios";
+import { apiUrl } from "@app/utils/env";
+import { ArrowLeft } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
-export function AddTAPage () {
+export function DetailTAPage() {
     return (
         <div>
             <h2 className={'font-weight-bold ml-3 pt-3'}>Tugas Akhir</h2>
@@ -25,31 +28,31 @@ export function AddTAPage () {
                     <div className={'row'}>
                         <div className="form-group col-sm">
                             <label>Judul Tugas Akhir</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" readOnly/>
                         </div>
 
                         <div className="form-group col-sm">
                             <label>Kata Kunci</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" readOnly/>
                         </div>
                     </div>
 
                     <div className={'row'}>
                         <div className="form-group col-sm">
                             <label>Penulis</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" readOnly/>
                         </div>
 
                         <div className="form-group col-sm">
                             <label>Abstrak</label>
-                            <textarea className="form-control"></textarea>
+                            <textarea className="form-control" readOnly></textarea>
                         </div>
                     </div>
 
                     <div className={'row'}>
                         <div className="form-group col-sm-6">
                             <label>Pembimbing</label>
-                            <input type="text" className="form-control" />
+                            <input type="text" className="form-control" readOnly/>
                         </div>
                     </div>
 
