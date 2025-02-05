@@ -62,6 +62,8 @@ export function BookPage() {
 
   return (
     <div className={'p-4 bg-white'}>
+      <h1>Buku</h1>
+
       <div className={'d-flex mb-3 w-100'} style={{ gap: 10 }}>
         <Link to={'/book/add'}>
           <button
@@ -127,7 +129,7 @@ export function BookPage() {
                   <button
                     className="btn btn-warning d-flex align-items-center"
                     onClick={() => {
-                      navigation(`/book/${row.id}`)
+                      navigation(`/book/edit/${row.id}`)
                     }}
                   >
                     <svg

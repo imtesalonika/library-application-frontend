@@ -33,13 +33,10 @@ export function AddBookPage() {
   const [gambarErr, setGambarErr] = useState<string>('')
   const navigation = useNavigate()
   const MySwal = withReactContent(Swal)
-  const [bookData, setBookData] = useState<any>()
 
   const getBookData = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/book/${id}`)
-
-      setBookData(response.data.data)
       setJudulBuku(response.data.data.judul)
       setPenulis(response.data.data.penulis)
       setPenerbit(response.data.data.penerbit)
@@ -125,7 +122,7 @@ export function AddBookPage() {
 
   return (
     <div>
-      <h2 className={'font-weight-bold ml-3 pt-3'}>Buku</h2>
+      <h1 className={'ml-3 pt-3'}>Buku</h1>
 
       <div
         className={'d-flex align-items-center bg-white px-3 py-1 mb-3'}
@@ -340,6 +337,9 @@ export function AddBookPage() {
             setisbnErr('')
             setAbstrakErr('')
             setGambarErr('')
+            setTahunTerbitErr('')
+            setJumlahHalamanErr('')
+            setBanyakBukuErr('')
 
             if (!id) {
               if (!gambar) {
@@ -386,6 +386,18 @@ export function AddBookPage() {
             }
             if (abstrak === '') {
               setAbstrakErr('Tidak boleh kosong')
+              return
+            }
+            if (jumlahHalaman === 0 || jumlahHalaman === null) {
+              setJumlahHalamanErr('Tidak boleh kosong')
+              return
+            }
+            if (tahunTerbit === 0 || tahunTerbit === null) {
+              setTahunTerbitErr('Tidak boleh kosong')
+              return
+            }
+            if (banyakBuku === null) {
+              setBanyakBukuErr('Tidak boleh kosong')
               return
             }
 

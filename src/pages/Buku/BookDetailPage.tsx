@@ -1,16 +1,12 @@
 import { useEffect, useState } from 'react'
 import { ArrowLeft } from 'react-bootstrap-icons'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 
 export function BookDetailPage() {
   const { id } = useParams()
   const [bookData, setBookData] = useState<any>()
-  const MySwal = withReactContent(Swal)
-  const navigation = useNavigate()
 
   const getBookData = async () => {
     try {
