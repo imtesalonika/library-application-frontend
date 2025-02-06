@@ -1,102 +1,101 @@
-import { useState } from "react";
-import axios from "axios";
-import { apiUrl } from "@app/utils/env";
-import { ArrowLeft } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { ArrowLeft } from 'react-bootstrap-icons'
+import { Link, useParams } from 'react-router-dom'
+import axios from 'axios'
+import { apiUrl } from '@app/utils/env'
 
 export function DetailTAPage() {
-    return (
-        <div>
-            <h2 className={'font-weight-bold ml-3 pt-3'}>Tugas Akhir</h2>
+//   const { id } = useParams()
+//   const [bookData, setBookData] = useState<any>()
 
-            <div className={'d-flex align-items-center bg-white px-3 py-1 mb-3'} style={{gap: 10}}>
-                <Link to="/" className={'d-flex flex-column align-items-sm-center justify-content-center rounded-circle'} style={{
-                    backgroundColor: '#87C1FF',
-                    width: '40px',
-                    height: '40px',
-                }}>
-                    <ArrowLeft size={'30'} color={'#3722AE'} />
-                </Link>
+//   const getBookData = async () => {
+//     try {
+//       const response = await axios.get(`${apiUrl}/api/book/${id}`)
+//       setBookData(response.data.data)
+//     } catch (e: any) {
+//       console.log(e)
+//     }
+//   }
 
-                <span style={{
-                    color: '#3722AE'
-                }} className={'text-lg'}>Tambah Tugas Akhir</span>
-            </div>
+//   useEffect(() => {
+//     getBookData().then()
+//   }, [])
 
-            <div className={'px-5'}>
-                <div className={'w-100'}>
-                    <div className={'row'}>
-                        <div className="form-group col-sm">
-                            <label>Judul Tugas Akhir</label>
-                            <input type="text" className="form-control" readOnly/>
-                        </div>
+  return (
+    <div className={'p-4 bg-white'}>
+      <div className={'d-flex flex-column mb-3 w-100'} style={{ gap: 10 }}>
+        <Link to={'/book'}>
+          <button
+            className="btn btn-success d-flex align-items-center"
+            style={{
+              gap: 3,
+            }}
+          >
+            <ArrowLeft /> Back
+          </button>
+        </Link>
 
-                        <div className="form-group col-sm">
-                            <label>Kata Kunci</label>
-                            <input type="text" className="form-control" readOnly/>
-                        </div>
-                    </div>
-
-                    <div className={'row'}>
-                        <div className="form-group col-sm">
-                            <label>Penulis</label>
-                            <input type="text" className="form-control" readOnly/>
-                        </div>
-
-                        <div className="form-group col-sm">
-                            <label>Abstrak</label>
-                            <textarea className="form-control" readOnly></textarea>
-                        </div>
-                    </div>
-
-                    <div className={'row'}>
-                        <div className="form-group col-sm-6">
-                            <label>Pembimbing</label>
-                            <input type="text" className="form-control" readOnly/>
-                        </div>
-                    </div>
-
-                    <div className={'row'}>
-                        <div className="form-group col-sm-6">
-                            <label>Fakultas</label>
-                            <select className="form-control">
-                            <option value="">Pilih Fakultas</option>
-                                <option value="FITE">FITE</option>
-                                <option value="FTI">FTI</option>
-                                <option value="FTB">FTB</option>
-                                <option value="Vokasi">Vokasi</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className={'row'}>
-                        <div className="form-group col-sm-6">
-                            <label>Prodi</label>
-                            <select className="form-control">
-                            <option value="">Pilih Prodi</option>
-                                <option value="Informatika">Informatika</option>
-                                <option value="Teknik Elektro">Teknik Elektro</option>
-                                <option value="Sistem Informasi">Sistem Informasi</option>
-                                <option value="Teknik Bioproses">Teknik Bioproses</option>
-                                <option value="Manajemen Rekayasa">Manajemen Rekayasa</option>
-                                <option value="Teknik Metalurgi">Teknik Metalurgi</option>
-                                <option value="Teknologi Informasi">Teknologi Informasi</option>
-                                <option value="Teknologi Komputer">Teknologi Komputer</option>
-                                <option value="Teknologi Rekayasa Perangkat Lunak">Teknologi Rekayasa Perangkat Lunak</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <button
-                className={'btn btn-success mb-3'}
-                // onClick={() => {
-                //     handleSaveBuku().then()
-                // }}
-                >
-                Save
-                </button>
-            </div>
+        {/*Bagian gambar cover*/}
+        <div className={'d-flex justify-content-center'}>
+          <img
+            className={'border rounded-lg'}
+            src="/img/logo.png"
+            // src={`${apiUrl}/${bookData?.gambar}`}
+            alt={'gambar-cover'}
+            style={{
+              width: '100%',
+              maxWidth: 400,
+            }}
+          />
         </div>
-    )
+
+        {/*Bagian data teks*/}
+        <div className={'d-flex justify-content-center mt-3'}>
+          <div
+            style={{
+              maxWidth: '80%',
+              width: '100%',
+            }}
+          >
+            <table className="table">
+              <tbody>
+                <tr>
+                  <th>Judul</th>
+                  <td>:</td>
+                  <td>Pembangunan Aplikasi Auto Grading Del Code Checker Menggunakan Unity Game Engine: Studi Kasus Institut Teknologi Del</td>
+                </tr>
+                <tr>
+                  <th>Penulis</th>
+                  <td>:</td>
+                  <td>Sondang Kevin Sihaloho - 11S190044
+                  Bintang Lumban Raja - 11S19033</td>
+                </tr>
+                <tr>
+                  <th>Pembimbing</th>
+                  <td>:</td>
+                  <td>Arie Satia Dharma, S.T., M.Kom
+                  Tahan HJ Sihombing, S.Pd., M. App Ling (TESOL)</td>
+                </tr>
+                <tr>
+                  <th>Fakultas</th>
+                  <td>:</td>
+                  <td>Fakultas Teknik Informatika dan Elektro</td>
+                </tr>
+                <tr>
+                  <th>Prodi</th>
+                  <td>:</td>
+                  <td>Informatika</td>
+                </tr>
+                <tr>
+                  <th>Kata Kunci</th>
+                  <td>:</td>
+                  <td>Auto Grading, Code Checker, Unity, Game Engineering</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
