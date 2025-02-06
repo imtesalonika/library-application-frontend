@@ -63,8 +63,8 @@ export function PengumumanPage() {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{row.judul}</td>
-              <td>{row[2]}</td>
-              <td className="text-center">
+              <td>{row.isi}</td>
+              <td>
                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
                   <button className="btn btn-success btn-sm">
                     <BoxArrowUpRight />

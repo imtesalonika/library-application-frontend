@@ -1,7 +1,14 @@
 import { ArrowLeft } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 export function AddPengumumanPage() {
+  const [file, setFile] = useState<File | undefined>()
+  const [fileErr, setFileErr] = useState<File | undefined>()
+  const [judul, setJudul] = useState<string>('')
+  const [judulErr, setJudulErr] = useState<string>('')
+  const [isi, setIsi] = useState<string>('')
+
   return (
     <div>
       <h2 className={'font-weight-bold ml-3 pt-3'}>Berita</h2>
@@ -54,7 +61,13 @@ export function AddPengumumanPage() {
           <div className={'row'}>
             <div className="form-group col-sm-6">
               <label>Deskripsi</label>
-              <textarea className="form-control"></textarea>
+              <textarea
+                className="form-control"
+                value={isi}
+                onChange={(e: any) => {
+                  setIsi(e.target.value)
+                }}
+              ></textarea>
             </div>
           </div>
 
