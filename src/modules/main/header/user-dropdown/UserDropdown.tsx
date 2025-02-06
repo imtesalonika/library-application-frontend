@@ -53,32 +53,11 @@ const UserDropdown = () => {
             rounded
           />
           <p>
-            {currentUser?.email}
-            <small>
-              <span>Member since </span>
-              {currentUser?.metadata?.creationTime && (
-                <span>
-                  {DateTime.fromRFC2822(
-                    currentUser?.metadata?.creationTime
-                  ).toFormat('dd LLL yyyy')}
-                </span>
-              )}
-            </small>
+          <p>{currentUser?.email}</p>
+
           </p>
         </UserHeader>
-        <UserBody>
-          <div className="row">
-            <div className="col-4 text-center">
-              <Link to="/">{t('header.user.followers')}</Link>
-            </div>
-            <div className="col-4 text-center">
-              <Link to="/">{t('header.user.sales')}</Link>
-            </div>
-            <div className="col-4 text-center">
-              <Link to="/">{t('header.user.friends')}</Link>
-            </div>
-          </div>
-        </UserBody>
+        
         <UserFooter>
           <button
             type="button"
