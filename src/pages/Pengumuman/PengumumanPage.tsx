@@ -59,7 +59,7 @@ export function PengumumanPage() {
           </tr>
         </thead>
         <tbody>
-          {dataPengumuman.map((row: any, index: number) => (
+          {dataPengumuman.length > 0 ? dataPengumuman.map((row: any, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{row.judul}</td>
@@ -78,7 +78,13 @@ export function PengumumanPage() {
                 </div>
               </td>
             </tr>
-          ))}
+          )) : (
+            <tr>
+              <td colSpan={4} className='text-center'>
+                Tidak ada data!
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
