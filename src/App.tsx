@@ -105,13 +105,16 @@ const App = () => {
             <Route path="/book/:id" element={<BookDetailPage />} />
             <Route path="/book/add" element={<AddBookPage />} />
             <Route path="/book/edit/:id" element={<AddBookPage />} />
-            {/*Bagian routing buku end*/}
+            
+            {/* Bagian routing pengumuman */}
+            <Route path="/pengumuman" element={<PengumumanPage />} />
+            <Route path="/pengumuman/add" element={<AddPengumumanPage />} />
+            {/*Bagian routing pengumuman end*/}
 
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
-            <Route path="/berita" element={<PengumumanPage />} />
-            <Route path="/addberita" element={<AddPengumumanPage />} />
+            
             <Route path="/VisitorReport" element={<VisitorReport />} />
             <Route path="/borrowed-books-detail" element={<DetailPeminjamanPage />} />
             <Route
