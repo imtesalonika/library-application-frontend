@@ -24,9 +24,9 @@ import { LaporanPeminjamanPage } from './pages/Dashboard/LaporanPeminjamanPage'
 import UserManagement from './pages/Dashboard/UserManagement'
 import { BookDetailPage } from '@pages/Buku/BookDetailPage'
 import { TugasakhirPage } from '@pages/TugasAkhir/TugasakhirPage'
-import { AddBeritaPage } from '@pages/Berita/AddBeritaPage'
+import { AddPengumumanPage } from '@pages/Pengumuman/AddPengumumanPage'
 import { AddTAPage } from '@pages/TugasAkhir/AddTAPage'
-import { BeritaPage } from '@pages/Berita/BeritaPage'
+import { PengumumanPage } from '@pages/Pengumuman/PengumumanPage'
 import { DetailTAPage } from '@pages/TugasAkhir/DetailTAPage'
 import { BookPage } from '@pages/Buku/BookPage'
 import { AddBookPage } from '@pages/Buku/AddBookPage'
@@ -108,8 +108,8 @@ const App = () => {
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
-            <Route path="/berita" element={<BeritaPage />} />
-            <Route path="/addberita" element={<AddBeritaPage />} />
+            <Route path="/berita" element={<PengumumanPage />} />
+            <Route path="/addberita" element={<AddPengumumanPage />} />
             <Route path="/VisitorReport" element={<VisitorReport />} />
             <Route
               path="/borrowed-books-report"
