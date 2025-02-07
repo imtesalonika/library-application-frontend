@@ -20,7 +20,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { Loading } from './components/Loading'
 import VisitorReport from './pages/Dashboard/VisitorReport'
-import BorrowedBooksReport from './pages/Dashboard/BorrowedBooksReport'
+import { LaporanPeminjamanPage } from './pages/Dashboard/LaporanPeminjamanPage'
 import UserManagement from './pages/Dashboard/UserManagement'
 import { BookDetailPage } from '@pages/Buku/BookDetailPage'
 import { TugasakhirPage } from '@pages/TugasAkhir/TugasakhirPage'
@@ -30,6 +30,7 @@ import { BeritaPage } from '@pages/Berita/BeritaPage'
 import { DetailTAPage } from '@pages/TugasAkhir/DetailTAPage'
 import { BookPage } from '@pages/Buku/BookPage'
 import { AddBookPage } from '@pages/Buku/AddBookPage'
+
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -112,7 +113,7 @@ const App = () => {
             <Route path="/VisitorReport" element={<VisitorReport />} />
             <Route
               path="/borrowed-books-report"
-              element={<BorrowedBooksReport />}
+              element={<LaporanPeminjamanPage />}
             />
             <Route path="/user-management" element={<UserManagement />} />
           </Route>
