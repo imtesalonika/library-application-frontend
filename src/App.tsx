@@ -21,7 +21,7 @@ import { useAppDispatch, useAppSelector } from '@store/store'
 import { Loading } from './components/Loading'
 import VisitorReport from './pages/Dashboard/VisitorReport'
 import { LaporanPeminjamanPage } from './pages/Dashboard/LaporanPeminjamanPage'
-import UserManagement from './pages/Dashboard/UserManagement'
+
 import { BookDetailPage } from '@pages/Buku/BookDetailPage'
 import { TugasakhirPage } from '@pages/TugasAkhir/TugasakhirPage'
 import { AddPengumumanPage } from '@pages/Pengumuman/AddPengumumanPage'
@@ -30,6 +30,8 @@ import { PengumumanPage } from '@pages/Pengumuman/PengumumanPage'
 import { DetailTAPage } from '@pages/TugasAkhir/DetailTAPage'
 import { BookPage } from '@pages/Buku/BookPage'
 import { AddBookPage } from '@pages/Buku/AddBookPage'
+import { DetailPeminjamanPage } from './pages/Dashboard/DetailPeminjamanPage'
+import { UserManagement } from './pages/Dashboard/UserManagement'
 
 
 const { VITE_NODE_ENV } = import.meta.env
@@ -111,6 +113,7 @@ const App = () => {
             <Route path="/berita" element={<PengumumanPage />} />
             <Route path="/addberita" element={<AddPengumumanPage />} />
             <Route path="/VisitorReport" element={<VisitorReport />} />
+            <Route path="/borrowed-books-detail" element={<DetailPeminjamanPage />} />
             <Route
               path="/borrowed-books-report"
               element={<LaporanPeminjamanPage />}

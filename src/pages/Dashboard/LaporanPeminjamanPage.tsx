@@ -2,6 +2,7 @@ import DataTable from 'datatables.net-react';
 import DT, { Config } from 'datatables.net-bs4';
 import 'datatables.net-responsive-bs4';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { BoxArrowUpRight, PencilSquare, Trash } from "react-bootstrap-icons";
 
 DataTable.use(DT);
@@ -48,7 +49,11 @@ export function LaporanPeminjamanPage() {
                             <td>{row[1]}</td>
                             <td>
                                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
-                                    <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button>
+                                <Link to="/borrowed-books-detail">
+    <button className="btn btn-success d-flex align-items-center" style={{ gap: 3 }}>
+        <BoxArrowUpRight />
+    </button>
+</Link>
                                 </div>
                             </td>
                         </tr>
