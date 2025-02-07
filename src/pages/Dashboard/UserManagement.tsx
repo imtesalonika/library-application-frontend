@@ -9,11 +9,11 @@ DataTable.use(DT);
 
 export function UserManagement() {
     const [dataTableData, setDataTableData] = useState([
-        [1, 'John Doeaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', 'johndoe@email.com', 'Admin', '08123456789'],
-        [2, 'Jane Smith', 'janesmith@email.com', 'User', '08129876543'],
-        [3, 'Michael Johnson', 'michael@email.com', 'Editor', '08213456789'],
-        [4, 'Emily Davis', 'emily@email.com', 'User', '08124567890'],
-        [5, 'David Wilson', 'david@email.com', 'Moderator', '08135678901']
+        [1, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08123456789'],
+        [2, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08129876543'],
+        [3, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08213456789'],
+        [4, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08124567890'],
+        [5, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08135678901']
     ]);
 
     const tableOption: Config = {
