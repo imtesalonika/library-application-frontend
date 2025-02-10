@@ -104,7 +104,7 @@ export function BookPage() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.judul}</td>
-                <td>{row.status}</td>
+                <td>{row.status === 1 ? 'Tersedia' : 'Tidak Tersedia'}</td>
                 <td className={'d-flex'} style={{ gap: '5px' }}>
                   <button
                     className="btn btn-success d-flex align-items-center"
