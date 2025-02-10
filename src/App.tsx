@@ -20,8 +20,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useAppDispatch, useAppSelector } from '@store/store'
 import { Loading } from './components/Loading'
 import VisitorReport from './pages/Dashboard/VisitorReport'
-import BorrowedBooksReport from './pages/Dashboard/BorrowedBooksReport'
-import UserManagement from './pages/Dashboard/UserManagement'
+import { LaporanPeminjamanPage } from './pages/Dashboard/LaporanPeminjamanPage'
+
 import { BookDetailPage } from '@pages/Buku/BookDetailPage'
 import { TugasakhirPage } from '@pages/TugasAkhir/TugasakhirPage'
 import { AddPengumumanPage } from '@pages/Pengumuman/AddPengumumanPage'
@@ -30,6 +30,9 @@ import { PengumumanPage } from '@pages/Pengumuman/PengumumanPage'
 import { DetailTAPage } from '@pages/TugasAkhir/DetailTAPage'
 import { BookPage } from '@pages/Buku/BookPage'
 import { AddBookPage } from '@pages/Buku/AddBookPage'
+import { DetailPeminjamanPage } from './pages/Dashboard/DetailPeminjamanPage'
+import { UserManagement } from './pages/Dashboard/UserManagement'
+
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -102,17 +105,21 @@ const App = () => {
             <Route path="/book/:id" element={<BookDetailPage />} />
             <Route path="/book/add" element={<AddBookPage />} />
             <Route path="/book/edit/:id" element={<AddBookPage />} />
-            {/*Bagian routing buku end*/}
+            
+            {/* Bagian routing pengumuman */}
+            <Route path="/pengumuman" element={<PengumumanPage />} />
+            <Route path="/pengumuman/add" element={<AddPengumumanPage />} />
+            {/*Bagian routing pengumuman end*/}
 
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
-            <Route path="/berita" element={<PengumumanPage />} />
-            <Route path="/addberita" element={<AddPengumumanPage />} />
+            
             <Route path="/VisitorReport" element={<VisitorReport />} />
+            <Route path="/borrowed-books-detail" element={<DetailPeminjamanPage />} />
             <Route
               path="/borrowed-books-report"
-              element={<BorrowedBooksReport />}
+              element={<LaporanPeminjamanPage />}
             />
             <Route path="/user-management" element={<UserManagement />} />
           </Route>

@@ -30,9 +30,9 @@ export const MENU: IMenuItem[] = [
     path: '/tugasakhir',
   },
   {
-    name: i18n.t('menusidebar.label.berita'),
+    name: i18n.t('menusidebar.label.pengumuman'),
     icon: 'fas fa-newspaper nav-icon',
-    path: '/berita',
+    path: '/pengumuman',
   },
 ]
 
