@@ -32,7 +32,7 @@ import { BookPage } from '@pages/Buku/BookPage'
 import { AddBookPage } from '@pages/Buku/AddBookPage'
 import { DetailPeminjamanPage } from './pages/Dashboard/DetailPeminjamanPage'
 import { UserManagement } from './pages/Dashboard/UserManagement'
-
+import { PengumumanDetailPage } from '@pages/Pengumuman/PengumumanDetailPage'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -105,18 +105,26 @@ const App = () => {
             <Route path="/book/:id" element={<BookDetailPage />} />
             <Route path="/book/add" element={<AddBookPage />} />
             <Route path="/book/edit/:id" element={<AddBookPage />} />
-            
+
             {/* Bagian routing pengumuman */}
             <Route path="/pengumuman" element={<PengumumanPage />} />
             <Route path="/pengumuman/add" element={<AddPengumumanPage />} />
+            <Route path="/pengumuman/:id" element={<PengumumanDetailPage />} />
+            <Route
+              path="/pengumuman/edit/:id"
+              element={<AddPengumumanPage />}
+            />
             {/*Bagian routing pengumuman end*/}
 
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
-            
+
             <Route path="/VisitorReport" element={<VisitorReport />} />
-            <Route path="/borrowed-books-detail" element={<DetailPeminjamanPage />} />
+            <Route
+              path="/borrowed-books-detail"
+              element={<DetailPeminjamanPage />}
+            />
             <Route
               path="/borrowed-books-report"
               element={<LaporanPeminjamanPage />}

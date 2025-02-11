@@ -1,5 +1,5 @@
 import DataTable from 'datatables.net-react'
-import DT, { Config } from 'datatables.net-bs4'
+import DT from 'datatables.net-bs4'
 import 'datatables.net-responsive-bs4'
 import 'datatables.net-buttons-bs4'
 import { useEffect, useState } from 'react'
@@ -9,7 +9,7 @@ import {
   Trash,
   BoxArrowUpRight,
 } from 'react-bootstrap-icons'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 import { formatWaktu } from '@app/services/format-waktu'
@@ -21,11 +21,11 @@ DataTable.use(DT)
 export function PengumumanPage() {
   const [dataPengumuman, setDataPengumuman] = useState<any>([])
   const MySwal = withReactContent(Swal)
+  const navigate = useNavigate()
 
   const getDataPengumuman = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/pengumuman`)
-      console.log(response.data.data)
 
       setDataPengumuman(response.data.data)
     } catch (e: any) {
@@ -103,15 +103,28 @@ export function PengumumanPage() {
                     role="group"
                     style={{ gap: '5px' }}
                   >
-                    <button className="btn btn-success btn-sm">
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => {
+                        navigate(`/pengumuman/${row.id}`)
+                      }}
+                    >
                       <BoxArrowUpRight />
                     </button>
-                    <button className="btn btn-warning btn-sm">
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => {
+                        navigate(`/pengumuman/edit/${row.id}`)
+                      }}
+                    >
                       <PencilSquare />
                     </button>
-                    <button onClick={() => {
-                      handleRemovePengumuman(row.id).then()
-                    }} className="btn btn-danger btn-sm">
+                    <button
+                      onClick={() => {
+                        handleRemovePengumuman(row.id).then()
+                      }}
+                      className="btn btn-danger btn-sm"
+                    >
                       <Trash />
                     </button>
                   </div>
@@ -120,7 +133,7 @@ export function PengumumanPage() {
             ))
           ) : (
             <tr>
-              <td colSpan={4} className="text-center">
+              <td colSpan={7} className="text-center">
                 Tidak ada data!
               </td>
             </tr>
