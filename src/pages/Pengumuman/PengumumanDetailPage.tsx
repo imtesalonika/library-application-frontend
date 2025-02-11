@@ -32,7 +32,9 @@ export function PengumumanDetailPage() {
           <span className={'text-danger font-weight-bold'}>
             [{pengumumanData?.kategori}]
           </span>{' '}
-          {pengumumanData?.judul}
+          <span className={'text-primary font-weight-bold'}>
+            {pengumumanData?.judul}
+          </span>
         </h3>
 
         <Link to={'/pengumuman'}>
