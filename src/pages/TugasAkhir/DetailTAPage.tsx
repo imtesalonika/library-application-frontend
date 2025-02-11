@@ -91,6 +91,11 @@ export function DetailTAPage() {
                   <td>:</td>
                   <td>Auto Grading, Code Checker, Unity, Game Engineering</td>
                 </tr>
+                <tr>
+                  <th>Abstrak</th>
+                  <td>:</td>
+                  <td>Auto Grading, Code Checker, Unity, Game Engineering</td>
+                </tr>
               </tbody>
             </table>
           </div>
