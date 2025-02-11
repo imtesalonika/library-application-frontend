@@ -1,35 +1,30 @@
-import DataTable from 'datatables.net-react';
-import DT, { Config } from 'datatables.net-bs4';
-import 'datatables.net-buttons-bs4';
-import { useState } from "react";
-import { Plus, PencilSquare, Trash, BoxArrowUpRight } from "react-bootstrap-icons";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Plus, PencilSquare, Trash, BoxArrowUpRight } from "react-bootstrap-icons";
 
-DataTable.use(DT);
+type User = {
+    id: number;
+    nama: string;
+    email: string;
+    role: string;
+    hp: string;
+};
 
 export function UserManagement() {
-    const [dataTableData, setDataTableData] = useState([
-        [1, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08123456789'],
-        [2, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08129876543'],
-        [3, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08213456789'],
-        [4, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08124567890'],
-        [5, 'Gerry Benyamin Abdiel Bukit', 'gerrybenyamin@email.com', 'Pustakawan', '08135678901']
-    ]);
+    const [users, setUsers] = useState<User[]>([]);
 
-    const tableOption: Config = {
-        ordering: true,
-        paging: true,
-        searching: true,
-        info: true,
-    };
+    useEffect(() => {
+        const storedUsers: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+        setUsers(storedUsers);
+    }, []);
 
     return (
         <div className={'p-4 bg-white'}>
             <h2>Manajemen Pengguna</h2>
             <div className={'d-flex mb-3 w-100'} style={{ gap: 10 }}>
-                <Link to={"/usermanagement/add"}>
+                <Link to="/dashboard/user-management/add">
                     <button className="btn btn-success d-flex align-items-center" style={{ gap: 3 }}>
-                        <Plus/> Tambah Pengguna
+                        <Plus /> Tambah Pengguna
                     </button>
                 </Link>
             </div>
@@ -46,16 +41,16 @@ export function UserManagement() {
                     </tr>
                 </thead>
                 <tbody>
-                    {dataTableData.map((row, index) => (
+                    {users.map((user, index) => (
                         <tr key={index}>
-                            <td>{row[0]}</td>
-                            <td>{row[1]}</td>
-                            <td>{row[2]}</td>
-                            <td>{row[3]}</td>
-                            <td>{row[4]}</td>
+                            <td>{index + 1}</td>
+                            <td>{user.nama}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                            <td>{user.hp}</td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
-                                    <Link to={`/usermanagement/detail/${row[0]}`}> 
+                                    <Link to={`/usermanagement/detail/${user.id}`}> 
                                         <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button> 
                                     </Link>
                                     <button className="btn btn-warning btn-sm"><PencilSquare /></button>
