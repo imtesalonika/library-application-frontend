@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
+import { ArrowLeft } from 'react-bootstrap-icons'
 
 export function PengumumanDetailPage() {
   const { id } = useParams()
@@ -27,23 +28,23 @@ export function PengumumanDetailPage() {
   return (
     <div className={'p-4 bg-white'}>
       <div className={'d-flex flex-column mb-3 w-100'} style={{ gap: 10 }}>
-        {/*<Link to={'/pengumuman'}>*/}
-        {/*  <button*/}
-        {/*    className="btn btn-success d-flex align-items-center"*/}
-        {/*    style={{*/}
-        {/*      gap: 3,*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    <ArrowLeft /> Back*/}
-        {/*  </button>*/}
-        {/*</Link>*/}
-
         <h3>
           <span className={'text-danger font-weight-bold'}>
             [{pengumumanData?.kategori}]
           </span>{' '}
           {pengumumanData?.judul}
         </h3>
+
+        <Link to={'/pengumuman'}>
+          <button
+            className="btn btn-success d-flex align-items-center"
+            style={{
+              gap: 3,
+            }}
+          >
+            <ArrowLeft /> Back
+          </button>
+        </Link>
 
         <p>{pengumumanData?.isi}</p>
 
