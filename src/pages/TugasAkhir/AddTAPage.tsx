@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import { isStringContainsNumber } from "@app/utils/is-string-contains-number";
+import { ArrowLeft } from "react-bootstrap-icons";
 
 export function AddTAPage() {
     const { id } = useParams();
@@ -22,6 +23,10 @@ export function AddTAPage() {
     const [katakunci, setKataKunci] = useState('');
     const [abstrak, setAbstrak] = useState('');
     const [abstrakErr, setAbstrakErr] = useState('');
+    const [tahun, setTahun] = useState('');
+    const [tahunErr, setTahunErr] = useState('');
+    const [lokasi, setLokasi] = useState('');
+    const [lokasiErr, setLokasiErr] = useState('');
     const navigation = useNavigate();
     const MySwal = withReactContent(Swal);
     
@@ -35,6 +40,8 @@ export function AddTAPage() {
           setProdi(response.data.data.prodi);
           setKataKunci(response.data.data.katakunci);
           setAbstrak(response.data.data.abstrak);
+          setTahun(response.data.data.tahuh);
+          setLokasi(response.data.data.lokasi);
         } catch (e: any) {
           console.log(e);
         }
@@ -49,7 +56,9 @@ export function AddTAPage() {
               fakultas,
               prodi,
               katakunci,
-              abstrak
+              abstrak,
+              tahun,
+              lokasi
           };
   
           const response = await axios.post(`${apiUrl}/api/tugasakhir`, formData, {
@@ -81,6 +90,8 @@ export function AddTAPage() {
           formData.append('prodi', prodi);
           formData.append('katakunci', katakunci);
           formData.append('abstrak', abstrak);
+          formData.append('tahun', tahun);
+          formData.append('lokasi', lokasi);
 
           const response = await axios.put(`${apiUrl}/api/tugasakhir/${id}`, formData);
 
@@ -106,6 +117,35 @@ export function AddTAPage() {
     return (
         <div>
             <h2 className={'font-weight-bold ml-3 pt-3'}>Tugas Akhir</h2>
+            <div
+                    className={'d-flex align-items-center bg-white px-3 py-1 mb-3'}
+                    style={{ gap: 10 }}
+                  >
+                    <div
+                      className={
+                        'd-flex flex-column align-items-sm-center justify-content-center rounded-circle'
+                      }
+                      style={{
+                        backgroundColor: '#87C1FF',
+                        width: '40px',
+                        height: '40px',
+                      }}
+                      onClick={() => {
+                        navigation('/tugasakhir')
+                      }}
+                    >
+                      <ArrowLeft size={'30'} color={'#3722AE'} />
+                    </div>
+            
+                    <span
+                      style={{
+                        color: '#3722AE',
+                      }}
+                      className={'text-lg'}
+                    >
+                      {id ? 'Edit Tugas AKhir' : 'Tambah Tugas Akhir'}
+                    </span>
+                  </div>
             <div className={'px-5'}>
                 <div className={'w-100'}>
                     <div className={'row'}>
@@ -133,14 +173,19 @@ export function AddTAPage() {
                         </div>
                     </div>
                     <div className={'row'}>
-                        <div className="form-group col-sm-6">
+                        <div className="form-group col-sm">
                             <label>Pembimbing</label>
                             <input type="text" className="form-control" name="pembimbing" value={pembimbing} onChange={(e) => {setPembimbing(e.target.value)}} />
                             <span className={'text-danger'}>{pembimbingErr}</span>
                         </div>
+                        <div className="form-group col-sm">
+                            <label>Tahun</label>
+                            <input type="text" className="form-control" name="tahun" value={tahun} onChange={(e) => {setTahun(e.target.value)}} />
+                            <span className={'text-danger'}>{pembimbingErr}</span>
+                        </div>
                     </div>
                     <div className={'row'}>
-                        <div className="form-group col-sm-6">
+                        <div className="form-group col-sm">
                             <label>Fakultas</label>
                             <select className="form-control" name="fakultas" value={fakultas} onChange={(e) => {setFakultas(e.target.value)}}>
                                 <option value="">Pilih Fakultas</option>
@@ -151,8 +196,6 @@ export function AddTAPage() {
                             </select>
                             <span className={'text-danger'}>{fakultasErr}</span>
                         </div>
-                    </div>
-                    <div className={'row'}>
                         <div className="form-group col-sm-6">
                             <label>Prodi</label>
                             <select className="form-control" name="prodi" value={prodi} onChange={(e) => {setProdi(e.target.value)}}>
@@ -168,6 +211,13 @@ export function AddTAPage() {
                                 <option value="Teknologi Rekayasa Perangkat Lunak">Teknologi Rekayasa Perangkat Lunak</option>
                             </select>
                             <span className={'text-danger'}>{prodiErr}</span>
+                        </div>
+                    </div>
+                    <div className={'row'}>
+                        <div className="form-group col-sm-6">
+                            <label>Lokasi</label>
+                            <input type="text" className="form-control" name="lokasi" value={lokasi} onChange={(e) => {setLokasi(e.target.value)}} />
+                            <span className={'text-danger'}>{pembimbingErr}</span>
                         </div>
                     </div>
                 </div>
