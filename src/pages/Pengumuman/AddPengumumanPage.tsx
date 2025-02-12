@@ -59,8 +59,17 @@ export function AddPengumumanPage() {
   }
 
   const handleUpdatePengumuman = async () => {
+    const formData = new FormData()
+    formData.append('files', file!)
+    formData.append('judul', judul)
+    formData.append('isi', isi)
+    formData.append('kategori', kategori)
+
     try {
-      const response = await axios.patch(`${apiUrl}/api/pengumuman/${id}`)
+      const response = await axios.patch(
+        `${apiUrl}/api/pengumuman/${id}`,
+        formData
+      )
 
       if (response.status === 200) {
         const tempResponseUpdate = response.data.data
