@@ -49,7 +49,7 @@ export function LaporanPeminjamanPage() {
                             <td>{row[1]}</td>
                             <td>
                                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
-                                <Link to="/borrowed-books-detail">
+                                <Link to="/dashboard/borrowed-books-detail">
     <button className="btn btn-success d-flex align-items-center" style={{ gap: 3 }}>
         <BoxArrowUpRight />
     </button>

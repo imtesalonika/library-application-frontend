@@ -22,7 +22,7 @@ const Dashboard = () => {
               <SmallBox
                 title="Total Users"
                 text="1,200"
-                navigateTo="/user-management"
+                navigateTo="/dashboard/user-management"
                 variant="info"
                 icon={{
                   content: (
@@ -58,7 +58,7 @@ const Dashboard = () => {
               <SmallBox
                 title="Books Borrowed"
                 text="1,030"
-                navigateTo="/borrowed-books-report"
+                navigateTo="/dashboard/borrowed-books-report"
                 variant="warning"
                 icon={{
                   content: (
@@ -76,7 +76,7 @@ const Dashboard = () => {
               <SmallBox
                 title="Visitors Today"
                 text="340"
-                navigateTo="/VisitorReport"
+                navigateTo="/dashboard/visitor-report"
                 variant="danger"
                 icon={{
                   content: (

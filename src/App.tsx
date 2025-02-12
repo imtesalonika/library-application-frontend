@@ -33,6 +33,9 @@ import { AddBookPage } from '@pages/Buku/AddBookPage'
 import { DetailPeminjamanPage } from './pages/Dashboard/DetailPeminjamanPage'
 import { UserManagement } from './pages/Dashboard/UserManagement'
 import { PengumumanDetailPage } from '@pages/Pengumuman/PengumumanDetailPage'
+import { AddUser } from './pages/Dashboard/AddUser'
+import { UserDetail } from './pages/Dashboard/UserDetail'
+import { UserEdit } from './pages/Dashboard/UserEdit'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -120,16 +123,19 @@ const App = () => {
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
 
-            <Route path="/VisitorReport" element={<VisitorReport />} />
+            <Route path="/dashboard/visitor-report" element={<VisitorReport />} />
             <Route
-              path="/borrowed-books-detail"
+              path="/dashboard/borrowed-books-detail"
               element={<DetailPeminjamanPage />}
             />
             <Route
-              path="/borrowed-books-report"
+              path="/dashboard/borrowed-books-report"
               element={<LaporanPeminjamanPage />}
             />
-            <Route path="/user-management" element={<UserManagement />} />
+            <Route path="/dashboard/user-management" element={<UserManagement />} />
+            <Route path="/dashboard/user-management/add" element={<AddUser />} />
+            <Route path="/dashboard/user-management/detail/:id" element={<UserDetail />} />
+                <Route path="/dashboard/user-management/edit/:id" element={<UserEdit />} />
           </Route>
         </Route>
       </Routes>
