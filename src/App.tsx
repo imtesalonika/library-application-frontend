@@ -34,6 +34,8 @@ import { DetailPeminjamanPage } from './pages/Dashboard/DetailPeminjamanPage'
 import { UserManagement } from './pages/Dashboard/UserManagement'
 import { PengumumanDetailPage } from '@pages/Pengumuman/PengumumanDetailPage'
 import { AddUser } from './pages/Dashboard/AddUser'
+import { UserDetail } from './pages/Dashboard/UserDetail'
+import { UserEdit } from './pages/Dashboard/UserEdit'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -132,6 +134,8 @@ const App = () => {
             />
             <Route path="/dashboard/user-management" element={<UserManagement />} />
             <Route path="/dashboard/user-management/add" element={<AddUser />} />
+            <Route path="/dashboard/user-management/detail/:id" element={<UserDetail />} />
+                <Route path="/dashboard/user-management/edit/:id" element={<UserEdit />} />
           </Route>
         </Route>
       </Routes>

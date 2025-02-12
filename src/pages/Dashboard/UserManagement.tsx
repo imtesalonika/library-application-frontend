@@ -18,6 +18,12 @@ export function UserManagement() {
         setUsers(storedUsers);
     }, []);
 
+    const handleDelete = (id: number) => {
+        const updatedUsers = users.filter(user => user.id !== id);
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+        setUsers(updatedUsers);
+    };
+
     return (
         <div className={'p-4 bg-white'}>
             <h2>Manajemen Pengguna</h2>
@@ -50,11 +56,15 @@ export function UserManagement() {
                             <td>{user.hp}</td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" style={{ gap: '5px' }}>
-                                    <Link to={`/usermanagement/detail/${user.id}`}> 
-                                        <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button> 
+                                    <Link to={`/dashboard/user-management/detail/${user.id}`}>
+                                        <button className="btn btn-success btn-sm"><BoxArrowUpRight /></button>
                                     </Link>
-                                    <button className="btn btn-warning btn-sm"><PencilSquare /></button>
-                                    <button className="btn btn-danger btn-sm"><Trash /></button>
+                                    <Link to={`/dashboard/user-management/edit/${user.id}`}>
+                                        <button className="btn btn-warning btn-sm"><PencilSquare /></button>
+                                    </Link>
+                                    <button className="btn btn-danger btn-sm" onClick={() => handleDelete(user.id)}>
+                                        <Trash />
+                                    </button>
                                 </div>
                             </td>
                         </tr>
