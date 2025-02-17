@@ -9,7 +9,7 @@ import { Form, InputGroup } from 'react-bootstrap'
 import { Button } from '@app/styles/common'
 import { useAppDispatch } from '@app/store/store'
 import axios from 'axios'
-import https from 'https'
+import { apiUrl } from '@app/utils/env'
 
 const Login = () => {
   const [isAuthLoading, setAuthLoading] = useState(false)
@@ -22,20 +22,23 @@ const Login = () => {
   const handleLogin = async () => {
     setAuthLoading(true)
     try {
-      const response = await axios.post(
-        'http://localhost:3000/api/auth/login',
-        {
-          username,
-          password,
-        }
-      )
+      const response = await axios.post(`${apiUrl}/api/auth/login`, {
+        username,
+        password,
+      })
 
-      console.log(response)
       if (response) {
-        const user = response.data.data
-        dispatch(setCurrentUser(user))
+        const responseData = response.data.data
+        dispatch(setCurrentUser(responseData.user))
         toast.success('Login berhasil!')
-        navigate('/')
+
+        console.log(responseData.is_complete)
+
+        if (responseData.is_complete) {
+          navigate('/')
+        } else {
+          navigate(`/complete_data/${responseData.user.user_id}`)
+        }
       } else {
         toast.error('Login gagal. Periksa kembali kredensial Anda.')
       }

@@ -36,6 +36,7 @@ import { PengumumanDetailPage } from '@pages/Pengumuman/PengumumanDetailPage'
 import { AddUser } from './pages/Dashboard/AddUser'
 import { UserDetail } from './pages/Dashboard/UserDetail'
 import { UserEdit } from './pages/Dashboard/UserEdit'
+import CompleteData from '@pages/Auth/CompleteData'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -49,25 +50,7 @@ const App = () => {
   const [isAppLoading, setIsAppLoading] = useState(true)
 
   useEffect(() => {
-    onAuthStateChanged(
-      firebaseAuth,
-      (user) => {
-        if (user) {
-          dispatch(setCurrentUser(user))
-          navigate('/dashboard', { replace: true })
-        } else {
-          dispatch(setCurrentUser(null))
-          navigate('/login', { replace: true })
-        }
-        setIsAppLoading(false)
-      },
-      (e) => {
-        console.error(e)
-        dispatch(setCurrentUser(null))
-        navigate('/login', { replace: true })
-        setIsAppLoading(false)
-      }
-    )
+    setIsAppLoading(false)
   }, [])
 
   useEffect(() => {
@@ -94,11 +77,14 @@ const App = () => {
     <>
       <Routes>
         {/* Public Routes */}
-        <Route path="/login" element={<PublicRoute />}>
+        <Route path="/login">
           <Route path="/login" element={<Login />} />
         </Route>
+
+        <Route path="/complete_data/:id" element={<CompleteData />} />
+
         {/* Private Routes */}
-        <Route path="/" element={<PrivateRoute />}>
+        <Route path="/">
           <Route path="/" element={<Main />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/" element={<Dashboard />} />
@@ -123,7 +109,10 @@ const App = () => {
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
             <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
 
-            <Route path="/dashboard/visitor-report" element={<VisitorReport />} />
+            <Route
+              path="/dashboard/visitor-report"
+              element={<VisitorReport />}
+            />
             <Route
               path="/dashboard/borrowed-books-detail"
               element={<DetailPeminjamanPage />}
@@ -132,10 +121,22 @@ const App = () => {
               path="/dashboard/borrowed-books-report"
               element={<LaporanPeminjamanPage />}
             />
-            <Route path="/dashboard/user-management" element={<UserManagement />} />
-            <Route path="/dashboard/user-management/add" element={<AddUser />} />
-            <Route path="/dashboard/user-management/detail/:id" element={<UserDetail />} />
-                <Route path="/dashboard/user-management/edit/:id" element={<UserEdit />} />
+            <Route
+              path="/dashboard/user-management"
+              element={<UserManagement />}
+            />
+            <Route
+              path="/dashboard/user-management/add"
+              element={<AddUser />}
+            />
+            <Route
+              path="/dashboard/user-management/detail/:id"
+              element={<UserDetail />}
+            />
+            <Route
+              path="/dashboard/user-management/edit/:id"
+              element={<UserEdit />}
+            />
           </Route>
         </Route>
       </Routes>
