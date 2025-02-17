@@ -1,35 +1,35 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { StyledBigUserImage, StyledSmallUserImage } from '@app/styles/common';
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { StyledBigUserImage, StyledSmallUserImage } from '@app/styles/common'
 import {
   UserBody,
   UserFooter,
   UserHeader,
   UserMenuDropdown,
-} from '@app/styles/dropdown-menus';
-import { firebaseAuth } from '@app/firebase';
-import {} from '@app/index';
-import { useAppSelector } from '@app/store/store';
-import { DateTime } from 'luxon';
+} from '@app/styles/dropdown-menus'
+import { firebaseAuth } from '@app/firebase'
+import {} from '@app/index'
+import { useAppSelector } from '@app/store/store'
+import { DateTime } from 'luxon'
 
 const UserDropdown = () => {
-  const navigate = useNavigate();
-  const [t] = useTranslation();
-  const currentUser = useAppSelector((state) => state.auth.currentUser);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const navigate = useNavigate()
+  const [t] = useTranslation()
+  const currentUser = useAppSelector((state) => state.auth.currentUser)
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const logOut = async (event: any) => {
-    await firebaseAuth.signOut();
-    event.preventDefault();
-    setDropdownOpen(false);
-  };
+    await firebaseAuth.signOut()
+    event.preventDefault()
+    setDropdownOpen(false)
+  }
 
   const navigateToProfile = (event: any) => {
-    event.preventDefault();
-    setDropdownOpen(false);
-    navigate('/profile');
-  };
+    event.preventDefault()
+    setDropdownOpen(false)
+    navigate('/profile')
+  }
 
   return (
     <UserMenuDropdown isOpen={dropdownOpen} hideArrow>
@@ -53,11 +53,10 @@ const UserDropdown = () => {
             rounded
           />
           <p>
-          <p>{currentUser?.email}</p>
-
+            <p>{currentUser?.name}</p>
           </p>
         </UserHeader>
-        
+
         <UserFooter>
           <button
             type="button"
@@ -76,7 +75,7 @@ const UserDropdown = () => {
         </UserFooter>
       </div>
     </UserMenuDropdown>
-  );
-};
+  )
+}
 
-export default UserDropdown;
+export default UserDropdown

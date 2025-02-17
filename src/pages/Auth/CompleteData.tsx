@@ -5,11 +5,14 @@ import { useState } from 'react'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 import { toast } from 'react-toastify'
+import { setCurrentUser } from '@store/reducers/auth'
+import { useAppDispatch } from '@store/store'
 
 export default function CompleteData() {
   const { id } = useParams()
   const [name, setName] = useState('')
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const handleSaveData = async () => {
     try {
@@ -20,6 +23,7 @@ export default function CompleteData() {
 
       if (response.status === 200) {
         toast.success(response.data.message)
+        dispatch(setCurrentUser(response.data.data))
         navigate('/')
       }
     } catch (e: any) {

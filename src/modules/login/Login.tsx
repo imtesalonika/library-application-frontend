@@ -29,13 +29,13 @@ const Login = () => {
 
       if (response) {
         const responseData = response.data.data
-        dispatch(setCurrentUser(responseData.user))
         toast.success('Login berhasil!')
 
         console.log(responseData.is_complete)
 
         if (responseData.is_complete) {
           navigate('/')
+          dispatch(setCurrentUser(responseData.user))
         } else {
           navigate(`/complete_data/${responseData.user.user_id}`)
         }
