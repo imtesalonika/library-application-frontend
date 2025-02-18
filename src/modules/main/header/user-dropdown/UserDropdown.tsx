@@ -20,9 +20,8 @@ const UserDropdown = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const logOut = async (event: any) => {
-    await firebaseAuth.signOut()
-    event.preventDefault()
     setDropdownOpen(false)
+    navigate('/login')
   }
 
   const navigateToProfile = (event: any) => {
@@ -70,7 +69,7 @@ const UserDropdown = () => {
             className="btn btn-default btn-flat float-right"
             onClick={logOut}
           >
-            {t('login.button.signOut')}
+            Sign Out
           </button>
         </UserFooter>
       </div>

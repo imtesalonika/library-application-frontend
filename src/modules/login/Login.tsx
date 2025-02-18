@@ -31,13 +31,11 @@ const Login = () => {
         const responseData = response.data.data
         toast.success('Login berhasil!')
 
-        console.log(responseData.is_complete)
-
         if (responseData.is_complete) {
           navigate('/')
           dispatch(setCurrentUser(responseData.user))
         } else {
-          navigate(`/complete_data/${responseData.user.user_id}`)
+          navigate(`/complete_data/${responseData.user_id}`)
         }
       } else {
         toast.error('Login gagal. Periksa kembali kredensial Anda.')
