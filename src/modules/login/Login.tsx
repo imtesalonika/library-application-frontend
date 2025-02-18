@@ -35,7 +35,7 @@ const Login = () => {
           navigate('/')
           dispatch(setCurrentUser(responseData.user))
         } else {
-          navigate(`/complete_data/${responseData.user_id}`)
+          navigate(`/complete_data/${responseData.user.user_id}`)
         }
       } else {
         toast.error('Login gagal. Periksa kembali kredensial Anda.')

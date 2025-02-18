@@ -76,14 +76,16 @@ export function BookPage() {
           </button>
         </Link>
 
-        <button
-          className="btn btn-success d-flex align-items-center"
-          style={{
-            gap: 3,
-          }}
-        >
-          Daftar Peminjaman Buku
-        </button>
+        <Link to={'/borrow-book'}>
+          <button
+            className="btn btn-success d-flex align-items-center"
+            style={{
+              gap: 3,
+            }}
+          >
+            Daftar Peminjaman Buku
+          </button>
+        </Link>
       </div>
 
       {bookData !== undefined ? (
