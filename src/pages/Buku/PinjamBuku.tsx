@@ -3,6 +3,7 @@ import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 import { useEffect, useState } from 'react'
 import { formatWaktu } from '@app/services/format-waktu'
+import { CheckLg, XLg } from 'react-bootstrap-icons'
 
 export default function PinjamBuku() {
   const [dataPeminjaman, setDataPeminjaman] = useState([])
@@ -15,7 +16,22 @@ export default function PinjamBuku() {
         setDataPeminjaman(response.data.data)
       }
     } catch (e: any) {
-      toast.success(e.response.data.message)
+      toast.error(e.response.data.message)
+    }
+  }
+
+  const handleAcceptRejectPeminjaman = async (id: number, status: string) => {
+    try {
+      const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
+        status: status,
+      })
+
+      if (response.status === 200) {
+        getDataPeminjaman().then()
+        toast.success(response.data.message)
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.message)
     }
   }
 
@@ -31,11 +47,11 @@ export default function PinjamBuku() {
         <thead>
           <tr>
             <th>No.</th>
-            <th>Judul Pengumuman</th>
-            <th>Isi Pengumuman</th>
-            <th>Kategori</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+            <th>Judul Buku</th>
+            <th>Peminjam</th>
+            <th>Status</th>
+            <th>Tanggal Pinjam</th>
+            <th>Tanggal Kembali</th>
             <th>Tindakan</th>
           </tr>
         </thead>
@@ -48,30 +64,47 @@ export default function PinjamBuku() {
                 <td>{row.nama_user}</td>
                 <td>{row.status}</td>
                 <td>{formatWaktu(row.tanggal_pinjam)}</td>
-                <td>{formatWaktu(row.tanggal_kembali)}</td>
                 <td>
-                  <div
-                    className="btn-group"
-                    role="group"
-                    style={{ gap: '5px' }}
-                  >
-                    {/*<button*/}
-                    {/*  className="btn btn-warning btn-sm"*/}
-                    {/*  onClick={() => {*/}
-                    {/*    navigate(`/pengumuman/edit/${row.id}`)*/}
-                    {/*  }}*/}
-                    {/*>*/}
-                    {/*  <PencilSquare />*/}
-                    {/*</button>*/}
-                    {/*<button*/}
-                    {/*  onClick={() => {*/}
-                    {/*    handleRemovePengumuman(row.id).then()*/}
-                    {/*  }}*/}
-                    {/*  className="btn btn-danger btn-sm"*/}
-                    {/*>*/}
-                    {/*  <Trash />*/}
-                    {/*</button>*/}
-                  </div>
+                  {row.tanggal_kembali ? formatWaktu(row.tanggal_kembali) : '-'}
+                </td>
+                <td>
+                  {row.status === 'REQ' ? (
+                    <div className={'d-flex'} style={{ gap: '5px' }}>
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => {
+                          handleAcceptRejectPeminjaman(
+                            row.id,
+                            'ACCEPTED'
+                          ).then()
+                        }}
+                      >
+                        <CheckLg />
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleAcceptRejectPeminjaman(
+                            row.id,
+                            'REJECTED'
+                          ).then()
+                        }}
+                        className="btn btn-danger btn-sm"
+                      >
+                        <XLg />
+                      </button>
+                    </div>
+                  ) : row.status === 'DONE' ? (
+                    '-'
+                  ) : (
+                    <button
+                      className="btn btn-success btn-sm"
+                      onClick={() => {
+                        handleAcceptRejectPeminjaman(row.id, 'DONE').then()
+                      }}
+                    >
+                      Selesai
+                    </button>
+                  )}
                 </td>
               </tr>
             ))
