@@ -12,11 +12,12 @@ import { firebaseAuth } from '@app/firebase'
 import {} from '@app/index'
 import { useAppSelector } from '@app/store/store'
 import { DateTime } from 'luxon'
+import { apiUrl } from '@app/utils/env'
 
 const UserDropdown = () => {
   const navigate = useNavigate()
   const [t] = useTranslation()
-  const currentUser = useAppSelector((state) => state.auth.currentUser)
+  const currentUser = JSON.parse(localStorage.getItem('user_data')!)
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const logOut = async (event: any) => {
@@ -34,7 +35,7 @@ const UserDropdown = () => {
     <UserMenuDropdown isOpen={dropdownOpen} hideArrow>
       <StyledSmallUserImage
         slot="head"
-        src={currentUser?.photoURL}
+        src={`${apiUrl}/${currentUser?.foto_profil}`}
         fallbackSrc="/img/default-profile.png"
         alt="User"
         width={25}
@@ -44,7 +45,7 @@ const UserDropdown = () => {
       <div slot="body">
         <UserHeader className=" bg-primary">
           <StyledBigUserImage
-            src={currentUser?.photoURL}
+            src={`${apiUrl}/${currentUser?.foto_profil}`}
             fallbackSrc="/img/default-profile.png"
             alt="User"
             width={90}

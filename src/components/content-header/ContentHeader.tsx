@@ -1,5 +1,3 @@
-
-
 const ContentHeader = ({ title }: { title: string }) => {
   return (
     <section className="content-header">
@@ -8,18 +6,18 @@ const ContentHeader = ({ title }: { title: string }) => {
           <div className="col-sm-6">
             <h1>{title}</h1>
           </div>
-          <div className="col-sm-6">
-            <ol className="breadcrumb float-sm-right">
-              <li className="breadcrumb-item">
-                <a href="/">Home</a>
-              </li>
-              <li className="breadcrumb-item active">{title}</li>
-            </ol>
-          </div>
+          {/*<div className="col-sm-6">*/}
+          {/*  <ol className="breadcrumb float-sm-right">*/}
+          {/*    <li className="breadcrumb-item">*/}
+          {/*      <a href="/">Home</a>*/}
+          {/*    </li>*/}
+          {/*    <li className="breadcrumb-item active">{title}</li>*/}
+          {/*  </ol>*/}
+          {/*</div>*/}
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default ContentHeader;
+export default ContentHeader

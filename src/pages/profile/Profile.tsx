@@ -1,68 +1,101 @@
-import { ContentHeader } from '@components';
-import { Image } from '@profabric/react-components';
-import { Button } from '@app/styles/common';
-import { useAppSelector } from '@app/store/store';
+import { ContentHeader } from '@components'
+import { Button } from '@app/styles/common'
+import { useNavigate } from 'react-router-dom'
+import { apiUrl } from '@app/utils/env'
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
 
 const Profile = () => {
-  const currentUser = useAppSelector((state) => state.auth.currentUser);
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(localStorage.getItem('user_data')!)
+  )
+  const navigate = useNavigate()
+
+  const handleGetUser = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/users/${currentUser?.id}`)
+
+      console.log(response)
+
+      if (response.status === 200) {
+        localStorage.setItem('user_data', JSON.stringify(response.data.data))
+        setCurrentUser(response.data.data)
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.message)
+    }
+  }
+
+  useEffect(() => {
+    handleGetUser().then()
+  }, [])
 
   return (
     <>
       <ContentHeader title="Profile" />
       <section className="content">
         <div className="container-fluid">
-          <div className="card mx-auto p-4 text-center shadow-sm border-0" style={{ maxWidth: '600px', borderRadius: '12px' }}>
+          <div
+            className="card mx-auto p-4 text-center shadow-sm border-0"
+            style={{ maxWidth: '600px', borderRadius: '12px' }}
+          >
             {/* Foto Profil */}
             <div className="d-flex justify-content-center">
-              <Image
-                rounded
-                src={currentUser?.photoURL || '/img/default-profile.png'}
+              <img
+                src={
+                  `${apiUrl}/${currentUser?.foto_profil}` ||
+                  '/img/default-profile.png'
+                }
                 alt="User profile"
                 className="border border-secondary p-2 rounded-circle"
                 style={{ width: '120px', height: '120px', objectFit: 'cover' }}
               />
             </div>
 
-            {/* Nama dan Role */}
-            <h3 className="mt-3">{currentUser?.displayName || 'Pustakawan'}</h3>
-            <p className="text-muted mb-3">Pustakawan</p>
-
             {/* Detail Profil */}
-            <ul className="list-group text-start">
+            <ul className="list-group text-start mt-3">
               <li className="list-group-item d-flex justify-content-between">
-                <strong>Nama Pengguna:</strong> <span>Tesalonika Sitopu</span>
+                <strong>Nama Pengguna :</strong> <span>{currentUser.name}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
-                <strong>Nomor Telepon:</strong> <span>082165646255</span>
+                <strong>Alamat Email :</strong> <span>{currentUser.email}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
-                <strong>Alamat Email:</strong> <span>tesalonikasitopu@gmail.com</span>
+                <strong>Username :</strong> <span>{currentUser.username}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
-                <strong>Role:</strong> <span>Pustakawan</span>
+                <strong>Role :</strong> <span>{currentUser.role}</span>
               </li>
               <li className="list-group-item d-flex justify-content-between">
-                <strong>Mulai Aktif Pada:</strong> <span>Sat, 18 May 2024</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                <strong>Terakhir Dilihat:</strong> <span>3 mnts ago</span>
-              </li>
-              <li className="list-group-item d-flex justify-content-between">
-                <strong>Alamat IP:</strong> <span>127.0.0.1</span>
+                <strong>Status :</strong>{' '}
+                <span>
+                  {currentUser.status === 1 ? 'Aktif' : 'Tidak Aktif'}
+                </span>
               </li>
             </ul>
 
             {/* Tombol Aksi */}
-            <div className="d-flex justify-content-center gap-2 mt-4">
-              <Button variant="primary">Ubah Gambar Profil</Button>
-              <Button variant="secondary">Sunting Profil</Button>
-              <Button variant="warning">Ganti Kata Sandi</Button>
+            <div
+              className="d-flex justify-content-center mt-4"
+              style={{
+                gap: 5,
+              }}
+            >
+              <Button
+                onClick={() => {
+                  navigate('/edit-profile')
+                }}
+                variant="primary"
+              >
+                Edit Profile
+              </Button>
             </div>
           </div>
         </div>
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile

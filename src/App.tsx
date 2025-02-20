@@ -38,6 +38,7 @@ import { UserDetail } from './pages/Dashboard/UserDetail'
 import { UserEdit } from './pages/Dashboard/UserEdit'
 import CompleteData from '@pages/Auth/CompleteData'
 import PinjamBuku from '@pages/Buku/PinjamBuku'
+import EditProfile from '@pages/profile/EditProfile'
 
 const { VITE_NODE_ENV } = import.meta.env
 
@@ -88,6 +89,7 @@ const App = () => {
         <Route path="/">
           <Route path="/" element={<Main />}>
             <Route path="/profile" element={<Profile />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
             <Route path="/" element={<Dashboard />} />
 
             {/*Bagian routing buku*/}

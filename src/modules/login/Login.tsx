@@ -2,12 +2,10 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
-import { setCurrentUser } from '@store/reducers/auth'
 import { setWindowClass } from '@app/utils/helpers'
 import { Checkbox } from '@profabric/react-components'
 import { Form, InputGroup } from 'react-bootstrap'
 import { Button } from '@app/styles/common'
-import { useAppDispatch } from '@app/store/store'
 import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 
@@ -15,7 +13,6 @@ const Login = () => {
   const [isAuthLoading, setAuthLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [t] = useTranslation()
 
@@ -33,7 +30,7 @@ const Login = () => {
 
         if (responseData.is_complete) {
           navigate('/')
-          dispatch(setCurrentUser(responseData.user))
+          localStorage.setItem('user_data', JSON.stringify(responseData.user))
         } else {
           navigate(`/complete_data/${responseData.user.user_id}`)
         }
