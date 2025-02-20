@@ -9,8 +9,8 @@ import { ArrowLeft } from "react-bootstrap-icons";
 
 export function AddTAPage() {
     const { id } = useParams();
-    const [judulTugasAkhir, setJudulTugasAkhir] = useState('');
-    const [judulTugasAkhirErr, setJudulTugasAkhirErr] = useState('');
+    const [judul, setJudul] = useState('');
+    const [judulErr, setJudulErr] = useState('');
     const [penulis, setPenulis] = useState('');
     const [penulisErr, setPenulisErr] = useState('');
     const [pembimbing, setPembimbing] = useState('');
@@ -33,14 +33,14 @@ export function AddTAPage() {
     const getBookData = async () => {
         try {
           const response = await axios.get(`${apiUrl}/api/tugasakhir/${id}`);
-          setJudulTugasAkhir(response.data.data.judul);
+          setJudul(response.data.data.judul);
           setPenulis(response.data.data.penulis);
           setPembimbing(response.data.data.pembimbing);
           setFakultas(response.data.data.fakultas);
           setProdi(response.data.data.prodi);
           setKataKunci(response.data.data.katakunci);
           setAbstrak(response.data.data.abstrak);
-          setTahun(response.data.data.tahuh);
+          setTahun(response.data.data.tahun);
           setLokasi(response.data.data.lokasi);
         } catch (e: any) {
           console.log(e);
@@ -49,31 +49,28 @@ export function AddTAPage() {
 
     const handleSaveTugasAkhir = async () => {
       try {
-          const formData = {
-              judul: judulTugasAkhir,
-              penulis,
-              pembimbing,
-              fakultas,
-              prodi,
-              katakunci,
-              abstrak,
-              tahun,
-              lokasi
-          };
-  
-          const response = await axios.post(`${apiUrl}/api/tugasakhir`, formData, {
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-  
+        const formData = {
+          judul,
+          penulis,
+          pembimbing,
+          fakultas,
+          prodi,
+          katakunci,
+          abstrak,
+          tahun,
+          lokasi,
+        };
+        const response = await axios.post(`${apiUrl}/api/tugasakhir`, formData, {
+          headers: { 'Content-Type': 'application/json' },
+        });
+        
           if (response.status === 200) {
               navigation('/tugasakhir');
           }
       } catch (e: any) {
           MySwal.fire({
               title: 'Failed!',
-              text: e.response?.data?.message || 'Terjadi kesalahan',
+              text: e.response?.data?.message,
               icon: 'error',
           });
           console.log(e);
@@ -82,18 +79,21 @@ export function AddTAPage() {
 
     const handleUpdateTugasAkhir = async () => {
         try {
-          const formData = new FormData();
-          formData.append('judul', judulTugasAkhir);
-          formData.append('penulis', penulis);
-          formData.append('pembimbing', pembimbing);
-          formData.append('fakultas', fakultas);
-          formData.append('prodi', prodi);
-          formData.append('katakunci', katakunci);
-          formData.append('abstrak', abstrak);
-          formData.append('tahun', tahun);
-          formData.append('lokasi', lokasi);
+          const formData = {
+            judul,
+            penulis,
+            pembimbing,
+            fakultas,
+            prodi,
+            katakunci,
+            abstrak,
+            tahun,
+            lokasi,
+          };
 
-          const response = await axios.put(`${apiUrl}/api/tugasakhir/${id}`, formData);
+          const response = await axios.put(`${apiUrl}/api/tugasakhir/${id}`, formData, {
+            headers: { 'Content-Type': 'application/json' },
+          });
 
           if (response.status === 200) {
             navigation('/tugasakhir');
@@ -151,8 +151,8 @@ export function AddTAPage() {
                     <div className={'row'}>
                         <div className="form-group col-sm">
                             <label>Judul Tugas Akhir</label>
-                            <input type="text" className="form-control" name="judul" value={judulTugasAkhir} onChange={(e) => {setJudulTugasAkhir(e.target.value)}} />
-                            <span className={'text-danger'}>{judulTugasAkhirErr}</span>
+                            <input type="text" className="form-control" name="judul" value={judul} onChange={(e) => {setJudul(e.target.value)}} />
+                            <span className={'text-danger'}>{judulErr}</span>
                         </div>
                         <div className="form-group col-sm">
                             <label>Kata Kunci</label>
@@ -181,7 +181,7 @@ export function AddTAPage() {
                         <div className="form-group col-sm">
                             <label>Tahun</label>
                             <input type="text" className="form-control" name="tahun" value={tahun} onChange={(e) => {setTahun(e.target.value)}} />
-                            <span className={'text-danger'}>{pembimbingErr}</span>
+                            <span className={'text-danger'}>{tahunErr}</span>
                         </div>
                     </div>
                     <div className={'row'}>
@@ -217,14 +217,14 @@ export function AddTAPage() {
                         <div className="form-group col-sm-6">
                             <label>Lokasi</label>
                             <input type="text" className="form-control" name="lokasi" value={lokasi} onChange={(e) => {setLokasi(e.target.value)}} />
-                            <span className={'text-danger'}>{pembimbingErr}</span>
+                            <span className={'text-danger'}>{lokasiErr}</span>
                         </div>
                     </div>
                 </div>
                 <button 
                     className={'btn btn-success mb-3'} 
                     onClick={() => {
-                        setJudulTugasAkhirErr('');
+                        setJudulErr('');
                         setPenulisErr('');
                         setPembimbingErr('');
                         setAbstrakErr('');
@@ -232,8 +232,8 @@ export function AddTAPage() {
                         setProdiErr('');
                         setKataKunciErr('');
         
-                        if (judulTugasAkhir === '') {
-                          setJudulTugasAkhirErr('Tidak boleh kosong');
+                        if (judul === '') {
+                          setJudulErr('Tidak boleh kosong');
                           return;
                         }
                         if (penulis === '') {

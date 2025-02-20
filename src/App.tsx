@@ -111,7 +111,8 @@ const App = () => {
 
             <Route path="/tugasakhir" element={<TugasakhirPage />} />
             <Route path="/tugasakhir/add" element={<AddTAPage />} />
-            <Route path="/tugasakhir/detail" element={<DetailTAPage />} />
+            <Route path="/tugasakhir/:id" element={<DetailTAPage />} />
+            <Route path="/tugasakhir/edit/:id" element={<AddTAPage />} />
 
             <Route
               path="/dashboard/visitor-report"
