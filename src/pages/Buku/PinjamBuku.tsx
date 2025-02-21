@@ -93,7 +93,7 @@ export default function PinjamBuku() {
                         <XLg />
                       </button>
                     </div>
-                  ) : row.status === 'DONE' ? (
+                  ) : row.status === 'DONE' || row.status === 'REJECTED' ? (
                     '-'
                   ) : (
                     <button
