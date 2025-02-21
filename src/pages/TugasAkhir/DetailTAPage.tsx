@@ -5,26 +5,26 @@ import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 
 export function DetailTAPage() {
-//   const { id } = useParams()
-//   const [bookData, setBookData] = useState<any>()
+  const { id } = useParams()
+  const [tugasakhirData, setTugasAkhirData] = useState<any>()
 
-//   const getBookData = async () => {
-//     try {
-//       const response = await axios.get(`${apiUrl}/api/book/${id}`)
-//       setBookData(response.data.data)
-//     } catch (e: any) {
-//       console.log(e)
-//     }
-//   }
+  const getTugasAkhirData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/tugasakhir/${id}`)
+      setTugasAkhirData(response.data.data)
+    } catch (e: any) {
+      console.log(e)
+    }
+  }
 
-//   useEffect(() => {
-//     getBookData().then()
-//   }, [])
+  useEffect(() => {
+    getTugasAkhirData().then()
+  }, [])
 
   return (
     <div className={'p-4 bg-white'}>
       <div className={'d-flex flex-column mb-3 w-100'} style={{ gap: 10 }}>
-        <Link to={'/book'}>
+        <Link to={'/tugasakhir'}>
           <button
             className="btn btn-success d-flex align-items-center"
             style={{
@@ -39,8 +39,7 @@ export function DetailTAPage() {
         <div className={'d-flex justify-content-center'}>
           <img
             className={'border rounded-lg'}
-            src="/img/logo.png"
-            // src={`${apiUrl}/${bookData?.gambar}`}
+            src={`${apiUrl}/${tugasakhirData?.gambar}`}
             alt={'gambar-cover'}
             style={{
               width: '100%',
@@ -62,39 +61,47 @@ export function DetailTAPage() {
                 <tr>
                   <th>Judul</th>
                   <td>:</td>
-                  <td>Pembangunan Aplikasi Auto Grading Del Code Checker Menggunakan Unity Game Engine: Studi Kasus Institut Teknologi Del</td>
+                  <td>{tugasakhirData?.judul}</td>
                 </tr>
                 <tr>
                   <th>Penulis</th>
                   <td>:</td>
-                  <td>Sondang Kevin Sihaloho - 11S190044
-                  Bintang Lumban Raja - 11S19033</td>
+                  <td>{tugasakhirData?.penulis}</td>
                 </tr>
                 <tr>
                   <th>Pembimbing</th>
                   <td>:</td>
-                  <td>Arie Satia Dharma, S.T., M.Kom
-                  Tahan HJ Sihombing, S.Pd., M. App Ling (TESOL)</td>
+                  <td>{tugasakhirData?.pembimbing}</td>
                 </tr>
                 <tr>
                   <th>Fakultas</th>
                   <td>:</td>
-                  <td>Fakultas Teknik Informatika dan Elektro</td>
+                  <td>{tugasakhirData?.fakultas}</td>
                 </tr>
                 <tr>
                   <th>Prodi</th>
                   <td>:</td>
-                  <td>Informatika</td>
+                  <td>{tugasakhirData?.prodi}</td>
                 </tr>
                 <tr>
                   <th>Kata Kunci</th>
                   <td>:</td>
-                  <td>Auto Grading, Code Checker, Unity, Game Engineering</td>
+                  <td>{tugasakhirData?.katakunci}</td>
                 </tr>
                 <tr>
                   <th>Abstrak</th>
                   <td>:</td>
-                  <td>Auto Grading, Code Checker, Unity, Game Engineering</td>
+                  <td>{tugasakhirData?.abstrak}</td>
+                </tr>
+                <tr>
+                  <th>Lokasi</th>
+                  <td>:</td>
+                  <td>{tugasakhirData?.lokasi}</td>
+                </tr>
+                <tr>
+                  <th>Tahun</th>
+                  <td>:</td>
+                  <td>{tugasakhirData?.tahun}</td>
                 </tr>
               </tbody>
             </table>
