@@ -64,21 +64,21 @@ export function AddPengumumanPage() {
     formData.append('judul', judul)
     formData.append('isi', isi)
     formData.append('kategori', kategori)
-
+  
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `${apiUrl}/api/pengumuman/${id}`,
         formData
       )
-
+  
       if (response.status === 200) {
-        const tempResponseUpdate = response.data.data
-        console.log(tempResponseUpdate)
+        navigate('/pengumuman')   
       }
     } catch (e: any) {
       console.log(e)
     }
   }
+  
 
   useEffect(() => {
     if (id) {
