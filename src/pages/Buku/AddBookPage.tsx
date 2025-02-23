@@ -25,6 +25,8 @@ export function AddBookPage() {
   const [tahunTerbitErr, setTahunTerbitErr] = useState('')
   const [isbn, setIsbn] = useState('')
   const [isbnErr, setisbnErr] = useState('')
+  const [lokasi, setLokasi] = useState('')
+  const [lokasiErr, setLokasiErr] = useState('')
   const [abstrak, setAbstrak] = useState('')
   const [abstrakErr, setAbstrakErr] = useState('')
   const [banyakBuku, setBanyakBuku] = useState(0)
@@ -66,6 +68,7 @@ export function AddBookPage() {
       formData.append('abstrak', abstrak)
       formData.append('status', banyakBuku > 0 ? 'true' : 'false')
       formData.append('gambar', gambar)
+      formData.append('lokasi', lokasi)
       formData.append('banyak_buku', banyakBuku.toString())
 
       const response = await axios.post(`${apiUrl}/api/book`, formData)
@@ -95,6 +98,7 @@ export function AddBookPage() {
       formData.append('bahasa', bahasa)
       formData.append('edisi', edisi)
       formData.append('abstrak', abstrak)
+      formData.append('lokasi', lokasi)
       formData.append('status', banyakBuku > 0 ? 'true' : 'false')
       formData.append('gambar', gambar)
       formData.append('banyak_buku', banyakBuku.toString())
@@ -324,6 +328,22 @@ export function AddBookPage() {
               <span className={'text-danger'}>{abstrakErr}</span>
             </div>
           </div>
+
+          <div className={'row'}>
+            <div className="form-group col-sm">
+              <label>Lokasi</label>
+              <input
+                type="text"
+                value={lokasi}
+                onChange={(e) => {
+                  setLokasi(e.target.value)
+                  setLokasiErr('')
+                }}
+                className="form-control"
+              />
+              <span className={'text-danger'}>{lokasiErr}</span>
+            </div>
+          </div>
         </div>
 
         <button
@@ -340,6 +360,7 @@ export function AddBookPage() {
             setTahunTerbitErr('')
             setJumlahHalamanErr('')
             setBanyakBukuErr('')
+            setLokasiErr('')
 
             if (!id) {
               if (!gambar) {

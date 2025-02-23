@@ -5,11 +5,12 @@ import axios from 'axios'
 import { apiUrl } from '@app/utils/env'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import Dropzone from 'react-dropzone'
 
 export function AddPengumumanPage() {
   const { id } = useParams()
-  const [file, setFile] = useState<File | undefined>()
-  const [fileErr, setFileErr] = useState<string>()
+  // const [file, setFile] = useState<File | undefined>()
+  // const [fileErr, setFileErr] = useState<string>()
   const [judul, setJudul] = useState<string>('')
   const [judulErr, setJudulErr] = useState<string>('')
   const [isi, setIsi] = useState<string>('')
@@ -18,11 +19,18 @@ export function AddPengumumanPage() {
   const [kategoriErr, setKategoriErr] = useState<string>('')
   const navigate = useNavigate()
   const MySwal = withReactContent(Swal)
+  const [uploadedFiles, setUploadedFiles] = useState([])
+
+  const handleAddFile = (acceptedFiles: any) => {
+    setUploadedFiles(acceptedFiles)
+  }
 
   const handleSavePengumuman = async () => {
     try {
       const formData = new FormData()
-      formData.append('files', file!)
+      uploadedFiles.forEach((file: any) => {
+        formData.append('files', file) // 'files' adalah nama field yang diterima server
+      })
       formData.append('judul', judul)
       formData.append('isi', isi)
       formData.append('kategori', kategori)
@@ -60,25 +68,26 @@ export function AddPengumumanPage() {
 
   const handleUpdatePengumuman = async () => {
     const formData = new FormData()
-    formData.append('files', file!)
+    uploadedFiles.forEach((file: any) => {
+      formData.append('files', file) // 'files' adalah nama field yang diterima server
+    })
     formData.append('judul', judul)
     formData.append('isi', isi)
     formData.append('kategori', kategori)
-  
+
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${apiUrl}/api/pengumuman/${id}`,
         formData
       )
-  
+
       if (response.status === 200) {
-        navigate('/pengumuman')   
+        navigate('/pengumuman')
       }
     } catch (e: any) {
       console.log(e)
     }
   }
-  
 
   useEffect(() => {
     if (id) {
@@ -122,14 +131,44 @@ export function AddPengumumanPage() {
         <div className="mb-3" style={{ width: '49%' }}>
           <label>File</label>
           <br />
-          <input
-            type="file"
-            onChange={(e) => {
-              setFile(e.target.files![0])
-            }}
-            className={'border p-1 rounded-lg w-100 bg-white'}
-          />
-          <span className="text-danger">{fileErr}</span>
+          {/*<input*/}
+          {/*  type="file"*/}
+          {/*  onChange={(e) => {*/}
+          {/*    setFile(e.target.files![0])*/}
+          {/*  }}*/}
+          {/*  className={'border p-1 rounded-lg w-100 bg-white'}*/}
+          {/*/>*/}
+          <Dropzone onDrop={handleAddFile}>
+            {({ getRootProps, getInputProps }) => (
+              <section>
+                <div
+                  {...getRootProps()}
+                  className="dropzone border border-primary rounded p-4 bg-light text-center"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <input {...getInputProps()} />
+                  <div className="d-flex flex-column align-items-center">
+                    <i className="fas fa-cloud-upload-alt fa-3x mb-2 text-primary"></i>
+                    <p className="mb-0 text-muted">
+                      Drag 'n' drop some files here, or click to select files
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
+          </Dropzone>
+
+          {/* Menampilkan nama file yang di-upload */}
+          {uploadedFiles.length > 0 && (
+            <div className="mt-3">
+              <h5>Uploaded Files:</h5>
+              <ul>
+                {uploadedFiles.map((file: any, index) => (
+                  <li key={index}>{file.name}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
         <div className={'w-100'}>
           <div className={'row'}>
@@ -139,6 +178,7 @@ export function AddPengumumanPage() {
                 type="text"
                 onChange={(e: any) => {
                   setJudul(e.target.value)
+                  setJudulErr('')
                 }}
                 value={judul}
                 className="form-control"
@@ -155,6 +195,7 @@ export function AddPengumumanPage() {
                 value={isi}
                 onChange={(e: any) => {
                   setIsi(e.target.value)
+                  setIsiErr('')
                 }}
               ></textarea>
               <span className="text-danger">{isiErr}</span>
@@ -169,6 +210,7 @@ export function AddPengumumanPage() {
                 value={kategori}
                 onChange={(e: any) => {
                   setKategori(e.target.value)
+                  setKategoriErr('')
                 }}
                 className="form-control"
               />

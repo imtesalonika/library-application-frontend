@@ -48,7 +48,13 @@ export function PengumumanDetailPage() {
           </button>
         </Link>
 
-        <p>{pengumumanData?.isi}</p>
+        <p
+          style={{
+            whiteSpace: 'pre-line',
+          }}
+        >
+          {pengumumanData?.isi}
+        </p>
 
         {pengumumanData?.file ? (
           <table className={'table table-bordered table-hover mt-3'}>

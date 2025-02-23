@@ -39,7 +39,11 @@ export function BookDetailPage() {
         <div className={'d-flex justify-content-center'}>
           <img
             className={'border rounded-lg'}
-            src={`${apiUrl}/${bookData?.gambar}`}
+            src={
+              bookData?.gambar
+                ? `${apiUrl}/${bookData?.gambar}`
+                : '/img/placeholder_buku.jpg'
+            }
             alt={'gambar-cover'}
             style={{
               width: '100%',
@@ -81,7 +85,12 @@ export function BookDetailPage() {
                 <tr>
                   <th>ISBN</th>
                   <td>:</td>
-                  <td>{bookData?.isbn}</td>
+                  <td>{bookData?.isbn ? bookData?.isbn : '-'}</td>
+                </tr>
+                <tr>
+                  <th>Lokasi</th>
+                  <td>:</td>
+                  <td>{bookData?.lokasi ? bookData?.lokasi : '-'}</td>
                 </tr>
                 <tr>
                   <th>Jumlah Halaman</th>
@@ -101,7 +110,7 @@ export function BookDetailPage() {
                 <tr>
                   <th>Abstrak</th>
                   <td>:</td>
-                  <td>{bookData?.abstrak}</td>
+                  <td>{bookData?.abstrak ? bookData?.abstrak : '-'}</td>
                 </tr>
                 <tr>
                   <th>Status</th>

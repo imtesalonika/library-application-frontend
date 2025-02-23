@@ -93,7 +93,13 @@ export function PengumumanPage() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.judul}</td>
-                <td>{row.isi}</td>
+                <td
+                  style={{
+                    whiteSpace: 'pre-line',
+                  }}
+                >
+                  {row.isi}
+                </td>
                 <td>{row.kategori}</td>
                 <td>{formatWaktu(row.created_at)}</td>
                 <td>{formatWaktu(row.updated_at)}</td>
