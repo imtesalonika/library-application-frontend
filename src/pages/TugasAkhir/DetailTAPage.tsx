@@ -39,7 +39,11 @@ export function DetailTAPage() {
         <div className={'d-flex justify-content-center'}>
           <img
             className={'border rounded-lg'}
-            src={`${apiUrl}/${tugasakhirData?.gambar}`}
+            src={
+              tugasakhirData?.gambar
+                ? `${apiUrl}/${tugasakhirData?.gambar}`
+                : '/img/placeholder_buku.jpg'
+            }
             alt={'gambar-cover'}
             style={{
               width: '100%',
@@ -91,7 +95,9 @@ export function DetailTAPage() {
                 <tr>
                   <th>Abstrak</th>
                   <td>:</td>
-                  <td>{tugasakhirData?.abstrak}</td>
+                  <td>
+                    {tugasakhirData?.abstrak ? tugasakhirData?.abstrak : '-'}
+                  </td>
                 </tr>
                 <tr>
                   <th>Lokasi</th>
@@ -99,7 +105,7 @@ export function DetailTAPage() {
                   <td>{tugasakhirData?.lokasi}</td>
                 </tr>
                 <tr>
-                  <th>Tahun</th>
+                  <th>Tahun Ajaran</th>
                   <td>:</td>
                   <td>{tugasakhirData?.tahun}</td>
                 </tr>
