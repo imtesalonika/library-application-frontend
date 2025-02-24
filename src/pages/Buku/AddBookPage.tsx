@@ -48,6 +48,7 @@ export function AddBookPage() {
       setBahasa(response.data.data.bahasa)
       setEdisi(response.data.data.edisi)
       setAbstrak(response.data.data.abstrak)
+      setLokasi(response.data.data.lokasi)
       setBanyakBuku(response.data.data.banyak_buku)
     } catch (e: any) {
       console.log(e)

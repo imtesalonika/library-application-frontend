@@ -1,4 +1,9 @@
-import { ArrowLeft } from 'react-bootstrap-icons'
+import {
+  ArrowLeft,
+  BoxArrowUpRight,
+  PencilSquare,
+  Trash,
+} from 'react-bootstrap-icons'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -6,6 +11,7 @@ import { apiUrl } from '@app/utils/env'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import Dropzone from 'react-dropzone'
+import { formatWaktu } from '@app/services/format-waktu'
 
 export function AddPengumumanPage() {
   const { id } = useParams()
@@ -20,6 +26,7 @@ export function AddPengumumanPage() {
   const navigate = useNavigate()
   const MySwal = withReactContent(Swal)
   const [uploadedFiles, setUploadedFiles] = useState([])
+  const [oldFiles, setOldFiles] = useState([])
 
   const handleAddFile = (acceptedFiles: any) => {
     setUploadedFiles(acceptedFiles)
@@ -60,6 +67,7 @@ export function AddPengumumanPage() {
         setJudul(tempDataPengumuman.judul)
         setIsi(tempDataPengumuman.isi)
         setKategori(tempDataPengumuman.kategori)
+        setOldFiles(JSON.parse(tempDataPengumuman.file))
       }
     } catch (e: any) {
       console.log(e)
@@ -74,6 +82,7 @@ export function AddPengumumanPage() {
     formData.append('judul', judul)
     formData.append('isi', isi)
     formData.append('kategori', kategori)
+    formData.append('oldFiles', JSON.stringify(oldFiles))
 
     try {
       const response = await axios.put(
@@ -87,6 +96,12 @@ export function AddPengumumanPage() {
     } catch (e: any) {
       console.log(e)
     }
+  }
+
+  const removeItem = (index: number) => {
+    const newItems = [...oldFiles]
+    newItems.splice(index, 1)
+    setOldFiles(newItems)
   }
 
   useEffect(() => {
@@ -157,19 +172,52 @@ export function AddPengumumanPage() {
               </section>
             )}
           </Dropzone>
-
-          {/* Menampilkan nama file yang di-upload */}
-          {uploadedFiles.length > 0 && (
-            <div className="mt-3">
-              <h5>Uploaded Files:</h5>
-              <ul>
-                {uploadedFiles.map((file: any, index) => (
-                  <li key={index}>{file.name}</li>
-                ))}
-              </ul>
-            </div>
-          )}
         </div>
+
+        {/* Menampilkan nama file yang di-upload */}
+        {uploadedFiles.length > 0 && (
+          <div className="mt-3">
+            <h5>Selected Files:</h5>
+            <ul>
+              {uploadedFiles.map((file: any, index) => (
+                <li key={index}>{file.name}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {oldFiles.length > 0 && (
+          <div className="mt-3">
+            <h5>Current Files at Announcement:</h5>
+
+            <table className={'table table-bordered table-hover mt-3'}>
+              <thead>
+                <tr>
+                  <th>File Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {oldFiles.map((file: any, index) => (
+                  <tr key={index}>
+                    <td>{file.originalFilename}</td>
+
+                    <td>
+                      <button
+                        className={'btn btn-danger mb-3'}
+                        onClick={() => {
+                          removeItem(index)
+                        }}
+                      >
+                        <Trash />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
         <div className={'w-100'}>
           <div className={'row'}>
             <div className="form-group col-sm-6">
