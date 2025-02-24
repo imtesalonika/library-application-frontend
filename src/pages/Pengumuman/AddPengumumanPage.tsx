@@ -76,7 +76,7 @@ export function AddPengumumanPage() {
     formData.append('kategori', kategori)
 
     try {
-      const response = await axios.patch(
+      const response = await axios.put(
         `${apiUrl}/api/pengumuman/${id}`,
         formData
       )
