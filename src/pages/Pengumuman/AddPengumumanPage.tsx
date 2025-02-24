@@ -85,7 +85,7 @@ export function AddPengumumanPage() {
     formData.append('oldFiles', JSON.stringify(oldFiles))
 
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         `${apiUrl}/api/pengumuman/${id}`,
         formData
       )
