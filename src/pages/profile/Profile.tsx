@@ -44,8 +44,9 @@ const Profile = () => {
             <div className="d-flex justify-content-center">
               <img
                 src={
-                  `${apiUrl}/${currentUser?.foto_profil}` ||
-                  '/img/default-profile.png'
+                  currentUser?.foto_profil
+                    ? `${apiUrl}/${currentUser?.foto_profil}`
+                    : '/img/default-profile.png'
                 }
                 alt="User profile"
                 className="border border-secondary p-2 rounded-circle"

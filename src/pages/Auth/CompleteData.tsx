@@ -23,7 +23,7 @@ export default function CompleteData() {
 
       if (response.status === 200) {
         toast.success(response.data.message)
-        dispatch(setCurrentUser(response.data.data))
+        localStorage.setItem('user_data', JSON.stringify(response.data.data[0]))
         navigate('/')
       }
     } catch (e: any) {
@@ -56,7 +56,7 @@ export default function CompleteData() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   type="text"
-                  placeholder="Username"
+                  placeholder="Your Name"
                 />
               </InputGroup>
             </div>
