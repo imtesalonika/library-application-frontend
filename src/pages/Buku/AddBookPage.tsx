@@ -167,9 +167,24 @@ export function AddBookPage() {
               <br />
               <input
                 type="file"
+                accept="image/*"
                 onChange={(e) => {
                   const selectedFile = e.target.files![0]
                   if (selectedFile) {
+                    const allowedTypes = [
+                      'image/jpeg',
+                      'image/png',
+                      'image/gif',
+                    ]
+
+                    if (!allowedTypes.includes(selectedFile.type)) {
+                      setGambarErr(
+                        'Hanya file gambar (JPEG, PNG) yang diperbolehkan!'
+                      )
+                      e.target.value = '' // Reset input jika tidak valid
+                      return
+                    }
+
                     setGambar(selectedFile)
                   }
                 }}
@@ -183,6 +198,7 @@ export function AddBookPage() {
               <input
                 type="number"
                 value={banyakBuku}
+                min={0}
                 onChange={(e) => {
                   setBanyakBuku(+e.target.value)
                 }}
@@ -211,6 +227,7 @@ export function AddBookPage() {
               <input
                 type="number"
                 value={jumlahHalaman}
+                min={0}
                 onChange={(e) => {
                   setJumlahHalaman(+e.target.value)
                 }}
@@ -282,6 +299,7 @@ export function AddBookPage() {
               <input
                 type="number"
                 value={tahunTerbit}
+                min={0}
                 onChange={(e) => {
                   setTahunTerbit(+e.target.value)
                 }}
@@ -416,6 +434,22 @@ export function AddBookPage() {
               return
             }
 
+            console.log(banyakBuku)
+
+            if (banyakBuku < 0) {
+              setBanyakBukuErr('Tidak boleh negatif')
+              return
+            }
+
+            if (jumlahHalaman < 0) {
+              setJumlahHalamanErr('Tidak boleh negatif')
+              return
+            }
+
+            if (tahunTerbit < 0) {
+              setTahunTerbitErr('Tidak boleh negatif')
+              return
+            }
             if (id) {
               handleUpdateBuku().then()
             } else {

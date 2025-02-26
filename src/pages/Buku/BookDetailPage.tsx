@@ -116,7 +116,9 @@ export function BookDetailPage() {
                 <tr>
                   <th>Status</th>
                   <td>:</td>
-                  <td>{bookData?.status}</td>
+                  <td>
+                    {bookData?.status === 1 ? 'Tersedia' : 'Tidak Tersedia'}
+                  </td>
                 </tr>
                 <tr>
                   <th>Banyak Buku</th>
