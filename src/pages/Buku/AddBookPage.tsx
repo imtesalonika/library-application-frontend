@@ -33,6 +33,7 @@ export function AddBookPage() {
   const [banyakBukuErr, setBanyakBukuErr] = useState('')
   const [gambar, setGambar] = useState<any>(undefined)
   const [gambarErr, setGambarErr] = useState<string>('')
+  const [oldGambar, setOldGambar] = useState<string>('')
   const navigation = useNavigate()
   const MySwal = withReactContent(Swal)
 
@@ -50,6 +51,7 @@ export function AddBookPage() {
       setAbstrak(response.data.data.abstrak)
       setLokasi(response.data.data.lokasi)
       setBanyakBuku(response.data.data.banyak_buku)
+      setOldGambar(response.data.data.gambar)
     } catch (e: any) {
       console.log(e)
     }
@@ -165,6 +167,17 @@ export function AddBookPage() {
             <div className="form-group col-sm">
               <label>File</label>
               <br />
+              {oldGambar && oldGambar !== 'null' ? (
+                <img
+                  src={`${apiUrl}/${oldGambar}`}
+                  alt="old-cover"
+                  style={{
+                    width: 150,
+                  }}
+                />
+              ) : (
+                ''
+              )}
               <input
                 type="file"
                 accept="image/*"

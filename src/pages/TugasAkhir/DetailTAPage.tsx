@@ -75,7 +75,24 @@ export function DetailTAPage() {
                 <tr>
                   <th>Pembimbing</th>
                   <td>:</td>
-                  <td>{tugasakhirData?.pembimbing}</td>
+                  <td
+                    style={{
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {tugasakhirData?.pembimbing}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Penguji</th>
+                  <td>:</td>
+                  <td
+                    style={{
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {tugasakhirData?.penguji}
+                  </td>
                 </tr>
                 <tr>
                   <th>Fakultas</th>
