@@ -363,13 +363,6 @@ export function AddBookPage() {
             setBanyakBukuErr('')
             setLokasiErr('')
 
-            if (!id) {
-              if (!gambar) {
-                setGambarErr('Pilih cover terlebih dahulu')
-                return
-              }
-            }
-
             if (judulBuku === '') {
               setJudulBukuErr('Tidak boleh kosong')
               return

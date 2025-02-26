@@ -11,6 +11,7 @@ export function BookDetailPage() {
   const getBookData = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/book/${id}`)
+      console.log(response.data.data)
       setBookData(response.data.data)
     } catch (e: any) {
       console.log(e)
@@ -40,7 +41,7 @@ export function BookDetailPage() {
           <img
             className={'border rounded-lg'}
             src={
-              bookData?.gambar
+              bookData?.gambar && bookData?.gambar !== 'null'
                 ? `${apiUrl}/${bookData?.gambar}`
                 : '/img/placeholder_buku.jpg'
             }
