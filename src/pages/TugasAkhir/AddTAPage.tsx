@@ -32,6 +32,15 @@ export function AddTAPage() {
   const navigation = useNavigate()
   const MySwal = withReactContent(Swal)
 
+  const fakultasProdiMapping = {
+    FITE: ['Informatika', 'Teknik Elektro', 'Sistem Informasi'],
+    FTI: ['Manajemen Rekayasa', 'Teknik Metalurgi'],
+    FTB: ['Bioproses'],
+    Vokasi: ['Teknologi Informasi', 'Teknologi Komputer', 'Teknologi Rekayasa Perangkat Lunak'],
+  }
+  
+  type FakultasType = keyof typeof fakultasProdiMapping;
+
   const getBookData = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/tugasakhir/${id}`)
@@ -152,7 +161,7 @@ export function AddTAPage() {
           }}
           className={'text-lg'}
         >
-          {id ? 'Edit Tugas AKhir' : 'Tambah Tugas Akhir'}
+          {id ? 'Edit Tugas Akhir' : 'Tambah Tugas Akhir'}
         </span>
       </div>
       <div className={'px-5'}>
@@ -248,6 +257,7 @@ export function AddTAPage() {
                 value={fakultas}
                 onChange={(e) => {
                   setFakultas(e.target.value)
+                  setProdi('') // Reset prodi ketika fakultas berubah
                 }}
               >
                 <option value="">Pilih Fakultas</option>
@@ -269,17 +279,11 @@ export function AddTAPage() {
                 }}
               >
                 <option value="">Pilih Prodi</option>
-                <option value="Informatika">Informatika</option>
-                <option value="Teknik Elektro">Teknik Elektro</option>
-                <option value="Sistem Informasi">Sistem Informasi</option>
-                <option value="Teknik Bioproses">Teknik Bioproses</option>
-                <option value="Manajemen Rekayasa">Manajemen Rekayasa</option>
-                <option value="Teknik Metalurgi">Teknik Metalurgi</option>
-                <option value="Teknologi Informasi">Teknologi Informasi</option>
-                <option value="Teknologi Komputer">Teknologi Komputer</option>
-                <option value="Teknologi Rekayasa Perangkat Lunak">
-                  Teknologi Rekayasa Perangkat Lunak
-                </option>
+                {fakultasProdiMapping[fakultas as FakultasType]?.map((prodiOption: string) => (
+                  <option key={prodiOption} value={prodiOption}>
+                    {prodiOption}
+                  </option>
+                ))}
               </select>
               <span className={'text-danger'}>{prodiErr}</span>
             </div>
