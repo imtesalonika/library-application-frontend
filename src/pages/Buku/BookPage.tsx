@@ -1,56 +1,69 @@
-import DataTable from 'datatables.net-react'
-import DT, { Config } from 'datatables.net-bs4'
-import 'datatables.net-responsive-bs4'
-import 'datatables.net-buttons-bs4'
-import { useEffect, useState } from 'react'
-import { Plus } from 'react-bootstrap-icons'
-import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { apiUrl } from '@app/utils/env'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import DataTable from 'datatables.net-react';
+import DT, { Config } from 'datatables.net-bs4';
+import 'datatables.net-responsive-bs4';
+import 'datatables.net-buttons-bs4';
+import { useEffect, useState } from 'react';
+import { Plus } from 'react-bootstrap-icons';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { apiUrl } from '@app/utils/env';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
-DataTable.use(DT)
+DataTable.use(DT);
 
 export function BookPage() {
-  const [bookData, setBookData] = useState<any>()
-  const MySwal = withReactContent(Swal)
-  const navigation = useNavigate()
+  const [bookData, setBookData] = useState<any>();
+  const MySwal = withReactContent(Swal);
+  const navigation = useNavigate();
+  const [jumlahRequest, setJumlahRequest] = useState(0);
 
   const getBookData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/book`)
-      setBookData(response.data.data)
+      const response = await axios.get(`${apiUrl}/api/book`);
+      setBookData(response.data.data);
     } catch (e: any) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
+
+  const getJumlahRequest = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku?status=REQ`);
+      if (response.status === 200) {
+        setJumlahRequest(response.data.data.length); // Set jumlah request peminjaman
+      }
+    } catch (e: any) {
+      console.error('Gagal mendapatkan jumlah request peminjaman:', e);
+    }
+  };
 
   useEffect(() => {
-    getBookData().then()
-  }, [])
+    getBookData().then();
+    getJumlahRequest();
+  }, []);
 
   const handleRemoveBuku = async (bookId: number) => {
     try {
-      const response = await axios.delete(`${apiUrl}/api/book/${bookId}`)
+      const response = await axios.delete(`<span class="math-inline">\{apiUrl\}/api/book/</span>{bookId}`);
 
       if (response.status === 200) {
         MySwal.fire({
           text: response.data.message,
           icon: 'success',
           title: 'Success!',
-        }).then()
-        getBookData().then()
+        }).then();
+        getBookData().then();
       }
     } catch (e: any) {
       MySwal.fire({
         text: e.response.data.message,
         icon: 'error',
         title: 'Failed!',
-      }).then()
-      console.log(e)
+      }).then();
+      console.log(e);
     }
-  }
+  };
 
   const tableOption: Config = {
     ordering: true,
@@ -58,7 +71,7 @@ export function BookPage() {
     searching: true,
     info: true,
     responsive: true,
-  }
+  };
 
   return (
     <div className={'p-4 bg-white'}>
@@ -76,14 +89,17 @@ export function BookPage() {
           </button>
         </Link>
 
-        <Link to={'/borrow-book'}>
+        <Link to={'/borrow-book'} className="position-relative">
           <button
-            className="btn btn-success d-flex align-items-center"
-            style={{
-              gap: 3,
-            }}
+            className="btn btn-success d-flex align-items-center position-relative"
+            style={{ gap: 3 }}
           >
             Daftar Peminjaman Buku
+            {jumlahRequest > 0 && (
+              <span className="badge rounded-pill bg-danger position-absolute" style={{ top: '-5px', right: '-10px' }}>
+                {jumlahRequest}
+              </span>
+            )}
           </button>
         </Link>
       </div>
@@ -111,7 +127,7 @@ export function BookPage() {
                   <button
                     className="btn btn-success d-flex align-items-center"
                     onClick={() => {
-                      navigation(`/book/${row.id}`)
+                      navigation(`/book/${row.id}`);
                     }}
                   >
                     <svg
@@ -131,7 +147,7 @@ export function BookPage() {
                   <button
                     className="btn btn-warning d-flex align-items-center"
                     onClick={() => {
-                      navigation(`/book/edit/${row.id}`)
+                      navigation(`/book/edit/${row.id}`);
                     }}
                   >
                     <svg
@@ -148,7 +164,7 @@ export function BookPage() {
                   <button
                     className="btn btn-danger d-flex align-items-center"
                     onClick={() => {
-                      handleRemoveBuku(row.id).then()
+                      handleRemoveBuku(row.id).then();
                     }}
                   >
                     <svg
@@ -159,7 +175,8 @@ export function BookPage() {
                       className="bi bi-trash"
                       viewBox="0 0 16 16"
                     >
-                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                      <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0
+                      0 0 0-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                       <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                     </svg>
                   </button>
@@ -172,5 +189,5 @@ export function BookPage() {
         ''
       )}
     </div>
-  )
+  );
 }
