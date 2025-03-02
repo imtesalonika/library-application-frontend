@@ -1,4 +1,4 @@
-import { InfoBox } from '@app/components/info-box/InfoBox'
+import { apiUrl } from '@app/utils/env'
 import { ContentHeader, SmallBox } from '@components'
 import {
   faUsers,
@@ -7,9 +7,25 @@ import {
   faEye,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
 const Dashboard = () => {
+  const [todayVisitor, setTodayVisitor] = useState(0);
+
+  const getVisitorInfo = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/auth/visitor`);
+      setTodayVisitor(response.data.data.length);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  useEffect(() => {
+    getVisitorInfo().then();
+  }, [])
+
   return (
     <div>
       <ContentHeader title="Dashboard" />
@@ -75,7 +91,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Visitors Today"
-                text="340"
+                text={`${todayVisitor }`}
                 navigateTo="/dashboard/visitor-report"
                 variant="danger"
                 icon={{
