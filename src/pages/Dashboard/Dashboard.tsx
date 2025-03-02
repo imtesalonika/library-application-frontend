@@ -15,11 +15,21 @@ const Dashboard = () => {
   const [todayVisitor, setTodayVisitor] = useState(0);
   const [dataPeminjaman, setDataPeminjaman] = useState(0);
   const [bookData, setBookData] = useState(0);
+  const [usersData, setUsersData] = useState(0);
 
   const getVisitorInfo = async () => {
     try {
       const response = await axios.get(`${apiUrl}/api/auth/visitor`);
       setTodayVisitor(response.data.data.length);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/users`);
+      setUsersData(response.data.data.length);
     } catch (e) {
       console.log(e);
     }
@@ -52,6 +62,7 @@ const Dashboard = () => {
     getVisitorInfo().then();
     getDataPeminjaman().then();
     getBookData().then();
+    getAllUsers().then();
   }, [])
 
   return (
@@ -65,7 +76,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Users"
-                text="1,200"
+                text={`${usersData}`}
                 navigateTo="/dashboard/user-management"
                 variant="info"
                 icon={{
