@@ -14,6 +14,7 @@ import { toast } from 'react-toastify'
 const Dashboard = () => {
   const [todayVisitor, setTodayVisitor] = useState(0);
   const [dataPeminjaman, setDataPeminjaman] = useState(0);
+  const [bookData, setBookData] = useState(0);
 
   const getVisitorInfo = async () => {
     try {
@@ -21,6 +22,15 @@ const Dashboard = () => {
       setTodayVisitor(response.data.data.length);
     } catch (e) {
       console.log(e);
+    }
+  }
+
+  const getBookData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/book`)
+      setBookData(response.data.data.length)
+    } catch (e: any) {
+      console.log(e)
     }
   }
 
@@ -41,6 +51,7 @@ const Dashboard = () => {
   useEffect(() => {
     getVisitorInfo().then();
     getDataPeminjaman().then();
+    getBookData().then();
   }, [])
 
   return (
@@ -72,7 +83,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Books"
-                text="5,400"
+                text={`${bookData}`}
                 navigateTo="/book"
                 variant="success"
                 icon={{
