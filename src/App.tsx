@@ -119,7 +119,7 @@ const App = () => {
               element={<VisitorReport />}
             />
             <Route
-              path="/dashboard/borrowed-books-detail"
+              path="/dashboard/borrowed-books-detail/:month"
               element={<DetailPeminjamanPage />}
             />
             <Route
