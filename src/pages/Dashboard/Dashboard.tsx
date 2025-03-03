@@ -1,4 +1,4 @@
-import { InfoBox } from '@app/components/info-box/InfoBox'
+import { apiUrl } from '@app/utils/env'
 import { ContentHeader, SmallBox } from '@components'
 import {
   faUsers,
@@ -7,9 +7,64 @@ import {
   faEye,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Dashboard = () => {
+  const [todayVisitor, setTodayVisitor] = useState(0);
+  const [dataPeminjaman, setDataPeminjaman] = useState(0);
+  const [bookData, setBookData] = useState(0);
+  const [usersData, setUsersData] = useState(0);
+
+  const getVisitorInfo = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/auth/visitor`);
+      setTodayVisitor(response.data.data.length);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getAllUsers = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/users`);
+      setUsersData(response.data.data.length);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  const getBookData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/book`)
+      setBookData(response.data.data.length)
+    } catch (e: any) {
+      console.log(e)
+    }
+  }
+
+  const getDataPeminjaman = async () => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
+
+        if (response.status === 200) {
+            setDataPeminjaman(response.data.data.length);
+            console.log('Data peminjaman berhasil diambil:', response.data.data); // Tambahkan log
+        }
+    } catch (e: any) {
+        toast.error(e.response.data.message);
+        console.error('Gagal mengambil data peminjaman:', e); // Tambahkan log error
+    }
+};
+
+  useEffect(() => {
+    getVisitorInfo().then();
+    getDataPeminjaman().then();
+    getBookData().then();
+    getAllUsers().then();
+  }, [])
+
   return (
     <div>
       <ContentHeader title="Dashboard" />
@@ -21,7 +76,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Users"
-                text="1,200"
+                text={`${usersData}`}
                 navigateTo="/dashboard/user-management"
                 variant="info"
                 icon={{
@@ -39,7 +94,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Total Books"
-                text="5,400"
+                text={`${bookData}`}
                 navigateTo="/book"
                 variant="success"
                 icon={{
@@ -56,8 +111,8 @@ const Dashboard = () => {
             {/* Books Borrowed Report */}
             <div className="col-lg-3 col-6">
               <SmallBox
-                title="Books Borrowed"
-                text="1,030"
+                title="Total Books Borrowed"
+                text={`${dataPeminjaman}`}
                 navigateTo="/dashboard/borrowed-books-report"
                 variant="warning"
                 icon={{
@@ -75,7 +130,7 @@ const Dashboard = () => {
             <div className="col-lg-3 col-6">
               <SmallBox
                 title="Visitors Today"
-                text="340"
+                text={`${todayVisitor }`}
                 navigateTo="/dashboard/visitor-report"
                 variant="danger"
                 icon={{
