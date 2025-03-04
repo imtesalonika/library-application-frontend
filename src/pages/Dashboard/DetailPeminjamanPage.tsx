@@ -66,6 +66,18 @@ export function DetailPeminjamanPage() {
     return `${hari}-${bulan}-${tahun}`
   }
 
+  const applyFilter = () => {
+    setFromDateErr('')
+    setEndDateErr('')
+
+    if (fromDate && endDate && endDate < fromDate) {
+      setEndDateErr('End date tidak boleh lebih kecil dari start date.')
+      return
+    }
+
+    getDataPeminjaman().then()
+  }
+
   useEffect(() => {
     getDataPeminjaman().then()
   }, [])
@@ -97,6 +109,7 @@ export function DetailPeminjamanPage() {
               }}
             />
           </div>
+          <span className={'text-danger text-xs no-print'}>{fromDateErr}</span>
         </div>
 
         <div className="form-group">
@@ -116,6 +129,7 @@ export function DetailPeminjamanPage() {
               }}
             />
           </div>
+          <span className={'text-danger text-xs no-print'}>{endDateErr}</span>
         </div>
 
         <div
@@ -126,7 +140,7 @@ export function DetailPeminjamanPage() {
           <button
             className="btn btn-success d-flex align-items-center no-print"
             onClick={() => {
-              getDataPeminjaman().then()
+              applyFilter()
             }}
           >
             Terapkan Filter
