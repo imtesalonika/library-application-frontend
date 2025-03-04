@@ -64,7 +64,7 @@ export function DetailPeminjamanPage() {
 
   return (
     <div className="p-4 bg-white">
-      <h2>Detail Peminjaman</h2>
+      <h2>Detail Peminjaman Bulan {month}</h2>
 
       <button
         className="btn btn-success d-flex align-items-center mt-3 no-print"
