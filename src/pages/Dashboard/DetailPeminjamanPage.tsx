@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 export function DetailPeminjamanPage() {
   const { month }: any = useParams()
   const [currentData, setCurrentData] = useState<any>([])
+  const [allData, setAllData] = useState<any>([])
   const [fromDate, setFromDate] = useState<any>()
   const [endDate, setEndDate] = useState<any>()
   const [fromDateErr, setFromDateErr] = useState('')
@@ -49,6 +50,7 @@ export function DetailPeminjamanPage() {
 
       if (response.status === 200) {
         setCurrentData(filterByMonthAndStatus(response.data.data))
+        setAllData(response.data.data)
         console.log('Data peminjaman berhasil diambil:', response.data.data)
       }
     } catch (e: any) {
@@ -161,6 +163,26 @@ export function DetailPeminjamanPage() {
             Save As PDF
           </button>
         </div>
+      </div>
+
+      <div>
+        {`DONE : ${
+          allData.filter((item: any) => {
+            return item.status_peminjaman === 'DONE'
+          }).length
+        }, REQ : ${
+          allData.filter((item: any) => {
+            return item.status_peminjaman === 'REQ'
+          }).length
+        }, ACCEPTED : ${
+          allData.filter((item: any) => {
+            return item.status_peminjaman === 'ACCEPTED'
+          }).length
+        }, REJECTED : ${
+          allData.filter((item: any) => {
+            return item.status_peminjaman === 'REJECTED'
+          }).length
+        }`}
       </div>
 
       <Table bordered hover className="text-center mt-3">
