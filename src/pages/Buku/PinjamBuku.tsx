@@ -55,6 +55,7 @@ export default function PinjamBuku() {
             <th>Peminjam</th>
             <th>Status</th>
             <th>Tanggal Pinjam</th>
+            <th>Batas Peminjaman</th>
             <th>Tanggal Kembali</th>
             <th>Tindakan</th>
           </tr>
@@ -68,6 +69,7 @@ export default function PinjamBuku() {
                 <td>{row.nama_user}</td>
                 <td>{row.status}</td>
                 <td>{formatWaktu(row.tanggal_pinjam)}</td>
+                <td>{formatWaktu(row.batas_peminjaman)}</td>
                 <td>{row.tanggal_kembali ? formatWaktu(row.tanggal_kembali) : '-'}</td>
                 <td>
                   {row.status === 'REQ' ? (
