@@ -49,3 +49,13 @@
 .control-sidebar-slide-open .control-sidebar::before {
   transition: none;
 }
+
+@media print {
+  @page {
+    size: landscape;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
