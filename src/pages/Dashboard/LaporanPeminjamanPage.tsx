@@ -12,6 +12,7 @@ DataTable.use(DT)
 
 export function LaporanPeminjamanPage() {
   const [dataPeminjaman, setDataPeminjaman] = useState<any>([])
+  const [allDataPeminjaman, setAllDataPeminjaman] = useState<any>([])
 
   const getMonthlyBorrowingData = (data: any) => {
     const monthNames = [
@@ -48,6 +49,7 @@ export function LaporanPeminjamanPage() {
 
       if (response.status === 200) {
         setDataPeminjaman(getMonthlyBorrowingData(response.data.data))
+        setAllDataPeminjaman(response.data.data)
         console.log('Data peminjaman berhasil diambil:', response.data.data) // Tambahkan log
       }
     } catch (e: any) {
@@ -75,6 +77,28 @@ export function LaporanPeminjamanPage() {
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>All Months</td>
+            <td>
+              {
+                allDataPeminjaman?.filter((item: any) => {
+                  return item.status_peminjaman === 'DONE'
+                }).length
+              }
+            </td>
+            <td>
+              <div className="btn-group" role="group" style={{ gap: '5px' }}>
+                <Link to={`/dashboard/borrowed-books-detail/All Month`}>
+                  <button
+                    className="btn btn-success d-flex align-items-center"
+                    style={{ gap: 3 }}
+                  >
+                    <BoxArrowUpRight />
+                  </button>
+                </Link>
+              </div>
+            </td>
+          </tr>
           {dataPeminjaman.map((row: any, index: number) => (
             <tr key={index}>
               <td>{row[0]}</td>

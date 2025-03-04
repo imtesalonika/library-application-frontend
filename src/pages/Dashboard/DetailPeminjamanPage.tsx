@@ -49,7 +49,11 @@ export function DetailPeminjamanPage() {
       })
 
       if (response.status === 200) {
-        setCurrentData(filterByMonthAndStatus(response.data.data))
+        if (month !== 'All Month') {
+          setCurrentData(filterByMonthAndStatus(response.data.data))
+        } else {
+          setCurrentData(response.data.data)
+        }
         setAllData(response.data.data)
         console.log('Data peminjaman berhasil diambil:', response.data.data)
       }
@@ -86,7 +90,7 @@ export function DetailPeminjamanPage() {
 
   return (
     <div className="p-4 bg-white">
-      <h2>Detail Peminjaman Bulan {month}</h2>
+      <h2>Detail Peminjaman {month}</h2>
 
       <div
         className={'d-flex'}
