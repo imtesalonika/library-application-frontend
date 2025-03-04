@@ -1,14 +1,17 @@
 import { apiUrl } from '@app/utils/env'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Table, Pagination, Form, Button } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { BoxArrowUpRight } from 'react-bootstrap-icons'
 
 export function DetailPeminjamanPage() {
   const { month }: any = useParams()
   const [currentData, setCurrentData] = useState<any>([])
+  const [fromDate, setFromDate] = useState<any>()
+  const [endDate, setEndDate] = useState<any>()
+  const [fromDateErr, setFromDateErr] = useState('')
+  const [endDateErr, setEndDateErr] = useState('')
 
   const filterByMonthAndStatus = (data: any) => {
     const bulanIndo: any = {
@@ -37,7 +40,12 @@ export function DetailPeminjamanPage() {
 
   const getDataPeminjaman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`, {
+        params: {
+          start_date: fromDate,
+          end_date: endDate,
+        },
+      })
 
       if (response.status === 200) {
         setCurrentData(filterByMonthAndStatus(response.data.data))
@@ -66,14 +74,80 @@ export function DetailPeminjamanPage() {
     <div className="p-4 bg-white">
       <h2>Detail Peminjaman Bulan {month}</h2>
 
-      <button
-        className="btn btn-success d-flex align-items-center mt-3 no-print"
-        onClick={() => {
-          window.print()
+      <div
+        className={'d-flex'}
+        style={{
+          gap: 10,
         }}
       >
-        Save As PDF
-      </button>
+        <div className="form-group">
+          <label>Start From :</label>
+
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <span className="input-group-text">
+                <i className="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input
+              type="date"
+              className="form-control float-right"
+              onChange={(e) => {
+                setFromDate(e.target.value)
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Until :</label>
+
+          <div className="input-group">
+            <div className="input-group-prepend">
+              <span className="input-group-text">
+                <i className="far fa-calendar-alt"></i>
+              </span>
+            </div>
+            <input
+              type="date"
+              className="form-control float-right"
+              onChange={(e) => {
+                setEndDate(e.target.value)
+              }}
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            marginTop: 32,
+          }}
+        >
+          <button
+            className="btn btn-success d-flex align-items-center no-print"
+            onClick={() => {
+              getDataPeminjaman().then()
+            }}
+          >
+            Terapkan Filter
+          </button>
+        </div>
+
+        <div
+          style={{
+            marginTop: 32,
+          }}
+        >
+          <button
+            className="btn btn-success d-flex align-items-center no-print"
+            onClick={() => {
+              window.print()
+            }}
+          >
+            Save As PDF
+          </button>
+        </div>
+      </div>
 
       <Table bordered hover className="text-center mt-3">
         <thead>
@@ -88,17 +162,23 @@ export function DetailPeminjamanPage() {
           </tr>
         </thead>
         <tbody>
-          {currentData.map((book: any, index: number) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td>{book.id_buku}</td>
-              <td>{book.judul_buku}</td>
-              <td>{book.id_user}</td>
-              <td>{book.nama_peminjam}</td>
-              <td>{book.status_peminjaman}</td>
-              <td>{`${formatTanggal(book.tanggal_pinjam)} s/d ${formatTanggal(book.tanggal_kembali)}`}</td>
+          {currentData.length > 0 ? (
+            currentData.map((book: any, index: number) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{book.id_buku}</td>
+                <td>{book.judul_buku}</td>
+                <td>{book.id_user}</td>
+                <td>{book.nama_peminjam}</td>
+                <td>{book.status_peminjaman}</td>
+                <td>{`${formatTanggal(book.tanggal_pinjam)} s/d ${formatTanggal(book.tanggal_kembali)}`}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={7}>Tidak ada data.</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </Table>
     </div>
