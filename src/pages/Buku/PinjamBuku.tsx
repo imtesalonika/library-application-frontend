@@ -43,6 +43,22 @@ export default function PinjamBuku() {
     }
   }
 
+  const handlePerpanjang = async (id: number) => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/api/pinjam-buku/perpanjang/${id}`
+      )
+
+      if (response.status === 200) {
+        await getDataPeminjaman() // Gunakan await untuk memastikan data diperbarui
+        toast.success(response.data.message)
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.message)
+      console.error('Gagal memperbarui status peminjaman:', e) // Tambahkan log error
+    }
+  }
+
   useEffect(() => {
     getDataPeminjaman() // Tidak perlu .then() di sini
   }, [])
@@ -78,36 +94,68 @@ export default function PinjamBuku() {
                   {row.tanggal_kembali ? formatWaktu(row.tanggal_kembali) : '-'}
                 </td>
                 <td>
-                  {row.status === 'REQ' ? (
+                  {row.status_peminjaman === 'REQ' ? (
                     <div className={'d-flex'} style={{ gap: '5px' }}>
                       <button
                         className="btn btn-success btn-sm"
                         onClick={() =>
-                          handleAcceptRejectPeminjaman(row.id, 'ACCEPTED')
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'IS BEING BORROWED'
+                          )
                         }
                       >
                         <CheckLg />
                       </button>
                       <button
                         onClick={() =>
-                          handleAcceptRejectPeminjaman(row.id, 'REJECTED')
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'REJECTED'
+                          )
                         }
                         className="btn btn-danger btn-sm"
                       >
                         <XLg />
                       </button>
                     </div>
-                  ) : row.status === 'DONE' || row.status === 'REJECTED' ? (
-                    '-'
-                  ) : (
+                  ) : row.status_peminjaman === 'DONE' ||
+                    row.status_peminjaman === 'REJECTED' ? (
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() =>
-                        handleAcceptRejectPeminjaman(row.id, 'DONE')
-                      }
+                      onClick={() => {
+                        handlePerpanjang(row.id_peminjaman).then()
+                      }}
                     >
-                      Selesai
+                      Perpanjang
                     </button>
+                  ) : (
+                    <div
+                      className={'d-flex flex-wrap'}
+                      style={{
+                        gap: 5,
+                      }}
+                    >
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() =>
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'DONE'
+                          )
+                        }
+                      >
+                        Selesai
+                      </button>
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => {
+                          handlePerpanjang(row.id_peminjaman).then()
+                        }}
+                      >
+                        Perpanjang
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>

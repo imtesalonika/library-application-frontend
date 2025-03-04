@@ -174,9 +174,9 @@ export function DetailPeminjamanPage() {
           allData.filter((item: any) => {
             return item.status_peminjaman === 'REQ'
           }).length
-        }, ACCEPTED : ${
+        }, IS BEING BORROWED : ${
           allData.filter((item: any) => {
-            return item.status_peminjaman === 'ACCEPTED'
+            return item.status_peminjaman === 'IS BEING BORROWED'
           }).length
         }, REJECTED : ${
           allData.filter((item: any) => {
