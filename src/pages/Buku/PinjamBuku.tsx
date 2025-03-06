@@ -25,23 +25,19 @@ export default function PinjamBuku() {
   const handleAcceptRejectPeminjaman = async (id: number, status: string) => {
     try {
       const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
-        // Perbaikan URL
         status: status,
-      })
-
+      });
+  
       if (response.status === 200) {
-        await getDataPeminjaman() // Gunakan await untuk memastikan data diperbarui
-        toast.success(response.data.message)
-        console.log(
-          'Status peminjaman berhasil diperbarui:',
-          response.data.message
-        ) // Tambahkan log
+        await getDataPeminjaman(); // Refresh data
+        toast.success(response.data.message);
+        console.log('Status peminjaman berhasil diperbarui:', response.data.message);
       }
     } catch (e: any) {
-      toast.error(e.response.data.message)
-      console.error('Gagal memperbarui status peminjaman:', e) // Tambahkan log error
+      toast.error(e.response.data.message);
+      console.error('Gagal memperbarui status peminjaman:', e);
     }
-  }
+  };
 
   const handlePerpanjang = async (id: number) => {
     try {
