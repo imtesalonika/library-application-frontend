@@ -147,14 +147,6 @@ export default function PinjamBuku() {
                       >
                         Selesai
                       </button>
-                      <button
-                        className="btn btn-success btn-sm"
-                        onClick={() => {
-                          handlePerpanjang(row.id_peminjaman).then()
-                        }}
-                      >
-                        Perpanjang
-                      </button>
                     </div>
                   )}
                 </td>
