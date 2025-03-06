@@ -1,47 +1,67 @@
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { apiUrl } from '@app/utils/env';
-import { useEffect, useState } from 'react';
-import { formatWaktu } from '@app/services/format-waktu';
-import { CheckLg, XLg } from 'react-bootstrap-icons';
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { apiUrl } from '@app/utils/env'
+import { useEffect, useState } from 'react'
+import { formatWaktu } from '@app/services/format-waktu'
+import { CheckLg, XLg } from 'react-bootstrap-icons'
 
 export default function PinjamBuku() {
-  const [dataPeminjaman, setDataPeminjaman] = useState([]);
+  const [dataPeminjaman, setDataPeminjaman] = useState([])
 
   const getDataPeminjaman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
 
       if (response.status === 200) {
-        setDataPeminjaman(response.data.data);
-        console.log('Data peminjaman berhasil diambil:', response.data.data); // Tambahkan log
+        setDataPeminjaman(response.data.data)
+        console.log('Data peminjaman berhasil diambil:', response.data.data) // Tambahkan log
       }
     } catch (e: any) {
-      toast.error(e.response.data.message);
-      console.error('Gagal mengambil data peminjaman:', e); // Tambahkan log error
+      toast.error(e.response.data.message)
+      console.error('Gagal mengambil data peminjaman:', e) // Tambahkan log error
     }
-  };
+  }
 
   const handleAcceptRejectPeminjaman = async (id: number, status: string) => {
     try {
-      const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, { // Perbaikan URL
+      const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
+        // Perbaikan URL
         status: status,
-      });
+      })
 
       if (response.status === 200) {
-        await getDataPeminjaman(); // Gunakan await untuk memastikan data diperbarui
-        toast.success(response.data.message);
-        console.log('Status peminjaman berhasil diperbarui:', response.data.message); // Tambahkan log
+        await getDataPeminjaman() // Gunakan await untuk memastikan data diperbarui
+        toast.success(response.data.message)
+        console.log(
+          'Status peminjaman berhasil diperbarui:',
+          response.data.message
+        ) // Tambahkan log
       }
     } catch (e: any) {
-      toast.error(e.response.data.message);
-      console.error('Gagal memperbarui status peminjaman:', e); // Tambahkan log error
+      toast.error(e.response.data.message)
+      console.error('Gagal memperbarui status peminjaman:', e) // Tambahkan log error
     }
-  };
+  }
+
+  const handlePerpanjang = async (id: number) => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/api/pinjam-buku/perpanjang/${id}`
+      )
+
+      if (response.status === 200) {
+        await getDataPeminjaman() // Gunakan await untuk memastikan data diperbarui
+        toast.success(response.data.message)
+      }
+    } catch (e: any) {
+      toast.error(e.response.data.message)
+      console.error('Gagal memperbarui status peminjaman:', e) // Tambahkan log error
+    }
+  }
 
   useEffect(() => {
-    getDataPeminjaman(); // Tidak perlu .then() di sini
-  }, []);
+    getDataPeminjaman() // Tidak perlu .then() di sini
+  }, [])
 
   return (
     <div className={'p-4 bg-white'}>
@@ -55,6 +75,7 @@ export default function PinjamBuku() {
             <th>Peminjam</th>
             <th>Status</th>
             <th>Tanggal Pinjam</th>
+            <th>Batas Peminjaman</th>
             <th>Tanggal Kembali</th>
             <th>Tindakan</th>
           </tr>
@@ -65,35 +86,76 @@ export default function PinjamBuku() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.judul_buku}</td>
-                <td>{row.nama_user}</td>
-                <td>{row.status}</td>
+                <td>{row.nama_peminjam}</td>
+                <td>{row.status_peminjaman}</td>
                 <td>{formatWaktu(row.tanggal_pinjam)}</td>
-                <td>{row.tanggal_kembali ? formatWaktu(row.tanggal_kembali) : '-'}</td>
+                <td>{formatWaktu(row.batas_peminjaman)}</td>
                 <td>
-                  {row.status === 'REQ' ? (
+                  {row.tanggal_kembali ? formatWaktu(row.tanggal_kembali) : '-'}
+                </td>
+                <td>
+                  {row.status_peminjaman === 'REQ' ? (
                     <div className={'d-flex'} style={{ gap: '5px' }}>
                       <button
                         className="btn btn-success btn-sm"
-                        onClick={() => handleAcceptRejectPeminjaman(row.id, 'ACCEPTED')}
+                        onClick={() =>
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'IS BEING BORROWED'
+                          )
+                        }
                       >
                         <CheckLg />
                       </button>
                       <button
-                        onClick={() => handleAcceptRejectPeminjaman(row.id, 'REJECTED')}
+                        onClick={() =>
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'REJECTED'
+                          )
+                        }
                         className="btn btn-danger btn-sm"
                       >
                         <XLg />
                       </button>
                     </div>
-                  ) : row.status === 'DONE' || row.status === 'REJECTED' ? (
-                    '-'
-                  ) : (
+                  ) : row.status_peminjaman === 'DONE' ||
+                    row.status_peminjaman === 'REJECTED' ? (
                     <button
                       className="btn btn-success btn-sm"
-                      onClick={() => handleAcceptRejectPeminjaman(row.id, 'DONE')}
+                      onClick={() => {
+                        handlePerpanjang(row.id_peminjaman).then()
+                      }}
                     >
-                      Selesai
+                      Perpanjang
                     </button>
+                  ) : (
+                    <div
+                      className={'d-flex flex-wrap'}
+                      style={{
+                        gap: 5,
+                      }}
+                    >
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() =>
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'DONE'
+                          )
+                        }
+                      >
+                        Selesai
+                      </button>
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => {
+                          handlePerpanjang(row.id_peminjaman).then()
+                        }}
+                      >
+                        Perpanjang
+                      </button>
+                    </div>
                   )}
                 </td>
               </tr>
@@ -108,5 +170,5 @@ export default function PinjamBuku() {
         </tbody>
       </table>
     </div>
-  );
+  )
 }

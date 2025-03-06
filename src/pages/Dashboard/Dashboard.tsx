@@ -12,26 +12,26 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 const Dashboard = () => {
-  const [todayVisitor, setTodayVisitor] = useState(0);
-  const [dataPeminjaman, setDataPeminjaman] = useState(0);
-  const [bookData, setBookData] = useState(0);
-  const [usersData, setUsersData] = useState(0);
+  const [todayVisitor, setTodayVisitor] = useState(0)
+  const [dataPeminjaman, setDataPeminjaman] = useState(0)
+  const [bookData, setBookData] = useState(0)
+  const [usersData, setUsersData] = useState(0)
 
   const getVisitorInfo = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/auth/visitor`);
-      setTodayVisitor(response.data.data.length);
+      const response = await axios.get(`${apiUrl}/api/auth/visitor`)
+      setTodayVisitor(response.data.data.length)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
   const getAllUsers = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/users`);
-      setUsersData(response.data.data.length);
+      const response = await axios.get(`${apiUrl}/api/users`)
+      setUsersData(response.data.data.length)
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
 
@@ -46,23 +46,23 @@ const Dashboard = () => {
 
   const getDataPeminjaman = async () => {
     try {
-        const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
 
-        if (response.status === 200) {
-            setDataPeminjaman(response.data.data.length);
-            console.log('Data peminjaman berhasil diambil:', response.data.data); // Tambahkan log
-        }
+      if (response.status === 200) {
+        setDataPeminjaman(response.data.data.length)
+        console.log('Data peminjaman berhasil diambil:', response.data.data) // Tambahkan log
+      }
     } catch (e: any) {
-        toast.error(e.response.data.message);
-        console.error('Gagal mengambil data peminjaman:', e); // Tambahkan log error
+      toast.error(e.response.data.message)
+      console.error('Gagal mengambil data peminjaman:', e) // Tambahkan log error
     }
-};
+  }
 
   useEffect(() => {
-    getVisitorInfo().then();
-    getDataPeminjaman().then();
-    getBookData().then();
-    getAllUsers().then();
+    getVisitorInfo().then()
+    getDataPeminjaman().then()
+    getBookData().then()
+    getAllUsers().then()
   }, [])
 
   return (
@@ -75,7 +75,7 @@ const Dashboard = () => {
             {/* Total Users */}
             <div className="col-lg-3 col-6">
               <SmallBox
-                title="Total Users"
+                title="Total Pengguna"
                 text={`${usersData}`}
                 navigateTo="/dashboard/user-management"
                 variant="info"
@@ -93,7 +93,7 @@ const Dashboard = () => {
             {/* Total Books */}
             <div className="col-lg-3 col-6">
               <SmallBox
-                title="Total Books"
+                title="Total Buku"
                 text={`${bookData}`}
                 navigateTo="/book"
                 variant="success"
@@ -111,7 +111,7 @@ const Dashboard = () => {
             {/* Books Borrowed Report */}
             <div className="col-lg-3 col-6">
               <SmallBox
-                title="Total Books Borrowed"
+                title="Total Peminjaman Buku"
                 text={`${dataPeminjaman}`}
                 navigateTo="/dashboard/borrowed-books-report"
                 variant="warning"
@@ -129,8 +129,8 @@ const Dashboard = () => {
             {/* Visitors */}
             <div className="col-lg-3 col-6">
               <SmallBox
-                title="Visitors Today"
-                text={`${todayVisitor }`}
+                title="Pengunjung Hari Ini"
+                text={`${todayVisitor}`}
                 navigateTo="/dashboard/visitor-report"
                 variant="danger"
                 icon={{

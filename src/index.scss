@@ -49,3 +49,9 @@
 .control-sidebar-slide-open .control-sidebar::before {
   transition: none;
 }
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
