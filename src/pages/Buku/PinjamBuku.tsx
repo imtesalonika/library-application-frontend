@@ -1,35 +1,36 @@
-import { toast } from 'react-toastify'
-import axios from 'axios'
-import { apiUrl } from '@app/utils/env'
-import { useEffect, useState } from 'react'
-import { formatWaktu } from '@app/services/format-waktu'
-import { CheckLg, XLg } from 'react-bootstrap-icons'
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { apiUrl } from '@app/utils/env';
+import { useEffect, useState } from 'react';
+// import { formatWaktu } from '@app/services/format-waktu';
+import { CheckLg, XLg } from 'react-bootstrap-icons';
+import moment from 'moment-timezone';
 
 export default function PinjamBuku() {
-  const [dataPeminjaman, setDataPeminjaman] = useState([])
+  const [dataPeminjaman, setDataPeminjaman] = useState([]);
 
   const getDataPeminjaman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
 
       if (response.status === 200) {
-        setDataPeminjaman(response.data.data)
-        console.log('Data peminjaman berhasil diambil:', response.data.data) // Tambahkan log
+        setDataPeminjaman(response.data.data);
+        console.log('Data peminjaman berhasil diambil:', response.data.data);
       }
     } catch (e: any) {
-      toast.error(e.response.data.message)
-      console.error('Gagal mengambil data peminjaman:', e) // Tambahkan log error
+      toast.error(e.response.data.message);
+      console.error('Gagal mengambil data peminjaman:', e);
     }
-  }
+  };
 
   const handleAcceptRejectPeminjaman = async (id: number, status: string) => {
     try {
       const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
         status: status,
       });
-  
+
       if (response.status === 200) {
-        await getDataPeminjaman(); // Refresh data
+        await getDataPeminjaman();
         toast.success(response.data.message);
         console.log('Status peminjaman berhasil diperbarui:', response.data.message);
       }
@@ -41,23 +42,21 @@ export default function PinjamBuku() {
 
   const handlePerpanjang = async (id: number) => {
     try {
-      const response = await axios.get(
-        `${apiUrl}/api/pinjam-buku/perpanjang/${id}`
-      )
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku/perpanjang/${id}`);
 
       if (response.status === 200) {
-        await getDataPeminjaman() // Gunakan await untuk memastikan data diperbarui
-        toast.success(response.data.message)
+        await getDataPeminjaman();
+        toast.success(response.data.message);
       }
     } catch (e: any) {
-      toast.error(e.response.data.message)
-      console.error('Gagal memperbarui status peminjaman:', e) // Tambahkan log error
+      toast.error(e.response.data.message);
+      console.error('Gagal memperbarui status peminjaman:', e);
     }
-  }
+  };
 
   useEffect(() => {
-    getDataPeminjaman() // Tidak perlu .then() di sini
-  }, [])
+    getDataPeminjaman();
+  }, []);
 
   return (
     <div className={'p-4 bg-white'}>
@@ -120,7 +119,7 @@ export default function PinjamBuku() {
                     <button
                       className="btn btn-success btn-sm"
                       onClick={() => {
-                        handlePerpanjang(row.id_peminjaman).then()
+                        handlePerpanjang(row.id_peminjaman).then();
                       }}
                     >
                       Perpanjang
@@ -158,5 +157,12 @@ export default function PinjamBuku() {
         </tbody>
       </table>
     </div>
-  )
+  );
+}
+
+export function formatWaktu(waktu: any) {
+  if (!waktu) return '-';
+  
+  // Mengonversi waktu ke zona waktu Asia/Jakarta
+  return moment.tz(waktu, 'Asia/Jakarta').format('DD MMM YYYY HH:mm');
 }
