@@ -116,14 +116,7 @@ export default function PinjamBuku() {
                     </div>
                   ) : row.status_peminjaman === 'DONE' ||
                     row.status_peminjaman === 'REJECTED' ? (
-                    <button
-                      className="btn btn-success btn-sm"
-                      onClick={() => {
-                        handlePerpanjang(row.id_peminjaman).then();
-                      }}
-                    >
-                      Perpanjang
-                    </button>
+                    '-'
                   ) : (
                     <div
                       className={'d-flex flex-wrap'}
@@ -142,6 +135,14 @@ export default function PinjamBuku() {
                       >
                         Selesai
                       </button>
+                      <button
+                        className="btn btn-success btn-sm"
+                        onClick={() => {
+                          handlePerpanjang(row.id_peminjaman).then()
+                        }}
+                      >
+                        Perpanjang
+                      </button>
                     </div>
                   )}
                 </td>
@@ -157,12 +158,12 @@ export default function PinjamBuku() {
         </tbody>
       </table>
     </div>
-  );
+  )
 }
 
 export function formatWaktu(waktu: any) {
   if (!waktu) return '-';
-  
+
   // Mengonversi waktu ke zona waktu Asia/Jakarta
   return moment.tz(waktu, 'Asia/Jakarta').format('DD MMM YYYY HH:mm');
 }
