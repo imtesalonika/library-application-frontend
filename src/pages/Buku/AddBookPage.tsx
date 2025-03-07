@@ -20,7 +20,7 @@ export function AddBookPage() {
   const [penerbit, setPenerbit] = useState('')
   const [penerbitErr, setPenerbitErr] = useState('')
   const [edisi, setEdisi] = useState('')
-  const [edisiErr, setEdisiErr] = useState('')
+  // const [edisiErr, setEdisiErr] = useState('')
   const [tahunTerbit, setTahunTerbit] = useState(0)
   const [tahunTerbitErr, setTahunTerbitErr] = useState('')
   const [isbn, setIsbn] = useState('')
@@ -302,7 +302,7 @@ export function AddBookPage() {
                 }}
                 className="form-control"
               />
-              <span className={'text-danger'}>{edisiErr}</span>
+              {/* <span className={'text-danger'}>{edisiErr}</span> */}
             </div>
           </div>
 
@@ -385,7 +385,7 @@ export function AddBookPage() {
             setPenulisErr('')
             setBahasaErr('')
             setPenerbitErr('')
-            setEdisiErr('')
+            // setEdisiErr('')
             setisbnErr('')
             setAbstrakErr('')
             setGambarErr('')
@@ -422,10 +422,10 @@ export function AddBookPage() {
               setPenerbitErr('Tidak boleh mengandung angka!')
               return
             }
-            if (edisi === '') {
-              setEdisiErr('Tidak boleh kosong')
-              return
-            }
+            // if (edisi === '') {
+            //   setEdisiErr('Tidak boleh kosong')
+            //   return
+            // }
             if (isbn === '') {
               setisbnErr('Tidak boleh kosong')
               return
