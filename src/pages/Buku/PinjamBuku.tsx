@@ -28,9 +28,9 @@ export default function PinjamBuku() {
       const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
         status: status,
       });
-
+  
       if (response.status === 200) {
-        await getDataPeminjaman();
+        await getDataPeminjaman(); // Refresh data
         toast.success(response.data.message);
         console.log('Status peminjaman berhasil diperbarui:', response.data.message);
       }
