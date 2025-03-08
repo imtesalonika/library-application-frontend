@@ -1,62 +1,72 @@
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { apiUrl } from '@app/utils/env';
-import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify'
+import axios from 'axios'
+import { apiUrl } from '@app/utils/env'
+import { useEffect, useState } from 'react'
 // import { formatWaktu } from '@app/services/format-waktu';
-import { CheckLg, XLg } from 'react-bootstrap-icons';
-import moment from 'moment-timezone';
+import { CheckLg, XLg } from 'react-bootstrap-icons'
+import moment from 'moment-timezone'
 
 export default function PinjamBuku() {
-  const [dataPeminjaman, setDataPeminjaman] = useState([]);
+  const [dataPeminjaman, setDataPeminjaman] = useState([])
 
   const getDataPeminjaman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
 
       if (response.status === 200) {
-        setDataPeminjaman(response.data.data);
-        console.log('Data peminjaman berhasil diambil:', response.data.data);
+        setDataPeminjaman(response.data.data)
+        console.log('Data peminjaman berhasil diambil:', response.data.data)
       }
     } catch (e: any) {
-      toast.error(e.response.data.message);
-      console.error('Gagal mengambil data peminjaman:', e);
+      toast.error(e.response.data.message)
+      console.error('Gagal mengambil data peminjaman:', e)
     }
-  };
+  }
 
-  const handleAcceptRejectPeminjaman = async (id: number, status: string) => {
+  const handleAcceptRejectPeminjaman = async (
+    id: number,
+    status: string,
+    id_buku: string
+  ) => {
     try {
       const response = await axios.patch(`${apiUrl}/api/pinjam-buku/${id}`, {
         status: status,
-      });
-  
+        id_buku: id_buku,
+      })
+
       if (response.status === 200) {
-        await getDataPeminjaman(); // Refresh data
-        toast.success(response.data.message);
-        console.log('Status peminjaman berhasil diperbarui:', response.data.message);
+        await getDataPeminjaman() // Refresh data
+        toast.success(response.data.message)
+        console.log(
+          'Status peminjaman berhasil diperbarui:',
+          response.data.message
+        )
       }
     } catch (e: any) {
-      toast.error(e.response.data.message);
-      console.error('Gagal memperbarui status peminjaman:', e);
+      toast.error(e.response.data.message)
+      console.error('Gagal memperbarui status peminjaman:', e)
     }
-  };
+  }
 
   const handlePerpanjang = async (id: number) => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku/perpanjang/${id}`);
+      const response = await axios.get(
+        `${apiUrl}/api/pinjam-buku/perpanjang/${id}`
+      )
 
       if (response.status === 200) {
-        await getDataPeminjaman();
-        toast.success(response.data.message);
+        await getDataPeminjaman()
+        toast.success(response.data.message)
       }
     } catch (e: any) {
-      toast.error(e.response.data.message);
-      console.error('Gagal memperbarui status peminjaman:', e);
+      toast.error(e.response.data.message)
+      console.error('Gagal memperbarui status peminjaman:', e)
     }
-  };
+  }
 
   useEffect(() => {
-    getDataPeminjaman();
-  }, []);
+    getDataPeminjaman()
+  }, [])
 
   return (
     <div className={'p-4 bg-white'}>
@@ -96,7 +106,8 @@ export default function PinjamBuku() {
                         onClick={() =>
                           handleAcceptRejectPeminjaman(
                             row.id_peminjaman,
-                            'IS BEING BORROWED'
+                            'IS BEING BORROWED',
+                            row.id_buku
                           )
                         }
                       >
@@ -106,7 +117,8 @@ export default function PinjamBuku() {
                         onClick={() =>
                           handleAcceptRejectPeminjaman(
                             row.id_peminjaman,
-                            'REJECTED'
+                            'REJECTED',
+                            row.id_buku
                           )
                         }
                         className="btn btn-danger btn-sm"
@@ -129,7 +141,8 @@ export default function PinjamBuku() {
                         onClick={() =>
                           handleAcceptRejectPeminjaman(
                             row.id_peminjaman,
-                            'DONE'
+                            'DONE',
+                            row.id_buku
                           )
                         }
                       >
@@ -162,8 +175,8 @@ export default function PinjamBuku() {
 }
 
 export function formatWaktu(waktu: any) {
-  if (!waktu) return '-';
+  if (!waktu) return '-'
 
   // Mengonversi waktu ke zona waktu Asia/Jakarta
-  return moment.tz(waktu, 'Asia/Jakarta').format('DD MMM YYYY HH:mm');
+  return moment.tz(waktu, 'Asia/Jakarta').format('DD MMM YYYY HH:mm')
 }
