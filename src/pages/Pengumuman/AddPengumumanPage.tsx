@@ -3,112 +3,155 @@ import {
   BoxArrowUpRight,
   PencilSquare,
   Trash,
-} from 'react-bootstrap-icons'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import { apiUrl } from '@app/utils/env'
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
-import Dropzone from 'react-dropzone'
-import { formatWaktu } from '@app/services/format-waktu'
+} from 'react-bootstrap-icons';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { apiUrl } from '@app/utils/env';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import Dropzone from 'react-dropzone';
+import { formatWaktu } from '@app/services/format-waktu';
 
 export function AddPengumumanPage() {
-  const { id } = useParams()
-  // const [file, setFile] = useState<File | undefined>()
-  // const [fileErr, setFileErr] = useState<string>()
-  const [judul, setJudul] = useState<string>('')
-  const [judulErr, setJudulErr] = useState<string>('')
-  const [isi, setIsi] = useState<string>('')
-  const [isiErr, setIsiErr] = useState<string>('')
-  const [kategori, setKategori] = useState<string>('')
-  const [kategoriErr, setKategoriErr] = useState<string>('')
-  const navigate = useNavigate()
-  const MySwal = withReactContent(Swal)
-  const [uploadedFiles, setUploadedFiles] = useState([])
-  const [oldFiles, setOldFiles] = useState([])
+  const { id } = useParams();
+  const [judul, setJudul] = useState<string>('');
+  const [judulErr, setJudulErr] = useState<string>('');
+  const [isi, setIsi] = useState<string>('');
+  const [isiErr, setIsiErr] = useState<string>('');
+  const [kategori, setKategori] = useState<string>('');
+  const [kategoriErr, setKategoriErr] = useState<string>('');
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [oldFiles, setOldFiles] = useState<any[]>([]);
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
 
-  const handleAddFile = (acceptedFiles: any) => {
-    setUploadedFiles(acceptedFiles)
-  }
+  // Fungsi untuk menangani file yang diunggah
+  const handleAddFile = (acceptedFiles: File[]) => {
+    setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
+  };
 
+  // Fungsi untuk menghapus file yang diunggah
+  const handleRemoveFile = (index: number) => {
+    const newFiles = [...uploadedFiles];
+    newFiles.splice(index, 1);
+    setUploadedFiles(newFiles);
+  };
+
+  // Fungsi untuk menyimpan pengumuman
   const handleSavePengumuman = async () => {
-    try {
-      const formData = new FormData()
-      uploadedFiles.forEach((file: any) => {
-        formData.append('files', file) // 'files' adalah nama field yang diterima server
-      })
-      formData.append('judul', judul)
-      formData.append('isi', isi)
-      formData.append('kategori', kategori)
+    // Validasi form
+    if (judul.trim() === '') {
+      setJudulErr('Judul tidak boleh kosong');
+      return;
+    }
+    if (isi.trim() === '') {
+      setIsiErr('Isi tidak boleh kosong');
+      return;
+    }
+    if (kategori.trim() === '') {
+      setKategoriErr('Kategori tidak boleh kosong');
+      return;
+    }
 
-      const response = await axios.post(`${apiUrl}/api/pengumuman`, formData)
+    try {
+      const formData = new FormData();
+      uploadedFiles.forEach((file) => {
+        formData.append('files', file); // Tambahkan file ke FormData
+      });
+      formData.append('judul', judul);
+      formData.append('isi', isi);
+      formData.append('kategori', kategori);                                  
+
+      const response = await axios.post(`${apiUrl}/api/pengumuman`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Set header untuk upload file
+        },
+      });
 
       if (response.status === 200) {
-        navigate('/pengumuman')
+        MySwal.fire({
+          text: 'Pengumuman berhasil ditambahkan!',
+          icon: 'success',
+          title: 'Sukses!',
+        }).then(() => {
+          navigate('/pengumuman');
+        });
       }
     } catch (e: any) {
       MySwal.fire({
-        text: e.response.data.message,
+        text: e.response?.data?.message || 'Terjadi kesalahan',
         icon: 'error',
         title: 'Gagal!',
-      }).then()
-      console.log(e)
+      });
+      console.error(e);
     }
-  }
+  };
 
-  const handleGetPengumuman = async () => {
-    try {
-      const response = await axios.get(`${apiUrl}/api/pengumuman/${id}`)
-
-      if (response.status === 200) {
-        const tempDataPengumuman = response.data.data
-        console.log(tempDataPengumuman)
-        setJudul(tempDataPengumuman.judul)
-        setIsi(tempDataPengumuman.isi)
-        setKategori(tempDataPengumuman.kategori)
-        setOldFiles(JSON.parse(tempDataPengumuman.file))
-      }
-    } catch (e: any) {
-      console.log(e)
-    }
-  }
-
+  // Fungsi untuk mengupdate pengumuman
   const handleUpdatePengumuman = async () => {
-    const formData = new FormData()
-    uploadedFiles.forEach((file: any) => {
-      formData.append('files', file) // 'files' adalah nama field yang diterima server
-    })
-    formData.append('judul', judul)
-    formData.append('isi', isi)
-    formData.append('kategori', kategori)
-    formData.append('oldFiles', JSON.stringify(oldFiles))
+    const formData = new FormData();
+    uploadedFiles.forEach((file) => {
+      formData.append('files', file);
+    });
+    formData.append('judul', judul);
+    formData.append('isi', isi);
+    formData.append('kategori', kategori);
+    formData.append('oldFiles', JSON.stringify(oldFiles));
 
     try {
       const response = await axios.patch(
         `${apiUrl}/api/pengumuman/${id}`,
-        formData
-      )
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
 
       if (response.status === 200) {
-        navigate('/pengumuman')
+        MySwal.fire({
+          text: 'Pengumuman berhasil diperbarui!',
+          icon: 'success',
+          title: 'Sukses!',
+        }).then(() => {
+          navigate('/pengumuman');
+        });
       }
     } catch (e: any) {
-      console.log(e)
+      MySwal.fire({
+        text: e.response?.data?.message || 'Terjadi kesalahan',
+        icon: 'error',
+        title: 'Gagal!',
+      });
+      console.error(e);
     }
-  }
+  };
 
-  const removeItem = (index: number) => {
-    const newItems = [...oldFiles]
-    newItems.splice(index, 1)
-    setOldFiles(newItems)
-  }
+  // Fungsi untuk mengambil data pengumuman (jika dalam mode edit)
+  const handleGetPengumuman = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/api/pengumuman/${id}`);
+      if (response.status === 200) {
+        const tempDataPengumuman = response.data.data;
+        setJudul(tempDataPengumuman.judul);
+        setIsi(tempDataPengumuman.isi);
+        setKategori(tempDataPengumuman.kategori);
+        if (tempDataPengumuman.file) {
+          setOldFiles(JSON.parse(tempDataPengumuman.file));
+        }
+      }
+    } catch (e: any) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     if (id) {
-      handleGetPengumuman().then()
+      handleGetPengumuman().then();
     }
-  }, [])
+  }, [id]);
 
   return (
     <div>
@@ -143,16 +186,10 @@ export function AddPengumumanPage() {
       </div>
 
       <div className={'px-5'}>
+        {/* Form Upload File */}
         <div className="mb-3" style={{ width: '49%' }}>
           <label>File</label>
           <br />
-          {/*<input*/}
-          {/*  type="file"*/}
-          {/*  onChange={(e) => {*/}
-          {/*    setFile(e.target.files![0])*/}
-          {/*  }}*/}
-          {/*  className={'border p-1 rounded-lg w-100 bg-white'}*/}
-          {/*/>*/}
           <Dropzone onDrop={handleAddFile}>
             {({ getRootProps, getInputProps }) => (
               <section>
@@ -174,22 +211,30 @@ export function AddPengumumanPage() {
           </Dropzone>
         </div>
 
-        {/* Menampilkan nama file yang di-upload */}
+        {/* Menampilkan file yang diunggah */}
         {uploadedFiles.length > 0 && (
           <div className="mt-3">
             <h5>Selected Files:</h5>
             <ul>
-              {uploadedFiles.map((file: any, index) => (
-                <li key={index}>{file.name}</li>
+              {uploadedFiles.map((file, index) => (
+                <li key={index}>
+                  {file.name}{' '}
+                  <button
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleRemoveFile(index)}
+                  >
+                    <Trash />
+                  </button>
+                </li>
               ))}
             </ul>
           </div>
         )}
 
+        {/* Menampilkan file lama (jika dalam mode edit) */}
         {oldFiles.length > 0 && (
           <div className="mt-3">
             <h5>Current Files at Announcement:</h5>
-
             <table className={'table table-bordered table-hover mt-3'}>
               <thead>
                 <tr>
@@ -198,15 +243,16 @@ export function AddPengumumanPage() {
                 </tr>
               </thead>
               <tbody>
-                {oldFiles.map((file: any, index) => (
+                {oldFiles.map((file, index) => (
                   <tr key={index}>
                     <td>{file.originalFilename}</td>
-
                     <td>
                       <button
                         className={'btn btn-danger mb-3'}
                         onClick={() => {
-                          removeItem(index)
+                          const newFiles = [...oldFiles];
+                          newFiles.splice(index, 1);
+                          setOldFiles(newFiles);
                         }}
                       >
                         <Trash />
@@ -218,15 +264,17 @@ export function AddPengumumanPage() {
             </table>
           </div>
         )}
+
+        {/* Form Input Judul, Isi, dan Kategori */}
         <div className={'w-100'}>
           <div className={'row'}>
             <div className="form-group col-sm-6">
               <label>Judul Pengumuman</label>
               <input
                 type="text"
-                onChange={(e: any) => {
-                  setJudul(e.target.value)
-                  setJudulErr('')
+                onChange={(e) => {
+                  setJudul(e.target.value);
+                  setJudulErr('');
                 }}
                 value={judul}
                 className="form-control"
@@ -241,9 +289,9 @@ export function AddPengumumanPage() {
               <textarea
                 className="form-control"
                 value={isi}
-                onChange={(e: any) => {
-                  setIsi(e.target.value)
-                  setIsiErr('')
+                onChange={(e) => {
+                  setIsi(e.target.value);
+                  setIsiErr('');
                 }}
               ></textarea>
               <span className="text-danger">{isiErr}</span>
@@ -256,9 +304,9 @@ export function AddPengumumanPage() {
               <input
                 type="text"
                 value={kategori}
-                onChange={(e: any) => {
-                  setKategori(e.target.value)
-                  setKategoriErr('')
+                onChange={(e) => {
+                  setKategori(e.target.value);
+                  setKategoriErr('');
                 }}
                 className="form-control"
               />
@@ -267,28 +315,14 @@ export function AddPengumumanPage() {
           </div>
         </div>
 
+        {/* Tombol Simpan/Update */}
         <button
           className={'btn btn-success mb-3'}
           onClick={() => {
-            if (judul.trim() === '') {
-              setJudulErr('Tidak boleh kosong')
-              return
-            }
-
-            if (isi.trim() === '') {
-              setIsiErr('Tidak boleh kosong')
-              return
-            }
-
-            if (kategori.trim() === '') {
-              setKategoriErr('Tidak boleh kosong')
-              return
-            }
-
             if (id) {
-              handleUpdatePengumuman().then()
+              handleUpdatePengumuman().then();
             } else {
-              handleSavePengumuman().then()
+              handleSavePengumuman().then();
             }
           }}
         >
@@ -296,5 +330,5 @@ export function AddPengumumanPage() {
         </button>
       </div>
     </div>
-  )
+  );
 }
