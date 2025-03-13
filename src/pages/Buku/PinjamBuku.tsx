@@ -11,17 +11,17 @@ export default function PinjamBuku() {
 
   const getDataPeminjaman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pinjam-buku`)
-
+      const response = await axios.get(`${apiUrl}/api/pinjam-buku`);
+  
       if (response.status === 200) {
-        setDataPeminjaman(response.data.data)
-        console.log('Data peminjaman berhasil diambil:', response.data.data)
+        setDataPeminjaman(response.data.data);
+        console.log('Data peminjaman berhasil diambil:', response.data.data);
       }
     } catch (e: any) {
-      toast.error(e.response.data.message)
-      console.error('Gagal mengambil data peminjaman:', e)
+      toast.error(e.response.data.message);
+      console.error('Gagal mengambil data peminjaman:', e);
     }
-  }
+  };
 
   const handleAcceptRejectPeminjaman = async (
     id: number,
