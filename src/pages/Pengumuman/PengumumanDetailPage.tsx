@@ -14,7 +14,8 @@ export function PengumumanDetailPage() {
       const response = await axios.get(`${apiUrl}/api/pengumuman/${id}`)
       setPengumumanData(response.data.data)
       if (response.data.data.file) {
-        setFiles(JSON.parse(response.data.data.file))
+        console.log(response.data.data.file)
+        setFiles(response.data.data.file)
       }
     } catch (e: any) {
       console.log(e)

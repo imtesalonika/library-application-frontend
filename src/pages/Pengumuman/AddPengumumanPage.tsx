@@ -1,73 +1,65 @@
-import {
-  ArrowLeft,
-  BoxArrowUpRight,
-  PencilSquare,
-  Trash,
-} from 'react-bootstrap-icons';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { apiUrl } from '@app/utils/env';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import Dropzone from 'react-dropzone';
-import { formatWaktu } from '@app/services/format-waktu';
+import { ArrowLeft, Trash } from 'react-bootstrap-icons'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { apiUrl } from '@app/utils/env'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import Dropzone from 'react-dropzone'
+import { formatWaktu } from '@app/services/format-waktu'
 
 export function AddPengumumanPage() {
-  const { id } = useParams();
-  const [judul, setJudul] = useState<string>('');
-  const [judulErr, setJudulErr] = useState<string>('');
-  const [isi, setIsi] = useState<string>('');
-  const [isiErr, setIsiErr] = useState<string>('');
-  const [kategori, setKategori] = useState<string>('');
-  const [kategoriErr, setKategoriErr] = useState<string>('');
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  const [oldFiles, setOldFiles] = useState<any[]>([]);
-  const navigate = useNavigate();
-  const MySwal = withReactContent(Swal);
+  const { id } = useParams()
+  const [judul, setJudul] = useState<string>('')
+  const [judulErr, setJudulErr] = useState<string>('')
+  const [isi, setIsi] = useState<string>('')
+  const [isiErr, setIsiErr] = useState<string>('')
+  const [kategori, setKategori] = useState<string>('')
+  const [kategoriErr, setKategoriErr] = useState<string>('')
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([])
+  const [oldFiles, setOldFiles] = useState<any[]>([])
+  const navigate = useNavigate()
+  const MySwal = withReactContent(Swal)
 
-  // Fungsi untuk menangani file yang diunggah
   const handleAddFile = (acceptedFiles: File[]) => {
-    setUploadedFiles([...uploadedFiles, ...acceptedFiles]);
-  };
+    setUploadedFiles([...uploadedFiles, ...acceptedFiles])
+  }
 
-  // Fungsi untuk menghapus file yang diunggah
   const handleRemoveFile = (index: number) => {
-    const newFiles = [...uploadedFiles];
-    newFiles.splice(index, 1);
-    setUploadedFiles(newFiles);
-  };
+    const newFiles = [...uploadedFiles]
+    newFiles.splice(index, 1)
+    setUploadedFiles(newFiles)
+  }
 
-  // Fungsi untuk menyimpan pengumuman
   const handleSavePengumuman = async () => {
     // Validasi form
     if (judul.trim() === '') {
-      setJudulErr('Judul tidak boleh kosong');
-      return;
+      setJudulErr('Judul tidak boleh kosong')
+      return
     }
     if (isi.trim() === '') {
-      setIsiErr('Isi tidak boleh kosong');
-      return;
+      setIsiErr('Isi tidak boleh kosong')
+      return
     }
     if (kategori.trim() === '') {
-      setKategoriErr('Kategori tidak boleh kosong');
-      return;
+      setKategoriErr('Kategori tidak boleh kosong')
+      return
     }
 
     try {
-      const formData = new FormData();
+      const formData = new FormData()
       uploadedFiles.forEach((file) => {
-        formData.append('files', file); // Tambahkan file ke FormData
-      });
-      formData.append('judul', judul);
-      formData.append('isi', isi);
-      formData.append('kategori', kategori);                                  
+        formData.append('files', file) // Tambahkan file ke FormData
+      })
+      formData.append('judul', judul)
+      formData.append('isi', isi)
+      formData.append('kategori', kategori)
 
       const response = await axios.post(`${apiUrl}/api/pengumuman`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data', // Set header untuk upload file
         },
-      });
+      })
 
       if (response.status === 200) {
         MySwal.fire({
@@ -75,29 +67,28 @@ export function AddPengumumanPage() {
           icon: 'success',
           title: 'Sukses!',
         }).then(() => {
-          navigate('/pengumuman');
-        });
+          navigate('/pengumuman')
+        })
       }
     } catch (e: any) {
       MySwal.fire({
         text: e.response?.data?.message || 'Terjadi kesalahan',
         icon: 'error',
         title: 'Gagal!',
-      });
-      console.error(e);
+      })
+      console.error(e)
     }
-  };
+  }
 
-  // Fungsi untuk mengupdate pengumuman
   const handleUpdatePengumuman = async () => {
-    const formData = new FormData();
+    const formData = new FormData()
     uploadedFiles.forEach((file) => {
-      formData.append('files', file);
-    });
-    formData.append('judul', judul);
-    formData.append('isi', isi);
-    formData.append('kategori', kategori);
-    formData.append('oldFiles', JSON.stringify(oldFiles));
+      formData.append('files', file)
+    })
+    formData.append('judul', judul)
+    formData.append('isi', isi)
+    formData.append('kategori', kategori)
+    formData.append('oldFiles', JSON.stringify(oldFiles))
 
     try {
       const response = await axios.patch(
@@ -108,7 +99,7 @@ export function AddPengumumanPage() {
             'Content-Type': 'multipart/form-data',
           },
         }
-      );
+      )
 
       if (response.status === 200) {
         MySwal.fire({
@@ -116,42 +107,41 @@ export function AddPengumumanPage() {
           icon: 'success',
           title: 'Sukses!',
         }).then(() => {
-          navigate('/pengumuman');
-        });
+          navigate('/pengumuman')
+        })
       }
     } catch (e: any) {
       MySwal.fire({
         text: e.response?.data?.message || 'Terjadi kesalahan',
         icon: 'error',
         title: 'Gagal!',
-      });
-      console.error(e);
+      })
+      console.error(e)
     }
-  };
+  }
 
-  // Fungsi untuk mengambil data pengumuman (jika dalam mode edit)
   const handleGetPengumuman = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/pengumuman/${id}`);
+      const response = await axios.get(`${apiUrl}/api/pengumuman/${id}`)
       if (response.status === 200) {
-        const tempDataPengumuman = response.data.data;
-        setJudul(tempDataPengumuman.judul);
-        setIsi(tempDataPengumuman.isi);
-        setKategori(tempDataPengumuman.kategori);
+        const tempDataPengumuman = response.data.data
+        setJudul(tempDataPengumuman.judul)
+        setIsi(tempDataPengumuman.isi)
+        setKategori(tempDataPengumuman.kategori)
         if (tempDataPengumuman.file) {
-          setOldFiles(JSON.parse(tempDataPengumuman.file));
+          setOldFiles(tempDataPengumuman.file)
         }
       }
     } catch (e: any) {
-      console.error(e);
+      console.error(e)
     }
-  };
+  }
 
   useEffect(() => {
     if (id) {
-      handleGetPengumuman().then();
+      handleGetPengumuman().then()
     }
-  }, [id]);
+  }, [id])
 
   return (
     <div>
@@ -248,11 +238,11 @@ export function AddPengumumanPage() {
                     <td>{file.originalFilename}</td>
                     <td>
                       <button
-                        className={'btn btn-danger mb-3'}
+                        className={'btn btn-danger'}
                         onClick={() => {
-                          const newFiles = [...oldFiles];
-                          newFiles.splice(index, 1);
-                          setOldFiles(newFiles);
+                          const newFiles = [...oldFiles]
+                          newFiles.splice(index, 1)
+                          setOldFiles(newFiles)
                         }}
                       >
                         <Trash />
@@ -273,8 +263,8 @@ export function AddPengumumanPage() {
               <input
                 type="text"
                 onChange={(e) => {
-                  setJudul(e.target.value);
-                  setJudulErr('');
+                  setJudul(e.target.value)
+                  setJudulErr('')
                 }}
                 value={judul}
                 className="form-control"
@@ -290,8 +280,8 @@ export function AddPengumumanPage() {
                 className="form-control"
                 value={isi}
                 onChange={(e) => {
-                  setIsi(e.target.value);
-                  setIsiErr('');
+                  setIsi(e.target.value)
+                  setIsiErr('')
                 }}
               ></textarea>
               <span className="text-danger">{isiErr}</span>
@@ -305,8 +295,8 @@ export function AddPengumumanPage() {
                 type="text"
                 value={kategori}
                 onChange={(e) => {
-                  setKategori(e.target.value);
-                  setKategoriErr('');
+                  setKategori(e.target.value)
+                  setKategoriErr('')
                 }}
                 className="form-control"
               />
@@ -320,9 +310,9 @@ export function AddPengumumanPage() {
           className={'btn btn-success mb-3'}
           onClick={() => {
             if (id) {
-              handleUpdatePengumuman().then();
+              handleUpdatePengumuman().then()
             } else {
-              handleSavePengumuman().then();
+              handleSavePengumuman().then()
             }
           }}
         >
@@ -330,5 +320,5 @@ export function AddPengumumanPage() {
         </button>
       </div>
     </div>
-  );
+  )
 }
