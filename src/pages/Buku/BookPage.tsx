@@ -45,7 +45,7 @@ export function BookPage() {
 
   const handleRemoveBuku = async (bookId: number) => {
     try {
-      const response = await axios.delete(`<span class="math-inline">\{apiUrl\}/api/book/</span>{bookId}`);
+      const response = await axios.delete(`${apiUrl}/api/book/${bookId}`);
 
       if (response.status === 200) {
         MySwal.fire({
