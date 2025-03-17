@@ -24,7 +24,7 @@ export function TugasakhirPage() {
 
   const getTugasAkhirData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/api/tugasakhir/get-all`)
+      const response = await axios.post(`${apiUrl}/api/tugasakhir/get-all`)
       console.error(response.data.data)
       setTugasAkhirData(response.data.data)
     } catch (e: any) {
