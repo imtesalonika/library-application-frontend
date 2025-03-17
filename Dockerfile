@@ -12,8 +12,10 @@ COPY package.json ./
 COPY . .
 
 RUN npm install
+RUN npm install -g serve
 RUN npm run build
 
-EXPOSE 3000
 
-CMD ["node", "app.js"]
+EXPOSE 4173
+
+CMD ["serve", "-s", "dist", "-l", "4173"]
