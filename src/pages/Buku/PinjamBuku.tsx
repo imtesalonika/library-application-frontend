@@ -136,8 +136,29 @@ export default function PinjamBuku() {
                         gap: 5,
                       }}
                     >
+                      
+                      <button
+                        onClick={() =>
+                          handleAcceptRejectPeminjaman(
+                            row.id_peminjaman,
+                            'REJECTED',
+                            row.id_buku
+                          )
+                        }
+                        className="btn btn-danger btn-sm"
+                      >
+                        Tidak diambil
+                      </button>
                       <button
                         className="btn btn-success btn-sm"
+                        onClick={() => {
+                          handlePerpanjang(row.id_peminjaman).then()
+                        }}
+                      >
+                        Perpanjang
+                      </button>
+                      <button
+                        className="btn btn-primary btn-sm"
                         onClick={() =>
                           handleAcceptRejectPeminjaman(
                             row.id_peminjaman,
@@ -147,14 +168,6 @@ export default function PinjamBuku() {
                         }
                       >
                         Selesai
-                      </button>
-                      <button
-                        className="btn btn-success btn-sm"
-                        onClick={() => {
-                          handlePerpanjang(row.id_peminjaman).then()
-                        }}
-                      >
-                        Perpanjang
                       </button>
                     </div>
                   )}
