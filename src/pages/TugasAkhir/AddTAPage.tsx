@@ -36,10 +36,14 @@ export function AddTAPage() {
     FITE: ['Informatika', 'Teknik Elektro', 'Sistem Informasi'],
     FTI: ['Manajemen Rekayasa', 'Teknik Metalurgi'],
     FTB: ['Bioproses'],
-    Vokasi: ['Teknologi Informasi', 'Teknologi Komputer', 'Teknologi Rekayasa Perangkat Lunak'],
-  };
-  
-  type FakultasType = keyof typeof fakultasProdiMapping;
+    Vokasi: [
+      'Teknologi Informasi',
+      'Teknologi Komputer',
+      'Teknologi Rekayasa Perangkat Lunak',
+    ],
+  }
+
+  type FakultasType = keyof typeof fakultasProdiMapping
 
   const getBookData = async () => {
     try {
@@ -60,54 +64,54 @@ export function AddTAPage() {
   }
 
   const validateForm = () => {
-    let isValid = true;
+    let isValid = true
 
     if (judul === '') {
-      setJudulErr('Tidak boleh kosong');
-      isValid = false;
+      setJudulErr('Tidak boleh kosong')
+      isValid = false
     }
     if (penulis === '') {
-      setPenulisErr('Tidak boleh kosong');
-      isValid = false;
+      setPenulisErr('Tidak boleh kosong')
+      isValid = false
     }
-    if (isStringContainsNumber(penulis)) {
-      setPenulisErr('Tidak boleh mengandung angka!');
-      isValid = false;
-    }
+    // if (isStringContainsNumber(penulis)) {
+    //   setPenulisErr('Tidak boleh mengandung angka!');
+    //   isValid = false;
+    // }
     if (pembimbing === '') {
-      setPembimbingErr('Tidak boleh kosong');
-      isValid = false;
+      setPembimbingErr('Tidak boleh kosong')
+      isValid = false
     }
     if (fakultas === '') {
-      setFakultasErr('Tidak boleh kosong');
-      isValid = false;
+      setFakultasErr('Tidak boleh kosong')
+      isValid = false
     }
     if (prodi === '') {
-      setProdiErr('Tidak boleh kosong');
-      isValid = false;
+      setProdiErr('Tidak boleh kosong')
+      isValid = false
     }
     if (!fakultasProdiMapping[fakultas as FakultasType]?.includes(prodi)) {
-      setProdiErr('Prodi tidak sesuai dengan fakultas yang dipilih');
-      isValid = false;
+      setProdiErr('Prodi tidak sesuai dengan fakultas yang dipilih')
+      isValid = false
     }
     if (abstrak === '') {
-      setAbstrakErr('Tidak boleh kosong');
-      isValid = false;
+      setAbstrakErr('Tidak boleh kosong')
+      isValid = false
     }
     if (penguji === '') {
-      setPengujiErr('Tidak boleh kosong');
-      isValid = false;
+      setPengujiErr('Tidak boleh kosong')
+      isValid = false
     }
     if (lokasi === '') {
-      setLokasiErr('Tidak boleh kosong');
-      isValid = false;
+      setLokasiErr('Tidak boleh kosong')
+      isValid = false
     }
 
-    return isValid;
-  };
+    return isValid
+  }
 
   const handleSaveTugasAkhir = async () => {
-    if (!validateForm()) return;
+    if (!validateForm()) return
 
     try {
       const formData = {
@@ -121,26 +125,26 @@ export function AddTAPage() {
         tahun,
         lokasi,
         penguji,
-      };
+      }
       const response = await axios.post(`${apiUrl}/api/tugasakhir`, formData, {
         headers: { 'Content-Type': 'application/json' },
-      });
+      })
 
       if (response.status === 200) {
-        navigation('/tugasakhir');
+        navigation('/tugasakhir')
       }
     } catch (e: any) {
       MySwal.fire({
         title: 'Failed!',
         text: e.response?.data?.message,
         icon: 'error',
-      });
-      console.log(e);
+      })
+      console.log(e)
     }
-  };
+  }
 
   const handleUpdateTugasAkhir = async () => {
-    if (!validateForm()) return;
+    if (!validateForm()) return
 
     try {
       const formData = {
@@ -154,7 +158,7 @@ export function AddTAPage() {
         tahun,
         lokasi,
         penguji,
-      };
+      }
 
       const response = await axios.put(
         `${apiUrl}/api/tugasakhir/${id}`,
@@ -162,20 +166,20 @@ export function AddTAPage() {
         {
           headers: { 'Content-Type': 'application/json' },
         }
-      );
+      )
 
       if (response.status === 200) {
-        navigation('/tugasakhir');
+        navigation('/tugasakhir')
       }
     } catch (e: any) {
       MySwal.fire({
         title: 'Failed!',
         text: e.response.data.message,
         icon: 'error',
-      });
-      console.log(e);
+      })
+      console.log(e)
     }
-  };
+  }
 
   useEffect(() => {
     if (id) {
@@ -200,7 +204,7 @@ export function AddTAPage() {
             height: '40px',
           }}
           onClick={() => {
-            navigation('/tugasakhir');
+            navigation('/tugasakhir')
           }}
         >
           <ArrowLeft size={'30'} color={'#3722AE'} />
@@ -330,11 +334,13 @@ export function AddTAPage() {
                 }}
               >
                 <option value="">Pilih Prodi</option>
-                {fakultasProdiMapping[fakultas as FakultasType]?.map((prodiOption: string) => (
-                  <option key={prodiOption} value={prodiOption}>
-                    {prodiOption}
-                  </option>
-                ))}
+                {fakultasProdiMapping[fakultas as FakultasType]?.map(
+                  (prodiOption: string) => (
+                    <option key={prodiOption} value={prodiOption}>
+                      {prodiOption}
+                    </option>
+                  )
+                )}
               </select>
               <span className={'text-danger'}>{prodiErr}</span>
             </div>
@@ -371,9 +377,9 @@ export function AddTAPage() {
           className={'btn btn-success mb-3'}
           onClick={() => {
             if (id) {
-              handleUpdateTugasAkhir().then();
+              handleUpdateTugasAkhir().then()
             } else {
-              handleSaveTugasAkhir().then();
+              handleSaveTugasAkhir().then()
             }
           }}
         >

@@ -12,6 +12,9 @@ export default ({ mode }) => {
   return defineConfig({
     mode: VITE_NODE_ENV,
     plugins: [react()],
+    server: {
+      host: true,
+    },
     resolve: {
       alias: {
         '@app': path.resolve(__dirname, './src'),
